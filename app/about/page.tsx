@@ -46,10 +46,11 @@ export default function AboutPage() {
                 prepare students not just for exams, but for life.
               </p>
               <p className="text-gray-700">
-                Our innovative programs and competitions are designed to develop critical thinking, entrepreneurship,
-                financial literacy, and communication skills that are essential for success in any career path. By
-                providing students with real-world challenges and expert mentorship, we empower them to discover their
-                potential and pursue their passions with confidence.
+                Our innovative programmes are designed to develop critical thinking, problem-solving,
+                decision-making, startup investing skills, and communication, essential
+                competencies for success in any career path. By providing students with real-world
+                challenges and expert mentorship, we empower them to discover their potential and
+                pursue their passions with confidence.
               </p>
               <p className="text-gray-700">
                 We envision a future where every student has access to educational experiences that are engaging,
