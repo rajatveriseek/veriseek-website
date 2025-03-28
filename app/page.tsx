@@ -24,8 +24,9 @@ export default function Home() {
                 Bridging Education and Real-World Skills
               </h1>
               <p className="text-lg md:text-xl opacity-90 max-w-lg">
-                Join India's first inter school competition testing for Problem Solving, Critical Thinking, Finance,
-                Decision Making and Communication Skills
+                India’s premier learning programme for students to develop critical thinking, problem-
+                solving decision-making, startup investing skills and communication through real-
+                world investment challenges.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-primary font-bold px-8">
@@ -98,8 +99,8 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold text-primary">Real-World Skills</h3>
                 <p className="text-gray-600">
-                  Develop practical business Problem Solving, Critical Thinking, Finance, Decision Making and
-                  Communication Skills
+                  Develop critical thinking, problem-solving, decision making, startup investing skills, and
+                  communication skills applicable in businesses.
                 </p>
               </CardContent>
             </Card>
