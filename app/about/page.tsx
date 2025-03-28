@@ -41,7 +41,7 @@ export default function AboutPage() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-primary">Our Vision</h2>
               <p className="text-gray-700">
-                Veriseek Education was founded with a clear vision: to bridge the gap between traditional academic
+                Veriseek Education was founded with a clear vision to bridge the gap between traditional academic
                 learning and the practical skills needed in today's professional world. We believe that education should
                 prepare students not just for exams, but for life.
               </p>
@@ -227,7 +227,7 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <span className="text-gray-700">
-                    <strong className="text-primary">Personalized Feedback:</strong> Regular assessment and guidance for
+                    <strong className="text-primary">Personalised Feedback:</strong> Regular assessment and guidance for
                     continuous improvement.
                   </span>
                 </li>
