@@ -90,7 +90,7 @@ export default function AboutPage() {
                 </p>
                 <div className="flex space-x-3">
                   <Link 
-                  href="https://www.linkedin.com/in/rajat-kumar-veriseek" 
+                  href="https://www.linkedin.com/in/rajat-kumar-004533/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-primary hover:text-secondary"
@@ -127,7 +127,7 @@ export default function AboutPage() {
                 </p>
                 <div className="flex space-x-3">
                   <Link 
-                  href="https://www.linkedin.com/in/durba-ray-veriseek" 
+                  href="https://www.linkedin.com/in/durba-ray-ab3a6012/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-primary hover:text-secondary"
