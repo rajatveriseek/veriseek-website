@@ -74,7 +74,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-primary">Our Mission</h2>
             <p className="text-lg text-gray-700">
               At Veriseek Education, we believe in empowering students with the skills they need to succeed in the real
-              world. Our innovative programs bridge the gap between traditional academic learning and practical
+              world. Our innovative programmes bridge the gap between traditional academic learning and practical
               professional skills, preparing the next generation of leaders, entrepreneurs, and changemakers.
             </p>
           </div>
