@@ -281,13 +281,7 @@ export default function AboutPage() {
               >
                 <Link href="/sharkathon">Learn About Sharkathon</Link>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="border-white text-white hover:bg-white/20 font-bold border-2 shadow-lg transition-all hover:scale-105"
-              >
-                <Link href="/contact">Contact Us</Link>
-              </Button>
+              
             </div>
           </div>
         </div>
