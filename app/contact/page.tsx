@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Mail, MapPin, Phone } from "lucide-react"
 
 import { ContactForm } from "@/components/contact-form"
-import { FAQSection } from "@/components/faq-section"
 
 export const metadata: Metadata = {
   title: "Contact Us | Veriseek Education",
@@ -96,11 +95,6 @@ export default function ContactPage() {
           <h2 className="mb-6 text-2xl font-bold text-[#011C41]">Send Us a Message</h2>
           <ContactForm />
         </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="mt-16">
-        <FAQSection />
       </div>
     </div>
   )
