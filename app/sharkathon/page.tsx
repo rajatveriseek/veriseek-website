@@ -30,8 +30,13 @@ export default function SharkathonPage() {
               </div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">Sharkathon - Think like a shark</h1>
               <p className="text-lg md:text-xl opacity-90">
-                India's First inter school competition testing for Problem Solving, critical thinking, finance, Decision
-                Making and communication skills
+                India’s premier learning programme for students to develop critical thinking, problem-
+                solving decision-making, startup investing skills and communication through real-
+                world investment challenges.
+              </p>
+              <p className="text-lg md:text-xl opacity-90">
+                An immersive experience where students step into the role of sharks, analysing real
+                businesses, questioning entrepreneurs, and making strategic investment decisions.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button
