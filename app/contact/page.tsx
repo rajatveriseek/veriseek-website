@@ -18,7 +18,7 @@ export default function ContactPage() {
       <div className="mb-12 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-[#011C41] sm:text-4xl md:text-5xl">Contact Us</h1>
         <p className="mt-4 text-lg text-gray-600 md:text-xl">
-          Have questions about our programs or the Sharkathon competition? We're here to help.
+          Have questions about our programmes or the Sharkathon competition? We're here to help.
         </p>
       </div>
 
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium text-gray-900">Office Address</p>
                   <address className="not-italic text-gray-700">
-                    AltF MPD Tower, Room MR1, 2nd Floor
+                    AltF MPD Tower, 2nd Floor
                     <br />
                     Golf Course Road, Sector 43
                     <br />
