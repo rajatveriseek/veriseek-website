@@ -4,32 +4,32 @@ export default function SharkathonTimeline() {
   const timelineSteps = [
     {
       icon: "📌",
-      title: "Registration",
-      description: "Submit your application with essential details to secure your spot in the competition.",
+      title: "Register & Secure Your Spot",
+      description: "Submit your application with essential details to secure your spot.",
     },
     {
       icon: "📖",
-      title: "Study Material",
+      title: "Access Study Resources & Prepare",
       description:
-        "Access comprehensive learning resources covering investment principles, financial analysis, and strategic evaluation to prepare for the competition.",
+        "Access comprehensive learning resources covering investment principles, data analysis, and strategic evaluation to prepare for the competition.",
     },
     {
       icon: "🖥",
-      title: "Online Test",
+      title: "Online Assessment",
       description:
-        "Demonstrate your understanding of critical thinking, problem-solving, and financial concepts through a proctored multiple-choice online test.",
+        "Take a proctored multiple-choice test to evaluate your business logic, problem-solving skills, and strategic thinking.",
     },
     {
       icon: "🎯",
-      title: "Mentorship",
+      title: "Case Study Challenge & Mentorship",
       description:
-        "Top-performing students receive personalised mentorship from industry professionals, guiding them on how to evaluate businesses and make investment decisions.",
+        "Analyse real business case studies, assess data, and present strategic recommendations, while receiving mentorship from industry professionals to refine your evaluation skills.",
     },
     {
       icon: "🔍",
-      title: "Semi-Finals",
+      title: "The Final Pitch - Live Investor Panel",
       description:
-        "Analyse real-world business cases, identify strengths and risks, and present your rationale to a panel of experts.",
+        "Step into the role of investors and evaluate live business pitches from real entrepreneurs, engaging in high-stakes decision-making and justify your investment rationale in front of a panel of experienced VCs, startup founders, and business leaders.",
     },
     {
       icon: "🏆",
