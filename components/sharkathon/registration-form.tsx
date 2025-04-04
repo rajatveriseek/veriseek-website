@@ -15,7 +15,6 @@ import { submitRegistration } from "@/app/actions/registration"
 import { dataStore } from "@/lib/client-data-store"
 
 const RegistrationForm = () => {
-  const [formStep, setFormStep] = useState(1)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formError, setFormError] = useState("")
@@ -169,7 +168,7 @@ const RegistrationForm = () => {
         <form onSubmit={handleSubmit}>
           {formError && <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-md">{formError}</div>}
 
-          {formStep === 1 && (
+          <div className="space-y-8">
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-primary mb-4">Personal Information</h3>
 
@@ -231,7 +230,7 @@ const RegistrationForm = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="grade">Grade Level *</Label>
-                  <Select value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)}>
+                  <Select value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)} required>
                     <SelectTrigger id="grade">
                       <SelectValue placeholder="Select grade" />
                     </SelectTrigger>
@@ -244,16 +243,8 @@ const RegistrationForm = () => {
                   </Select>
                 </div>
               </div>
-
-              <div className="flex justify-end mt-6">
-                <Button type="button" onClick={nextStep} className="bg-primary text-white hover:bg-primary/90">
-                  Next Step
-                </Button>
-              </div>
             </div>
-          )}
 
-          {formStep === 2 && (
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-primary mb-4">Team & Project Information</h3>
 
@@ -271,7 +262,7 @@ const RegistrationForm = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="teamSize">Team Size *</Label>
-                  <Select value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)}>
+                  <Select value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)} required>
                     <SelectTrigger id="teamSize">
                       <SelectValue placeholder="Select team size" />
                     </SelectTrigger>
@@ -300,7 +291,7 @@ const RegistrationForm = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="howHeard">How did you hear about Sharkathon? *</Label>
-                <Select value={formData.howHeard} onValueChange={(value) => handleSelectChange("howHeard", value)}>
+                <Select value={formData.howHeard} onValueChange={(value) => handleSelectChange("howHeard", value)} required>
                   <SelectTrigger id="howHeard">
                     <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
@@ -334,10 +325,7 @@ const RegistrationForm = () => {
                 </Label>
               </div>
 
-              <div className="flex justify-between mt-6">
-                <Button type="button" onClick={prevStep} variant="outline">
-                  Previous Step
-                </Button>
+              <div className="flex justify-end mt-6">
                 <Button
                   type="submit"
                   className="bg-primary text-white hover:bg-primary/90"
@@ -354,7 +342,11 @@ const RegistrationForm = () => {
                 </Button>
               </div>
             </div>
-          )}
+          </div>
+        </form>
+      </CardContent>
+    </Card>
+  )
         </form>
       </CardContent>
     </Card>
