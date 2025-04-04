@@ -1,6 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { supabase } from "@/lib/supabase"
 
 // Submit Sharkathon registration
 export async function submitRegistration(formData: FormData) {
