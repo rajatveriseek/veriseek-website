@@ -97,23 +97,7 @@ const RegistrationForm = () => {
     setFormError("")
 
     try {
-      // Add to client-side data store
-      dataStore.addRegistration({
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        school: formData.school,
-        grade: formData.grade,
-        team_name: formData.teamName,
-        team_size: formData.teamSize,
-        project_idea: formData.projectIdea,
-        how_heard: formData.howHeard,
-        program: "sharkathon",
-        status: "pending",
-      })
-
-      // Also submit to server (this won't actually use Supabase anymore)
+      // Submit to server which will save to Supabase
       const form = e.target as HTMLFormElement
       const formData = new FormData(form)
       formData.append("program", "sharkathon")
