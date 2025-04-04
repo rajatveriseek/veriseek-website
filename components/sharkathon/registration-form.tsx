@@ -1,22 +1,21 @@
+
 "use client"
 
 import type React from "react"
+
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem
-} from "@/components/ui/select"
+import { Card, CardContent } from "@/components/ui/card"
+import { CheckCircle2, Loader2 } from "lucide-react"
 import { submitRegistration } from "@/app/actions/registration"
+import { dataStore } from "@/lib/client-data-store"
 
 const RegistrationForm = () => {
-  const [formStep, setFormStep] = useState(1)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formError, setFormError] = useState("")
@@ -31,36 +30,29 @@ const RegistrationForm = () => {
     teamSize: "",
     projectIdea: "",
     howHeard: "",
+    agreeTerms: false,
   })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
   }
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }))
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
   }
 
-  const nextStep = () => {
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.school ||
-      !formData.grade
-    ) {
-      setFormError("Please fill in all required fields")
-      return
-    }
-    setFormError("")
-    setFormStep(formStep + 1)
-  }
-
-  const prevStep = () => {
-    setFormError("")
-    setFormStep(formStep - 1)
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData({
+      ...formData,
+      agreeTerms: checked,
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,24 +62,31 @@ const RegistrationForm = () => {
       !formData.teamName ||
       !formData.teamSize ||
       !formData.projectIdea ||
-      !formData.howHeard
+      !formData.howHeard ||
+      !formData.agreeTerms
     ) {
-      setFormError("Please fill in all required fields")
+      setFormError("Please fill in all required fields and agree to the terms")
       return
     }
 
-    setFormError("")
     setIsSubmitting(true)
+    setFormError("")
 
     try {
       const form = e.target as HTMLFormElement
-      const formDataPayload = new FormData(form)
-      formDataPayload.append("program", "sharkathon")
+      const formData = new FormData(form)
+      formData.append("program", "sharkathon")
 
-      await submitRegistration(formDataPayload)
-      setFormSubmitted(true)
+      const result = await submitRegistration(formData)
+
+      if (result.success) {
+        setFormSubmitted(true)
+      } else {
+        setFormError(result.message)
+      }
     } catch (error) {
-      setFormError("Something went wrong. Please try again.")
+      setFormError("An unexpected error occurred. Please try again.")
+      console.error("Registration error:", error)
     } finally {
       setIsSubmitting(false)
     }
@@ -96,31 +95,38 @@ const RegistrationForm = () => {
   if (formSubmitted) {
     return (
       <Card className="border-none shadow-lg">
-        <CardContent className="p-6">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-primary mb-4">Registration Successful!</h2>
-            <p className="mb-6">Thanks for registering for Sharkathon. We'll be in touch soon!</p>
-            <Button
-              onClick={() => {
-                setFormSubmitted(false)
-                setFormStep(1)
-                setFormData({
-                  firstName: "",
-                  lastName: "",
-                  email: "",
-                  phone: "",
-                  school: "",
-                  grade: "",
-                  teamName: "",
-                  teamSize: "",
-                  projectIdea: "",
-                  howHeard: "",
-                })
-              }}
-            >
-              Register Another
-            </Button>
+        <CardContent className="p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-green-100 p-3 rounded-full">
+              <CheckCircle2 className="h-12 w-12 text-green-600" />
+            </div>
           </div>
+          <h3 className="text-2xl font-bold text-primary mb-2">Registration Successful!</h3>
+          <p className="text-gray-600 mb-6">
+            Thank you for registering for Sharkathon! We've sent a confirmation email to {formData.email} with next
+            steps.
+          </p>
+          <Button
+            onClick={() => {
+              setFormSubmitted(false)
+              setFormData({
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: "",
+                school: "",
+                grade: "",
+                teamName: "",
+                teamSize: "",
+                projectIdea: "",
+                howHeard: "",
+                agreeTerms: false,
+              })
+            }}
+            className="bg-primary text-white hover:bg-primary/90"
+          >
+            Register Another Team
+          </Button>
         </CardContent>
       </Card>
     )
@@ -128,90 +134,131 @@ const RegistrationForm = () => {
 
   return (
     <Card className="border-none shadow-lg">
-      <CardContent className="p-6">
+      <CardContent className="p-8">
         <form onSubmit={handleSubmit}>
           {formError && <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-md">{formError}</div>}
 
-          {formStep === 1 && (
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-primary mb-4">Personal Information</h3>
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-primary mb-4">Personal Information</h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name *</Label>
-                    <Input name="firstName" value={formData.firstName} onChange={handleInputChange} required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name *</Label>
-                    <Input name="lastName" value={formData.lastName} onChange={handleInputChange} required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <Input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone *</Label>
-                    <Input name="phone" value={formData.phone} onChange={handleInputChange} required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="school">School *</Label>
-                    <Input name="school" value={formData.school} onChange={handleInputChange} required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="grade">Grade Level *</Label>
-                    <Select name="grade" value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)} required>
-                      <SelectTrigger id="grade">
-                        <SelectValue placeholder="Select grade" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="9">9th Grade</SelectItem>
-                        <SelectItem value="10">10th Grade</SelectItem>
-                        <SelectItem value="11">11th Grade</SelectItem>
-                        <SelectItem value="12">12th Grade</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <input type="hidden" name="grade" value={formData.grade} />
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name *</Label>
+                  <Input
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
 
-                <div className="flex justify-end mt-6">
-                  <Button type="button" onClick={nextStep} className="bg-primary text-white hover:bg-primary/90">
-                    Next Step
-                  </Button>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name *</Label>
+                  <Input
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="school">School Name *</Label>
+                  <Input id="school" name="school" value={formData.school} onChange={handleInputChange} required />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="grade">Grade Level *</Label>
+                  <Select name="grade" value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)} required>
+                    <SelectTrigger id="grade">
+                      <SelectValue placeholder="Select grade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="9">9th Grade</SelectItem>
+                      <SelectItem value="10">10th Grade</SelectItem>
+                      <SelectItem value="11">11th Grade</SelectItem>
+                      <SelectItem value="12">12th Grade</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <input type="hidden" name="grade" value={formData.grade} />
                 </div>
               </div>
             </div>
-          )}
 
-          {formStep === 2 && (
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-primary mb-4">Team & Project Information</h3>
 
-              <div className="space-y-2">
-                <Label htmlFor="teamName">Team Name *</Label>
-                <Input name="teamName" value={formData.teamName} onChange={handleInputChange} required />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="teamName">Team Name *</Label>
+                  <Input
+                    id="teamName"
+                    name="teamName"
+                    value={formData.teamName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="teamSize">Team Size *</Label>
+                  <Select name="teamSize" value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)} required>
+                    <SelectTrigger id="teamSize">
+                      <SelectValue placeholder="Select team size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Individual (1 person)</SelectItem>
+                      <SelectItem value="2">2 members</SelectItem>
+                      <SelectItem value="3">3 members</SelectItem>
+                      <SelectItem value="4">4 members</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <input type="hidden" name="teamSize" value={formData.teamSize} />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="teamSize">Team Size *</Label>
-                <Select name="teamSize" value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)} required>
-                  <SelectTrigger id="teamSize">
-                    <SelectValue placeholder="Select team size" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1 member</SelectItem>
-                    <SelectItem value="2">2 members</SelectItem>
-                    <SelectItem value="3">3 members</SelectItem>
-                    <SelectItem value="4">4 members</SelectItem>
-                  </SelectContent>
-                </Select>
-                <input type="hidden" name="teamSize" value={formData.teamSize} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="projectIdea">Project Idea *</Label>
-                <Input name="projectIdea" value={formData.projectIdea} onChange={handleInputChange} required />
+                <Label htmlFor="projectIdea">Brief Project Idea Description *</Label>
+                <Textarea
+                  id="projectIdea"
+                  name="projectIdea"
+                  value={formData.projectIdea}
+                  onChange={handleInputChange}
+                  placeholder="Describe your business idea in 200 words or less"
+                  className="min-h-[120px]"
+                  required
+                />
               </div>
 
               <div className="space-y-2">
@@ -223,24 +270,52 @@ const RegistrationForm = () => {
                   <SelectContent>
                     <SelectItem value="school">School</SelectItem>
                     <SelectItem value="social">Social Media</SelectItem>
-                    <SelectItem value="friend">Friend</SelectItem>
+                    <SelectItem value="friend">Friend/Family</SelectItem>
+                    <SelectItem value="search">Search Engine</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
                 <input type="hidden" name="howHeard" value={formData.howHeard} />
               </div>
 
+              <div className="flex items-center space-x-2 mt-4">
+                <Checkbox
+                  id="agreeTerms"
+                  checked={formData.agreeTerms}
+                  onCheckedChange={handleCheckboxChange}
+                  required
+                />
+                <Label htmlFor="agreeTerms" className="text-sm">
+                  I agree to the{" "}
+                  <a href="#" className="text-primary underline">
+                    terms and conditions
+                  </a>{" "}
+                  and{" "}
+                  <a href="#" className="text-primary underline">
+                    privacy policy
+                  </a>
+                  .
+                </Label>
+              </div>
+
               <div className="flex justify-end mt-6">
                 <Button
                   type="submit"
                   className="bg-primary text-white hover:bg-primary/90"
-                  disabled={isSubmitting}
+                  disabled={!formData.agreeTerms || isSubmitting}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Registration"}
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Registration"
+                  )}
                 </Button>
               </div>
             </div>
-          )}
+          </div>
         </form>
       </CardContent>
     </Card>
