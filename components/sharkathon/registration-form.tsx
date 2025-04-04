@@ -200,7 +200,7 @@ const RegistrationForm = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="grade">Grade Level *</Label>
-                  <Select value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)} required>
+                  <Select name="grade" value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)} required>
                     <SelectTrigger id="grade">
                       <SelectValue placeholder="Select grade" />
                     </SelectTrigger>
@@ -211,6 +211,7 @@ const RegistrationForm = () => {
                       <SelectItem value="12">12th Grade</SelectItem>
                     </SelectContent>
                   </Select>
+                  <input type="hidden" name="grade" value={formData.grade} />
                 </div>
               </div>
             </div>
