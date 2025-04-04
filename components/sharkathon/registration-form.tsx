@@ -1,18 +1,19 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle2, Loader2 } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem
+} from "@/components/ui/select"
 import { submitRegistration } from "@/app/actions/registration"
-import { dataStore } from "@/lib/client-data-store"
 
 const RegistrationForm = () => {
   const [formStep, setFormStep] = useState(1)
@@ -30,33 +31,18 @@ const RegistrationForm = () => {
     teamSize: "",
     projectIdea: "",
     howHeard: "",
-    agreeTerms: false,
   })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-  }
-
-  const handleCheckboxChange = (checked: boolean) => {
-    setFormData({
-      ...formData,
-      agreeTerms: checked,
-    })
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const nextStep = () => {
-    // Basic validation for first step
     if (
       !formData.firstName ||
       !formData.lastName ||
@@ -68,7 +54,6 @@ const RegistrationForm = () => {
       setFormError("Please fill in all required fields")
       return
     }
-
     setFormError("")
     setFormStep(formStep + 1)
   }
@@ -81,99 +66,61 @@ const RegistrationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate second step
     if (
       !formData.teamName ||
       !formData.teamSize ||
       !formData.projectIdea ||
-      !formData.howHeard ||
-      !formData.agreeTerms
+      !formData.howHeard
     ) {
-      setFormError("Please fill in all required fields and agree to the terms")
+      setFormError("Please fill in all required fields")
       return
     }
 
-    setIsSubmitting(true)
     setFormError("")
+    setIsSubmitting(true)
 
     try {
-      // Add to client-side data store
-      dataStore.addRegistration({
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        school: formData.school,
-        grade: formData.grade,
-        team_name: formData.teamName,
-        team_size: formData.teamSize,
-        project_idea: formData.projectIdea,
-        how_heard: formData.howHeard,
-        program: "sharkathon",
-        status: "pending",
-      })
-
-      // Also submit to server (this won't actually use Supabase anymore)
       const form = e.target as HTMLFormElement
-      const formPayload = new FormData(form)
-      formPayload.append("program", "sharkathon")
+      const formDataPayload = new FormData(form)
+      formDataPayload.append("program", "sharkathon")
 
-      const result = await submitRegistration(formPayload)
-
-      if (result.success) {
-        setFormSubmitted(true)
-      } else {
-        setFormError(result.message)
-      }
+      await submitRegistration(formDataPayload)
+      setFormSubmitted(true)
     } catch (error) {
-      setFormError("An unexpected error occurred. Please try again.")
-      console.error("Registration error:", error)
+      setFormError("Something went wrong. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // Rest of the component remains the same...
-  // (I'm not including the rest of the component to keep the response shorter)
-  // The only change is adding the dataStore.addRegistration call
-
-  // The rest of the component is unchanged
   if (formSubmitted) {
     return (
       <Card className="border-none shadow-lg">
-        <CardContent className="p-8 text-center">
-          <div className="flex justify-center mb-4">
-            <div className="bg-green-100 p-3 rounded-full">
-              <CheckCircle2 className="h-12 w-12 text-green-600" />
-            </div>
+        <CardContent className="p-6">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-primary mb-4">Registration Successful!</h2>
+            <p className="mb-6">Thanks for registering for Sharkathon. We'll be in touch soon!</p>
+            <Button
+              onClick={() => {
+                setFormSubmitted(false)
+                setFormStep(1)
+                setFormData({
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  phone: "",
+                  school: "",
+                  grade: "",
+                  teamName: "",
+                  teamSize: "",
+                  projectIdea: "",
+                  howHeard: "",
+                })
+              }}
+            >
+              Register Another
+            </Button>
           </div>
-          <h3 className="text-2xl font-bold text-primary mb-2">Registration Successful!</h3>
-          <p className="text-gray-600 mb-6">
-            Thank you for registering for Sharkathon! We've sent a confirmation email to {formData.email} with next
-            steps.
-          </p>
-          <Button
-            onClick={() => {
-              setFormSubmitted(false)
-              setFormStep(1)
-              setFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                phone: "",
-                school: "",
-                grade: "",
-                teamName: "",
-                teamSize: "",
-                projectIdea: "",
-                howHeard: "",
-                agreeTerms: false,
-              })
-            }}
-            className="bg-primary text-white hover:bg-primary/90"
-          >
-            Register Another Team
-          </Button>
         </CardContent>
       </Card>
     )
@@ -181,90 +128,58 @@ const RegistrationForm = () => {
 
   return (
     <Card className="border-none shadow-lg">
-      <CardContent className="p-8">
+      <CardContent className="p-6">
         <form onSubmit={handleSubmit}>
           {formError && <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-md">{formError}</div>}
 
           {formStep === 1 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-primary mb-4">Personal Information</h3>
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-primary mb-4">Personal Information</h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name *</Label>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name *</Label>
+                    <Input name="firstName" value={formData.firstName} onChange={handleInputChange} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name *</Label>
+                    <Input name="lastName" value={formData.lastName} onChange={handleInputChange} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email *</Label>
+                    <Input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone *</Label>
+                    <Input name="phone" value={formData.phone} onChange={handleInputChange} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="school">School *</Label>
+                    <Input name="school" value={formData.school} onChange={handleInputChange} required />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="grade">Grade Level *</Label>
+                    <Select name="grade" value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)} required>
+                      <SelectTrigger id="grade">
+                        <SelectValue placeholder="Select grade" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="9">9th Grade</SelectItem>
+                        <SelectItem value="10">10th Grade</SelectItem>
+                        <SelectItem value="11">11th Grade</SelectItem>
+                        <SelectItem value="12">12th Grade</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <input type="hidden" name="grade" value={formData.grade} />
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name *</Label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="flex justify-end mt-6">
+                  <Button type="button" onClick={nextStep} className="bg-primary text-white hover:bg-primary/90">
+                    Next Step
+                  </Button>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number *</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="school">School Name *</Label>
-                  <Input id="school" name="school" value={formData.school} onChange={handleInputChange} required />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="grade">Grade Level *</Label>
-                  <Select value={formData.grade} onValueChange={(value) => handleSelectChange("grade", value)}>
-                    <SelectTrigger id="grade">
-                      <SelectValue placeholder="Select grade" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="9">9th Grade</SelectItem>
-                      <SelectItem value="10">10th Grade</SelectItem>
-                      <SelectItem value="11">11th Grade</SelectItem>
-                      <SelectItem value="12">12th Grade</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="flex justify-end mt-6">
-                <Button type="button" onClick={nextStep} className="bg-primary text-white hover:bg-primary/90">
-                  Next Step
-                </Button>
               </div>
             </div>
           )}
@@ -273,100 +188,55 @@ const RegistrationForm = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-primary mb-4">Team & Project Information</h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="teamName">Team Name *</Label>
-                  <Input
-                    id="teamName"
-                    name="teamName"
-                    value={formData.teamName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="teamSize">Team Size *</Label>
-                  <Select value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)}>
-                    <SelectTrigger id="teamSize">
-                      <SelectValue placeholder="Select team size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">Individual (1 person)</SelectItem>
-                      <SelectItem value="2">2 members</SelectItem>
-                      <SelectItem value="3">3 members</SelectItem>
-                      <SelectItem value="4">4 members</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="teamName">Team Name *</Label>
+                <Input name="teamName" value={formData.teamName} onChange={handleInputChange} required />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="projectIdea">Brief Project Idea Description *</Label>
-                <Textarea
-                  id="projectIdea"
-                  name="projectIdea"
-                  value={formData.projectIdea}
-                  onChange={handleInputChange}
-                  placeholder="Describe your business idea in 200 words or less"
-                  className="min-h-[120px]"
-                  required
-                />
+                <Label htmlFor="teamSize">Team Size *</Label>
+                <Select name="teamSize" value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)} required>
+                  <SelectTrigger id="teamSize">
+                    <SelectValue placeholder="Select team size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1 member</SelectItem>
+                    <SelectItem value="2">2 members</SelectItem>
+                    <SelectItem value="3">3 members</SelectItem>
+                    <SelectItem value="4">4 members</SelectItem>
+                  </SelectContent>
+                </Select>
+                <input type="hidden" name="teamSize" value={formData.teamSize} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="projectIdea">Project Idea *</Label>
+                <Input name="projectIdea" value={formData.projectIdea} onChange={handleInputChange} required />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="howHeard">How did you hear about Sharkathon? *</Label>
-                <Select value={formData.howHeard} onValueChange={(value) => handleSelectChange("howHeard", value)}>
+                <Select name="howHeard" value={formData.howHeard} onValueChange={(value) => handleSelectChange("howHeard", value)} required>
                   <SelectTrigger id="howHeard">
                     <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="school">School</SelectItem>
                     <SelectItem value="social">Social Media</SelectItem>
-                    <SelectItem value="friend">Friend/Family</SelectItem>
-                    <SelectItem value="search">Search Engine</SelectItem>
+                    <SelectItem value="friend">Friend</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+                <input type="hidden" name="howHeard" value={formData.howHeard} />
               </div>
 
-              <div className="flex items-center space-x-2 mt-4">
-                <Checkbox
-                  id="agreeTerms"
-                  checked={formData.agreeTerms}
-                  onCheckedChange={handleCheckboxChange}
-                  required
-                />
-                <Label htmlFor="agreeTerms" className="text-sm">
-                  I agree to the{" "}
-                  <a href="#" className="text-primary underline">
-                    terms and conditions
-                  </a>{" "}
-                  and{" "}
-                  <a href="#" className="text-primary underline">
-                    privacy policy
-                  </a>
-                  .
-                </Label>
-              </div>
-
-              <div className="flex justify-between mt-6">
-                <Button type="button" onClick={prevStep} variant="outline">
-                  Previous Step
-                </Button>
+              <div className="flex justify-end mt-6">
                 <Button
                   type="submit"
                   className="bg-primary text-white hover:bg-primary/90"
-                  disabled={!formData.agreeTerms || isSubmitting}
+                  disabled={isSubmitting}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    "Submit Registration"
-                  )}
+                  {isSubmitting ? "Submitting..." : "Submit Registration"}
                 </Button>
               </div>
             </div>
@@ -378,4 +248,3 @@ const RegistrationForm = () => {
 }
 
 export default RegistrationForm
-
