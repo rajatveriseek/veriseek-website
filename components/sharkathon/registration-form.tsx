@@ -1,3 +1,4 @@
+
 "use client"
 
 import type React from "react"
@@ -54,33 +55,9 @@ const RegistrationForm = () => {
     })
   }
 
-  const nextStep = () => {
-    // Basic validation for first step
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.school ||
-      !formData.grade
-    ) {
-      setFormError("Please fill in all required fields")
-      return
-    }
-
-    setFormError("")
-    setFormStep(formStep + 1)
-  }
-
-  const prevStep = () => {
-    setFormError("")
-    setFormStep(formStep - 1)
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate second step
     if (
       !formData.teamName ||
       !formData.teamSize ||
@@ -96,7 +73,6 @@ const RegistrationForm = () => {
     setFormError("")
 
     try {
-      // Submit to server which will save to Supabase
       const form = e.target as HTMLFormElement
       const formData = new FormData(form)
       formData.append("program", "sharkathon")
@@ -116,11 +92,6 @@ const RegistrationForm = () => {
     }
   }
 
-  // Rest of the component remains the same...
-  // (I'm not including the rest of the component to keep the response shorter)
-  // The only change is adding the dataStore.addRegistration call
-
-  // The rest of the component is unchanged
   if (formSubmitted) {
     return (
       <Card className="border-none shadow-lg">
@@ -138,7 +109,6 @@ const RegistrationForm = () => {
           <Button
             onClick={() => {
               setFormSubmitted(false)
-              setFormStep(1)
               setFormData({
                 firstName: "",
                 lastName: "",
@@ -347,11 +317,6 @@ const RegistrationForm = () => {
       </CardContent>
     </Card>
   )
-        </form>
-      </CardContent>
-    </Card>
-  )
 }
 
 export default RegistrationForm
-
