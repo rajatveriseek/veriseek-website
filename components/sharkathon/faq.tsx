@@ -26,31 +26,21 @@ const SharkathonFAQ = () => {
 
       <AccordionItem value="item-3">
         <AccordionTrigger className="text-left font-medium text-primary">
-          What is the format of the competition?
+          What is the format of the Programme?
         </AccordionTrigger>
         <AccordionContent className="text-gray-600">
-          The competition consists of three rounds – an online critical thinking test, an online case study-based
+          The Programme consists of three rounds – an online critical thinking test, an online case study-based
           analysis, and a live offline business evaluation round where students act as investors.
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="item-4">
         <AccordionTrigger className="text-left font-medium text-primary">
-          What support will I receive during the competition?
+          What support will I receive during the Programme?
         </AccordionTrigger>
         <AccordionContent className="text-gray-600">
           Participants will receive study materials, mentorship from industry professionals, and access to exclusive
           learning sessions.
-        </AccordionContent>
-      </AccordionItem>
-
-      <AccordionItem value="item-5">
-        <AccordionTrigger className="text-left font-medium text-primary">
-          How are the winners selected?
-        </AccordionTrigger>
-        <AccordionContent className="text-gray-600">
-          Winners are judged based on their analytical skills, strategic decision-making, and ability to evaluate
-          investment opportunities effectively.
         </AccordionContent>
       </AccordionItem>
 
@@ -62,19 +52,8 @@ const SharkathonFAQ = () => {
           Yes, students can participate every year if they meet the eligibility criteria.
         </AccordionContent>
       </AccordionItem>
-
-      <AccordionItem value="item-7">
-        <AccordionTrigger className="text-left font-medium text-primary">
-          How much time commitment is required?
-        </AccordionTrigger>
-        <AccordionContent className="text-gray-600">
-          The competition requires approximately 20-30 hours of preparation, including study materials and practice
-          sessions.
-        </AccordionContent>
-      </AccordionItem>
     </Accordion>
   )
 }
 
 export default SharkathonFAQ
-
