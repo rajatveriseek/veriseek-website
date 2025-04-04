@@ -26,23 +26,24 @@ const SharkathonFAQ = () => {
 
       <AccordionItem value="item-3">
         <AccordionTrigger className="text-left font-medium text-primary">
-          What is the format of the Programme?
+          What is the format of the competition?
         </AccordionTrigger>
         <AccordionContent className="text-gray-600">
-          The Programme consists of three rounds – an online critical thinking test, an online case study-based
+          The competition consists of three rounds – an online critical thinking test, an online case study-based
           analysis, and a live offline business evaluation round where students act as investors.
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="item-4">
         <AccordionTrigger className="text-left font-medium text-primary">
-          What support will I receive during the Programme?
+          What support will I receive during the competition?
         </AccordionTrigger>
         <AccordionContent className="text-gray-600">
           Participants will receive study materials, mentorship from industry professionals, and access to exclusive
           learning sessions.
         </AccordionContent>
       </AccordionItem>
+
 
       <AccordionItem value="item-6">
         <AccordionTrigger className="text-left font-medium text-primary">
@@ -52,8 +53,10 @@ const SharkathonFAQ = () => {
           Yes, students can participate every year if they meet the eligibility criteria.
         </AccordionContent>
       </AccordionItem>
+
     </Accordion>
   )
 }
 
 export default SharkathonFAQ
+
