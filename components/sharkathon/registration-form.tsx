@@ -263,7 +263,7 @@ const RegistrationForm = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="howHeard">How did you hear about Sharkathon? *</Label>
-                <Select value={formData.howHeard} onValueChange={(value) => handleSelectChange("howHeard", value)} required>
+                <Select name="howHeard" value={formData.howHeard} onValueChange={(value) => handleSelectChange("howHeard", value)} required>
                   <SelectTrigger id="howHeard">
                     <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
@@ -275,6 +275,7 @@ const RegistrationForm = () => {
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+                <input type="hidden" name="howHeard" value={formData.howHeard} />
               </div>
 
               <div className="flex items-center space-x-2 mt-4">
