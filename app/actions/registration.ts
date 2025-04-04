@@ -44,7 +44,6 @@ export async function submitRegistration(formData: FormData) {
     return { success: true, message: "Registration submitted successfully!" }
   } catch (error) {
     console.error("Registration error:", error)
-    return { success: false, message: "An error occurred during registration." }
     return { success: false, message: "Failed to submit registration. Please try again." }
   }
 }
