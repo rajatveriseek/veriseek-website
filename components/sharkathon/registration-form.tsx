@@ -233,7 +233,7 @@ const RegistrationForm = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="teamSize">Team Size *</Label>
-                  <Select value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)} required>
+                  <Select name="teamSize" value={formData.teamSize} onValueChange={(value) => handleSelectChange("teamSize", value)} required>
                     <SelectTrigger id="teamSize">
                       <SelectValue placeholder="Select team size" />
                     </SelectTrigger>
@@ -244,6 +244,7 @@ const RegistrationForm = () => {
                       <SelectItem value="4">4 members</SelectItem>
                     </SelectContent>
                   </Select>
+                  <input type="hidden" name="teamSize" value={formData.teamSize} />
                 </div>
               </div>
 
