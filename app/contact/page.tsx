@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Mail, MapPin, Phone } from "lucide-react"
 
-import { ContactForm } from "@/components/contact-form"
+// import { ContactForm } from "@/components/contact-form" //Removed import as ContactForm is removed
 
 export const metadata: Metadata = {
   title: "Contact Us | Veriseek Education",
@@ -33,10 +33,10 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium text-gray-900">Email</p>
                   <Link
-                    href="mailto:team@veriseekeducation.com"
+                    href="mailto:rajat@veriseekeducation.com"
                     className="text-[#011C41] hover:text-[#FAD133] hover:underline"
                   >
-                    team@veriseekeducation.com
+                    rajat@veriseekeducation.com
                   </Link>
                 </div>
               </div>
@@ -90,13 +90,12 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Contact Form */}
-        <div className="rounded-lg bg-white p-6 shadow-md">
+        {/* Contact Form Removed */}
+        {/* <div className="rounded-lg bg-white p-6 shadow-md">
           <h2 className="mb-6 text-2xl font-bold text-[#011C41]">Send Us a Message</h2>
           <ContactForm />
-        </div>
+        </div> */}
       </div>
     </div>
   )
 }
-
