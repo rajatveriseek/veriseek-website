@@ -28,11 +28,11 @@ export default function SharkathonPage() {
   return (
     <React.Fragment>
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-primary text-white">
+      <section className="pt-20 pb-16 bg-primary text-white">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="inline-block bg-secondary text-primary px-4 py-1 rounded-full text-sm font-medium">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="space-y-4">
+              <div className="inline-block bg-secondary text-primary px-3 py-1 rounded-full text-sm font-medium">
                 Now Accepting Applications
               </div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">Sharkathon - Think like a shark</h1>
@@ -63,7 +63,31 @@ export default function SharkathonPage() {
                 </Button>
 
               </div>
+              
+              <div className="flex flex-wrap gap-3 pt-1 items-center">
+              <Button 
+                asChild 
+                size="default"
+                className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-lg border-2 border-secondary transition-all hover:scale-105"
+              >
+                <Link href="#register">Register Now</Link>
+              </Button>
+              
+              <Button 
+                asChild 
+                size="default"
+                variant="outline" 
+                className="border-secondary bg-secondary text-primary hover:bg-yellow-500 hover:text-black font-bold border-2 shadow-lg transition-all hover:scale-105 [&>a]:text-yellow-500"
+              >
+                <Link href="#process">Learn More</Link>
+              </Button>
+              <div className="w-full text-white font-medium">
+              For grades 9th to 12th
             </div>
+            </div>
+
+            </div>
+
             <div className="relative">
               {/* Replace the hero section image */}
               <ImageCarousel />
