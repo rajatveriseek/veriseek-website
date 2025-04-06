@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-
-const SneakPeekSection = () => {
-  return (
-    <section className="py-16 bg-gray-50 text-center" id="sneak-peek">
-      <div className="container px-4 max-w-3xl mx-auto">
-=======
 "use client";
 
 import { useState } from "react";
@@ -43,9 +34,9 @@ For both of the findings to be accurate, which of the following must be true?`,
   },
   {
     question: `The management of a famous restaurant in North East Delhi gave the following information to its CEO:
-“Our revenues in North East Delhi declined by 10,000 consumers during the year. This is likely entirely due to the launch of a food delivery service in the area that, in addition to delivering both tasty and cheap food made by its cooks in central locations (cloud kitchens) targeting the student population living in the area, also delivered food from neighbourhood restaurants to people’s homes for a fee. We should tie up with it.”
-The CEO was not convinced. He said “I know from some reliable sources that the cloud kitchens of the food delivery company prepared dishes for only 4,000 orders. Yet our fall was 10,000 consumers. There are other bigger reasons why our sales have declined. We should not do a tie-up.”
-Which of the following, if true, would most seriously weaken the CEO’s argument:`,
+"Our revenues in North East Delhi declined by 10,000 consumers during the year. This is likely entirely due to the launch of a food delivery service in the area that, in addition to delivering both tasty and cheap food made by its cooks in central locations (cloud kitchens) targeting the student population living in the area, also delivered food from neighbourhood restaurants to people's homes for a fee. We should tie up with it."
+The CEO was not convinced. He said "I know from some reliable sources that the cloud kitchens of the food delivery company prepared dishes for only 4,000 orders. Yet our fall was 10,000 consumers. There are other bigger reasons why our sales have declined. We should not do a tie-up."
+Which of the following, if true, would most seriously weaken the CEO's argument:`,
     options: [
       "A. Three restaurants shut down in North East Delhi during the year",
       "B. During the year, the food delivery company did more deliveries for neighbourhood restaurants than its cloud kitchen orders",
@@ -119,71 +110,82 @@ const SneakPeekSection = () => {
     setIsCorrect(null);
   };
 
+  // Function to format question text with proper spacing
+  const formatQuestionText = (text: string) => {
+    return text.split("\n").map((line, idx) => (
+      <p key={idx} className={idx > 0 ? "mt-2" : ""}>
+        {line}
+      </p>
+    ));
+  };
+
   return (
-    <section className="py-16 bg-gray-50 text-center" id="sneak-peek">
-      <div className="container px-4 max-w mx-auto">
->>>>>>> design-change-apr25
-        <Card className="shadow-md border rounded-xl bg-white p-6 sm:p-8">
-          <CardContent className="text-center">
-            <h2 className="text-3xl font-bold text-primary">
+    <section className="py-8 md:py-16 bg-gray-50 text-center" id="sneak-peek">
+      <div className="container px-4 mx-auto max-w-4xl">
+        {/* Header Card */}
+        <Card className="shadow-md border rounded-xl bg-white p-4 sm:p-6 md:p-8">
+          <CardContent className="text-center p-0 sm:p-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary">
               Want a Sneak Peek into Sharkathon?
             </h2>
-            <p className="text-gray-600 mt-3 text-lg">
-<<<<<<< HEAD
-              Curious about the challenges ahead? Get a glimpse of the kind of real-world 
-              business problems you’ll tackle in India’s premier investment and strategy programme.
-            </p>
-          </CardContent>
-        </Card>
-=======
+            <p className="text-gray-600 mt-2 sm:mt-3 text-base sm:text-lg">
               Curious about the challenges ahead? Get a glimpse of the kind of
-              real-world business problems you’ll tackle in India’s premier
+              real-world business problems you'll tackle in India's premier
               investment and strategy programme.
             </p>
           </CardContent>
         </Card>
 
         {/* Question Card */}
-        <div className="mt-10 relative">
-          <Card className="bg-white shadow-sm border rounded-xl p-6">
-            <CardContent>
-              <h3 className="text-sm font-semibold mb-4 text-left">
-                Q{currentIndex + 1}.
-                {currentQuiz.question.split("\n").map((line, idx) => (
-                  <p key={idx} className="mt-2">
-                    {line}
-                  </p>
-                ))}
-              </h3>
+        <div className="mt-6 sm:mt-10 relative">
+          <Card className="bg-white shadow-sm border rounded-xl p-4 sm:p-6">
+            <CardContent className="p-0 sm:p-2">
+              <div className="text-left mb-4">
+                <span className="text-sm font-semibold">Q{currentIndex + 1}.</span>
+                <div className="text-sm sm:text-base mt-1">
+                  {formatQuestionText(currentQuiz.question)}
+                </div>
+              </div>
 
-              <div className="space-y-2">
+              {/* Options Container */}
+              <div className="mt-4">
                 {currentQuiz.options.length > 0 ? (
-                  currentQuiz.options.map((option, idx) => {
-                    const isSelected = selectedOption === idx;
-                    const isAnswer = currentQuiz.correctAnswer === idx;
+                  <div className="flex flex-col gap-2">
+                    {currentQuiz.options.map((option, idx) => {
+                      const isSelected = selectedOption === idx;
+                      const isAnswer = currentQuiz.correctAnswer === idx;
 
-                    const baseStyle =
-                      "w-full justify-start text-left transition-colors";
-                    const selectedStyle = isSelected
-                      ? isAnswer
-                        ? "border-green-500 bg-green-50 text-green-800"
-                        : "border-red-500 bg-red-50 text-red-800"
-                      : "";
+                      let bgColor = "bg-white";
+                      let textColor = "text-gray-800";
+                      let borderColor = "border-gray-200";
 
-                    return (
-                      <Button
-                        key={idx}
-                        variant="outline"
-                        className={`${baseStyle} ${selectedStyle}`}
-                        onClick={() => handleOptionClick(idx)}
-                        disabled={selectedOption !== null}
-                      >
-                        {option}
-                      </Button>
-                    );
-                  })
+                      if (isSelected) {
+                        if (isAnswer) {
+                          bgColor = "bg-green-50";
+                          textColor = "text-green-800";
+                          borderColor = "border-green-500";
+                        } else {
+                          bgColor = "bg-red-50";
+                          textColor = "text-red-800";
+                          borderColor = "border-red-500";
+                        }
+                      }
+
+                      return (
+                        <div 
+                          key={idx}
+                          className={`border rounded p-3 text-left cursor-pointer transition-colors ${bgColor} ${textColor} ${borderColor} ${selectedOption !== null ? 'cursor-default' : 'hover:bg-gray-50'}`}
+                          onClick={() => selectedOption === null && handleOptionClick(idx)}
+                        >
+                          <div className="text-xs sm:text-sm md:text-base whitespace-normal break-words">
+                            {option}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 ) : (
-                  <p className="text-gray-600 italic">
+                  <p className="text-gray-600 italic text-sm">
                     Open-ended or discussion-based question. Think deeply and
                     form your own opinion.
                   </p>
@@ -191,49 +193,57 @@ const SneakPeekSection = () => {
               </div>
 
               {selectedOption !== null && currentQuiz.correctAnswer !== null && (
-              <div className="mt-4">
-                <p
-                  className={`text-base font-medium ${
-                    isCorrect ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  {isCorrect ? "✅ Correct!" : "❌ Incorrect"}
-                </p>
-
-                {!isCorrect && (
-                  <Button
-                    className="mt-2"
-                    variant="outline"
-                    onClick={() => {
-                      setSelectedOption(null);
-                      setIsCorrect(null);
-                    }}
+                <div className="mt-4">
+                  <p
+                    className={`text-sm sm:text-base font-medium ${
+                      isCorrect ? "text-green-600" : "text-red-600"
+                    }`}
                   >
-                    🔁 Try Again
-                  </Button>
-                )}
-              </div>
-            )}
+                    {isCorrect ? "✅ Correct!" : "❌ Incorrect"}
+                  </p>
 
+                  {!isCorrect && (
+                    <Button
+                      className="mt-2 text-xs sm:text-sm"
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedOption(null);
+                        setIsCorrect(null);
+                      }}
+                    >
+                      🔁 Try Again
+                    </Button>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
 
           {/* Navigation */}
-          <div className="flex justify-between items-center mt-6">
-            <Button variant="ghost" onClick={prevQuestion}>
-              <ChevronLeft className="w-5 h-5 mr-1" />
-              Previous
+          <div className="flex justify-between items-center mt-4 sm:mt-6">
+            <Button 
+              variant="ghost" 
+              onClick={prevQuestion}
+              className="text-xs sm:text-sm px-2 sm:px-4"
+              size="sm"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+              <span className="hidden xs:inline">Previous</span>
             </Button>
-            <span className="text-sm text-gray-600">
-              Question {currentIndex + 1} of {totalQuestions}
+            <span className="text-xs sm:text-sm text-gray-600">
+              {currentIndex + 1} / {totalQuestions}
             </span>
-            <Button variant="ghost" onClick={nextQuestion}>
-              Next
-              <ChevronRight className="w-5 h-5 ml-1" />
+            <Button 
+              variant="ghost" 
+              onClick={nextQuestion}
+              className="text-xs sm:text-sm px-2 sm:px-4"
+              size="sm"
+            >
+              <span className="hidden xs:inline">Next</span>
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1" />
             </Button>
           </div>
         </div>
->>>>>>> design-change-apr25
       </div>
     </section>
   );
