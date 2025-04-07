@@ -16,7 +16,7 @@ const quizData = [
       "D. Rs 12.0 lakhs",
       "E. Cannot be determined from the information provided",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
   },
   {
     question: `A famous Technology economics magazine in India, widely available across bookstores and airports across India, did two surveys. The findings were:
@@ -47,7 +47,7 @@ Which of the following, if true, would most seriously weaken the CEO's argument:
     correctAnswer: 1,
   },
   {
-    question: `During the harvest season, grain is being brought into an empty warehouse constantly every day through trucks. At the same time, it releases a certain constant quantity of grain to milling factories across the region for making flour. Unless grain is stored in the warehouse, it will get spoiled in the next rain. Rain is expected in 20 days. 400 metric tonnes of grain are waiting for storage in the warehouse. How long will it take for the warehouse to get filled? Two statements are provided:
+    question: `During the harvest season, grain is being brought into an empty warehouse constantly every day through trucks. At the same time, it releases a certain constant quantity of grain to milling factories across the region for making flour. Unless grain is stored in the warehouse, it will get spoiled in the next rain. 400 metric tonnes of grain are waiting for storage in the warehouse. How long will it take for the warehouse to get filled? Two statements are provided:
 I. The total capacity of grain the warehouse can hold is 120 metric tonnes
 II. The trucks bringing grains can completely fill the empty warehouse in 10 days if there are no outward deliveries to milling factories. The trucks carrying grain for milling can completely empty a filled warehouse in 15 days if there are no fresh inward supplies of grains.`,
     options: [
@@ -57,7 +57,7 @@ II. The trucks bringing grains can completely fill the empty warehouse in 10 day
       "4. Each statement alone is sufficient to answer the question",
       "5. Statements I and II are not sufficient to answer the question asked and additional data is needed to answer the statements",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
   },
   {
     question: `An entrepreneur shows the following data. He is looking for funding of INR 2 crore, at a valuation of INR 10 Crore for the
