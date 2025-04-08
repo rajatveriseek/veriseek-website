@@ -60,22 +60,18 @@ II. The trucks bringing grains can completely fill the empty warehouse in 10 day
     correctAnswer: 1,
   },
   {
-    question: `An entrepreneur shows the following data. He is looking for funding of INR 2 crore, at a valuation of INR 10 Crore for the
-company. Should you invest?
-Year 0: Revenue INR 1 Cr. Loss INR 2 crores
-Year 1: Revenue INR 3 Cr. Loss INR 1 Cr
-Year 2: Revenue INR 6 Cr: Profit INR 5 lakhs
-Year 3 (Current year): Revenue INR 8 Cr: Profit INR 10 lakhs
-The team is expected to come up with and ask a set of questions, get more data, and then form an opinion about the
-business, including whether the valuation is justified or not, and finally take a decision and create a small presentation on
-the reason for its decision. There is no right or wrong answer, but the depth of thinking and communication will decide
-the scoring.
-For example, the initial questions in this case could be:
-On business: Industry, promoter experience, funding taken so far
-On profitability and growth: Projections for the next 3 years
-On valuation metrics: TAM, SAM, SOM, Industry multiples, etc
-On risks and capabilities: Team, attritions if any, legal cases, consumer complaints, etc
-On financials: Metrics like debtors, inventory, ROCE, etc,`,
+    question: `An entrepreneur shows the following data. He is looking for funding of INR 2 crore, at a valuation of INR 10 Crore for the company. Should you invest?
+    Year 0: Revenue INR 1 Cr. Loss INR 2 crores
+    Year 1: Revenue INR 3 Cr. Loss INR 1 Cr
+    Year 2: Revenue INR 6 Cr: Profit INR 5 lakhs
+    Year 3 (Current year): Revenue INR 8 Cr: Profit INR 10 lakhs
+    The team is expected to come up with and ask a set of questions, get more data, and then form an opinion about the business, including whether the valuation is justified or not, and finally take a decision and create a small presentation on the reason for its decision. There is no right or wrong answer, but the depth of thinking and communication will decide the scoring.
+    For example, the initial questions in this case could be:
+    On business: Industry, promoter experience, funding taken so far
+    On profitability and growth: Projections for the next 3 years
+    On valuation metrics: TAM, SAM, SOM, Industry multiples, etc
+    On risks and capabilities: Team, attritions if any, legal cases, consumer complaints, etc
+    On financials: Metrics like debtors, inventory, ROCE, etc.`,
     options: [],
     correctAnswer: null,
   },
