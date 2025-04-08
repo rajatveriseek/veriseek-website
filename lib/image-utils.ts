@@ -27,7 +27,7 @@ const imageMap: Record<string, string> = {
   "founder-rajat":
     "rajat-bg-bw.png",
   "founder-durba":
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-02-13%20at%2022.29.35_d0ebcd3e.jpg-ZybU2PKo8TM7DMz9QO4ZZ10CSClsGl.jpeg",
+    "/durba.png",
   "founder-mayank":"/mayank-bg-bw.png",
   "founder-shalabh":"/shalabh-bg-bw.png",
   

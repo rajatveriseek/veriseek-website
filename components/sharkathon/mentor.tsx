@@ -6,17 +6,17 @@ const MentorsSection = () => {
   const mentors = [
     {
       name: "Mr. Rajat Kumar",
-      title: "Nandan Capital, Ex McKinsey and Wharton Alumni ",
+      title: "Nandan Capital, Ex McKinsey and Wharton Alum ",
       imageKey: "founder-rajat",
     },
     {
       name: "Mr. Mayank Kapoor",
-      title: "CTO Car Dekho, Alumni IIT Delhi & MIT",
+      title: "CTO Car Dekho, Alum IIT Delhi & MIT",
       imageKey: "founder-mayank",
     },
     {
       name: "Mr. Shalabh Gupta",
-      title: "Founder NUUK, Alumni IIT Delhi & IIM Ahmedabad",
+      title: "Founder NUUK, Alum IIT Delhi & IIM Ahmedabad",
       imageKey: "founder-shalabh",
     },
   ];

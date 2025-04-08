@@ -37,7 +37,7 @@ export default function SharkathonPage() {
               </div>
               
               <h1 className="text-3xl default:text-4xl font-bold leading-tight">
-                Sharkathon - Think like a shark
+                Sharkathon - Learn To Think Like a Shark
               </h1>
               
               <p className="text-base default:text-lg opacity-90">
