@@ -52,14 +52,16 @@ export default function SharkathonPage() {
               </p>
 
               {/* Built by box styled exactly like the image */}
-              <div className="border border-olive-green/50 bg-light-cream p-3 rounded-sm inline-flex items-center">
-                <span className="font-medium mr-2">Built by</span>
-                <span className="font-medium mr-2">alumni from </span><br />
-                <div className="flex items-center space-x-3">
-                  <img src="/mit.png" alt="mit logo" className="h-16" />
-                  <img src="/wharton.png" alt="wharton logo" className="h-16" />
-                  <img src="/iit.png" alt="wharton logo" className="h-16" />
-                  <img src="/iima.png" alt="wharton logo" className="h-16" />
+               <div className="border border-olive-green/50 bg-light-cream p-3 rounded-sm inline-flex flex-col sm:flex-row items-center sm:items-start sm:space-x-3 space-y-3 sm:space-y-0 w-full max-w-screen-md">
+                <div className="text-center sm:text-left">
+                  <span className="font-medium mr-1">Built by</span>
+                  <span className="font-medium">alumni from</span>
+                </div>
+                <div className="flex flex-wrap justify-center sm:justify-start items-center gap-4">
+                  <img src="/mit.png" alt="MIT logo" className="h-12 sm:h-16" />
+                  <img src="/wharton.png" alt="Wharton logo" className="h-12 sm:h-16" />
+                  <img src="/iit.png" alt="IIT logo" className="h-12 sm:h-16" />
+                  <img src="/iima.png" alt="IIMA logo" className="h-12 sm:h-16" />
                 </div>
               </div>
               
