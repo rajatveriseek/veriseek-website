@@ -112,8 +112,7 @@ const RegistrationForm = () => {
             Registration Successful!
           </h3>
           <p className="text-gray-600 mb-6">
-            Thank you for registering for Sharkathon! We've sent a confirmation
-            email to {formData.email} with next steps.
+            Thank you for registering for Sharkathon!
           </p>
           <Button
             onClick={() => {
@@ -234,9 +233,9 @@ const RegistrationForm = () => {
                     name="grade"
                     value={formData.grade}
                     onValueChange={(value) => {
-                      setFormData(prev => ({
+                      setFormData((prev) => ({
                         ...prev,
-                        grade: value
+                        grade: value,
                       }));
                     }}
                     required
