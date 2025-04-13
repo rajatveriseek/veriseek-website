@@ -10,9 +10,6 @@ CREATE TABLE IF NOT EXISTS registrations (
     school TEXT NOT NULL,
     school_city TEXT NOT NULL,
     grade TEXT NOT NULL,
-    team_name TEXT NOT NULL,
-    team_size TEXT NOT NULL,
-    project_idea TEXT NOT NULL,
     how_heard TEXT NOT NULL,
     program TEXT NOT NULL,
     status TEXT NOT NULL
