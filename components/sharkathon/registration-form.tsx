@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"; //Updated import
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { submitRegistration } from "@/app/actions/registration";
 
@@ -252,76 +252,74 @@ const RegistrationForm = () => {
                   </Select>
                   <input type="hidden" name="grade" value={formData.grade} />
                 </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="howHeard">
+                    How did you hear about Sharkathon? *
+                  </Label>
+                  <Select
+                    name="howHeard"
+                    value={formData.howHeard}
+                    onValueChange={(value) =>
+                      handleSelectChange("howHeard", value)
+                    }
+                    required
+                  >
+                    <SelectTrigger id="howHeard">
+                      <SelectValue placeholder="Select an option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="school">School</SelectItem>
+                      <SelectItem value="social">Social Media</SelectItem>
+                      <SelectItem value="friend">Friend/Family</SelectItem>
+                      <SelectItem value="search">Search Engine</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <input
+                    type="hidden"
+                    name="howHeard"
+                    value={formData.howHeard}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="howHeard">
-                  How did you hear about Sharkathon? *
-                </Label>
-                <Select
-                  name="howHeard"
-                  value={formData.howHeard}
-                  onValueChange={(value) =>
-                    handleSelectChange("howHeard", value)
-                  }
-                  required
-                >
-                  <SelectTrigger id="howHeard">
-                    <SelectValue placeholder="Select an option" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="school">School</SelectItem>
-                    <SelectItem value="social">Social Media</SelectItem>
-                    <SelectItem value="friend">Friend/Family</SelectItem>
-                    <SelectItem value="search">Search Engine</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <input
-                  type="hidden"
-                  name="howHeard"
-                  value={formData.howHeard}
-                />
-              </div>
+            <div className="flex items-center space-x-2 mt-4">
+              <Checkbox
+                id="agreeTerms"
+                checked={formData.agreeTerms}
+                onCheckedChange={handleCheckboxChange}
+                required
+              />
+              <Label htmlFor="agreeTerms" className="text-sm">
+                I agree to the{" "}
+                <a href="/rules" className="text-primary underline">
+                  rules and regulations
+                </a>{" "}
+                and{" "}
+                <a href="/privacy" className="text-primary underline">
+                  privacy policy
+                </a>
+                .
+              </Label>
+            </div>
 
-              <div className="flex items-center space-x-2 mt-4">
-                <Checkbox
-                  id="agreeTerms"
-                  checked={formData.agreeTerms}
-                  onCheckedChange={handleCheckboxChange}
-                  required
-                />
-                <Label htmlFor="agreeTerms" className="text-sm">
-                  I agree to the{" "}
-                  <a href="/rules" className="text-primary underline">
-                    rules and regulations
-                  </a>{" "}
-                  and{" "}
-                  <a href="/privacy" className="text-primary underline">
-                    privacy policy
-                  </a>
-                  .
-                </Label>
-              </div>
-
-              <div className="flex justify-end mt-6">
-                <Button
-                  type="submit"
-                  className="bg-primary text-white hover:bg-primary/90"
-                  disabled={!formData.agreeTerms || isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    "Submit Registration"
-                  )}
-                </Button>
-              </div>
+            <div className="flex justify-end mt-6">
+              <Button
+                type="submit"
+                className="bg-primary text-white hover:bg-primary/90"
+                disabled={!formData.agreeTerms || isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit Registration"
+                )}
+              </Button>
             </div>
           </div>
         </form>
