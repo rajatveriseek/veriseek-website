@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS registrations (
     email TEXT NOT NULL,
     phone TEXT NOT NULL,
     school TEXT NOT NULL,
+    school_city TEXT NOT NULL,
     grade TEXT NOT NULL,
     team_name TEXT NOT NULL,
     team_size TEXT NOT NULL,

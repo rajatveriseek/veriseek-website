@@ -30,6 +30,7 @@ const RegistrationForm = () => {
     email: "",
     phone: "",
     school: "",
+    schoolCity: "",
     grade: "",
     teamName: "",
     teamSize: "",
@@ -214,6 +215,17 @@ const RegistrationForm = () => {
                     id="school"
                     name="school"
                     value={formData.school}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="schoolCity">School City *</Label>
+                  <Input
+                    id="schoolCity"
+                    name="schoolCity"
+                    value={formData.schoolCity}
                     onChange={handleInputChange}
                     required
                   />
