@@ -14,10 +14,8 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import CardComponent from "@/components/ui/card"; //Updated import
+import { CardContent } from "@/components/ui/card";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { submitRegistration } from "@/app/actions/registration";
 
@@ -104,7 +102,7 @@ const RegistrationForm = () => {
 
   if (formSubmitted) {
     return (
-      <Card className="border-none shadow-lg">
+      <CardComponent className="border-none shadow-lg">
         <CardContent className="p-8 text-center">
           <div className="flex justify-center mb-4">
             <div className="bg-green-100 p-3 rounded-full">
@@ -137,12 +135,12 @@ const RegistrationForm = () => {
             Register Another Student
           </Button>
         </CardContent>
-      </Card>
+      </CardComponent>
     );
   }
 
   return (
-    <Card className="border-none shadow-lg">
+    <CardComponent className="border-none shadow-lg">
       <CardContent className="p-8">
         <form onSubmit={handleSubmit}>
           {formError && (
@@ -255,7 +253,7 @@ const RegistrationForm = () => {
                   </Select>
                   <input type="hidden" name="grade" value={formData.grade} />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="howHeard">
                     How did you hear about Sharkathon? *
@@ -328,7 +326,7 @@ const RegistrationForm = () => {
           </div>
         </form>
       </CardContent>
-    </Card>
+    </CardComponent>
   );
 };
 
