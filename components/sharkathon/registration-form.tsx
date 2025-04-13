@@ -30,6 +30,7 @@ const RegistrationForm = () => {
     email: "",
     phone: "",
     school: "",
+    schoolCity: "",
     grade: "",
     teamName: "",
     teamSize: "",
@@ -220,13 +221,27 @@ const RegistrationForm = () => {
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="schoolCity">School City *</Label>
+                  <Input
+                    id="schoolCity"
+                    name="schoolCity"
+                    value={formData.schoolCity}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="grade">Grade Level *</Label>
                   <Select
                     name="grade"
                     value={formData.grade}
-                    onValueChange={(value) =>
-                      handleSelectChange("grade", value)
-                    }
+                    onValueChange={(value) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        grade: value
+                      }));
+                    }}
                     required
                   >
                     <SelectTrigger id="grade">

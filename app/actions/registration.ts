@@ -16,6 +16,7 @@ export async function submitRegistration(formData: FormData) {
       email: formDataObj.email as string,
       phone: formDataObj.phone as string,
       school: formDataObj.school as string,
+      school_city: formDataObj.schoolCity as string,
       grade: formDataObj.grade as string,
       team_name: formDataObj.teamName as string,
       team_size: formDataObj.teamSize as string,
