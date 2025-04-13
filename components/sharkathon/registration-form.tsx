@@ -236,9 +236,12 @@ const RegistrationForm = () => {
                   <Select
                     name="grade"
                     value={formData.grade}
-                    onValueChange={(value) =>
-                      handleSelectChange("grade", value)
-                    }
+                    onValueChange={(value) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        grade: value
+                      }));
+                    }}
                     required
                   >
                     <SelectTrigger id="grade">
