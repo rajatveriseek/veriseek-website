@@ -5,7 +5,6 @@ import type React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -18,7 +17,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { submitRegistration } from "@/app/actions/registration";
-import { dataStore } from "@/lib/client-data-store";
 
 const RegistrationForm = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -32,9 +30,6 @@ const RegistrationForm = () => {
     school: "",
     schoolCity: "",
     grade: "",
-    teamName: "",
-    teamSize: "",
-    projectIdea: "",
     howHeard: "",
     agreeTerms: false,
   });
@@ -67,9 +62,13 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     if (
-      !formData.teamName ||
-      !formData.teamSize ||
-      !formData.projectIdea ||
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.school ||
+      !formData.schoolCity ||
+      !formData.grade ||
       !formData.howHeard ||
       !formData.agreeTerms
     ) {
@@ -125,17 +124,15 @@ const RegistrationForm = () => {
                 email: "",
                 phone: "",
                 school: "",
+                schoolCity: "",
                 grade: "",
-                teamName: "",
-                teamSize: "",
-                projectIdea: "",
                 howHeard: "",
                 agreeTerms: false,
               });
             }}
             className="bg-primary text-white hover:bg-primary/90"
           >
-            Register Another Team
+            Register Another Student
           </Button>
         </CardContent>
       </Card>
@@ -260,65 +257,6 @@ const RegistrationForm = () => {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-primary mb-4">
-                Team & Project Information
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="teamName">Team Name *</Label>
-                  <Input
-                    id="teamName"
-                    name="teamName"
-                    value={formData.teamName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="teamSize">Team Size *</Label>
-                  <Select
-                    name="teamSize"
-                    value={formData.teamSize}
-                    onValueChange={(value) =>
-                      handleSelectChange("teamSize", value)
-                    }
-                    required
-                  >
-                    <SelectTrigger id="teamSize">
-                      <SelectValue placeholder="Select team size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">Individual (1 person)</SelectItem>
-                      <SelectItem value="2">2 members</SelectItem>
-                      <SelectItem value="3">3 members</SelectItem>
-                      <SelectItem value="4">4 members</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <input
-                    type="hidden"
-                    name="teamSize"
-                    value={formData.teamSize}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="projectIdea">
-                  Brief Project Idea Description *
-                </Label>
-                <Textarea
-                  id="projectIdea"
-                  name="projectIdea"
-                  value={formData.projectIdea}
-                  onChange={handleInputChange}
-                  placeholder="Describe your business idea in 200 words or less"
-                  className="min-h-[120px]"
-                  required
-                />
-              </div>
-
               <div className="space-y-2">
                 <Label htmlFor="howHeard">
                   How did you hear about Sharkathon? *
