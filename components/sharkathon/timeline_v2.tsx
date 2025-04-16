@@ -26,7 +26,7 @@ export default function ProgramTimeline() {
     {
       number: 1,
       date: "20th June 2025",
-      image: "/register.jpg",
+      image: "/register.JPG",
       content: {
         sessions: [
           { time: "", title: "Step 1: Register and secure your spots" },
@@ -37,7 +37,7 @@ export default function ProgramTimeline() {
     {
       number: 2,
       date: "1st July 2025",
-      image: "/study-resources.jpg",
+      image: "/study-resources.JPG",
       content: {
         sessions: [
           { time: "", title: "Step 2: Access Study Resources & Prepare" },
