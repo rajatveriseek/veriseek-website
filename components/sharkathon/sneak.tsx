@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -81,32 +81,52 @@ const SneakPeekSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [showCorrect, setShowCorrect] = useState(false);
 
   const totalQuestions = quizData.length;
   const currentQuiz = quizData[currentIndex];
 
   const handleOptionClick = (index: number) => {
+    if (selectedOption !== null) return; // prevent multiple clicks
+
     setSelectedOption(index);
     if (currentQuiz.correctAnswer !== null) {
-      setIsCorrect(index === currentQuiz.correctAnswer);
+      const correct = index === currentQuiz.correctAnswer;
+      setIsCorrect(correct);
+      if (!correct) {
+        setShowCorrect(true);
+      }
     }
   };
 
   const prevQuestion = (e: React.MouseEvent) => {
     e.preventDefault();
+    resetState();
     setCurrentIndex((prev) => (prev === 0 ? totalQuestions - 1 : prev - 1));
-    setSelectedOption(null);
-    setIsCorrect(null);
   };
 
   const nextQuestion = (e: React.MouseEvent) => {
     e.preventDefault();
+    resetState();
     setCurrentIndex((prev) => (prev === totalQuestions - 1 ? 0 : prev + 1));
-    setSelectedOption(null);
-    setIsCorrect(null);
   };
 
-  // Function to format question text with proper spacing
+  const resetState = () => {
+    setSelectedOption(null);
+    setIsCorrect(null);
+    setShowCorrect(false);
+  };
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isCorrect) {
+      timer = setTimeout(() => {
+        nextQuestion(new MouseEvent("click") as any);
+      }, 1500); // Auto advance after 1.5s
+    }
+    return () => clearTimeout(timer);
+  }, [isCorrect]);
+
   const formatQuestionText = (text: string) => {
     return text.split("\n").map((line, idx) => (
       <p key={idx} className={idx > 0 ? "mt-2" : ""}>
@@ -116,9 +136,8 @@ const SneakPeekSection = () => {
   };
 
   return (
-    <section className="py-8 md:py-16 bg-gray-50 text-center" id="sneak-peek">
+    <section className="py-8 md:py-16  text-center" id="sneak-peek">
       <div className="container px-4 mx-auto max-w-4xl">
-        {/* Header Card */}
         <Card className="shadow-md border rounded-xl bg-white p-4 sm:p-6 md:p-8">
           <CardContent className="text-center p-0 sm:p-2">
             <h2 className="text-2xl sm:text-3xl font-bold text-primary">
@@ -132,7 +151,6 @@ const SneakPeekSection = () => {
           </CardContent>
         </Card>
 
-        {/* Question Card */}
         <div className="mt-6 sm:mt-10 relative">
           <Card className="bg-white shadow-sm border rounded-xl p-4 sm:p-6">
             <CardContent className="p-0 sm:p-2">
@@ -143,7 +161,6 @@ const SneakPeekSection = () => {
                 </div>
               </div>
 
-              {/* Options Container */}
               <div className="mt-4">
                 {currentQuiz.options.length > 0 ? (
                   <div className="flex flex-col gap-2">
@@ -155,22 +172,28 @@ const SneakPeekSection = () => {
                       let textColor = "text-gray-800";
                       let borderColor = "border-gray-200";
 
-                      if (isSelected) {
-                        if (isAnswer) {
+                      if (selectedOption !== null) {
+                        if (isSelected && isAnswer) {
                           bgColor = "bg-green-50";
                           textColor = "text-green-800";
                           borderColor = "border-green-500";
-                        } else {
+                        } else if (isSelected && !isAnswer) {
                           bgColor = "bg-red-50";
                           textColor = "text-red-800";
                           borderColor = "border-red-500";
+                        } else if (!isSelected && isAnswer && showCorrect) {
+                          bgColor = "bg-green-100";
+                          textColor = "text-green-700";
+                          borderColor = "border-green-400";
                         }
                       }
 
                       return (
-                        <div 
+                        <div
                           key={idx}
-                          className={`border rounded p-3 text-left cursor-pointer transition-colors ${bgColor} ${textColor} ${borderColor} ${selectedOption !== null ? 'cursor-default' : 'hover:bg-gray-50'}`}
+                          className={`border rounded p-3 text-left transition-colors ${bgColor} ${textColor} ${borderColor} ${
+                            selectedOption === null ? "cursor-pointer hover:bg-gray-50" : "cursor-default"
+                          }`}
                           onClick={() => selectedOption === null && handleOptionClick(idx)}
                         >
                           <div className="text-xs sm:text-sm md:text-base whitespace-normal break-words">
@@ -199,42 +222,24 @@ const SneakPeekSection = () => {
                   </p>
 
                   {!isCorrect && (
-                    <Button
-                      className="mt-2 text-xs sm:text-sm"
-                      variant="outline"
-                      onClick={() => {
-                        setSelectedOption(null);
-                        setIsCorrect(null);
-                      }}
-                    >
-                      🔁 Try Again
-                    </Button>
+                    <>
+                      
+                    </>
                   )}
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {/* Navigation */}
           <div className="flex justify-between items-center mt-4 sm:mt-6">
-            <Button 
-              variant="ghost" 
-              onClick={prevQuestion}
-              className="text-xs sm:text-sm px-2 sm:px-4"
-              size="sm"
-            >
+            <Button onClick={prevQuestion} className="text-xs sm:text-sm px-2 sm:px-4" size="sm">
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
               <span className="hidden xs:inline">Previous</span>
             </Button>
-            <span className="text-xs sm:text-sm text-gray-600">
+            <span className="text-s sm:text-sm text-primary font-bold">
               {currentIndex + 1} / {totalQuestions}
             </span>
-            <Button 
-              variant="ghost" 
-              onClick={nextQuestion}
-              className="text-xs sm:text-sm px-2 sm:px-4"
-              size="sm"
-            >
+            <Button onClick={nextQuestion} className="text-xs sm:text-sm px-2 sm:px-4" size="sm">
               <span className="hidden xs:inline">Next</span>
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1" />
             </Button>
