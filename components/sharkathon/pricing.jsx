@@ -1,7 +1,6 @@
-import { Card, CardHeader, CardContent } from "@/components/ui/card"
-import { cn } from "@/lib/utils" // Assuming you have a utility for classnames
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
-// SVG component for the wavy underline with gradient
 const WavyUnderline = ({ gradientId = "blueYellowGradient", className }) => (
   <svg
     viewBox="0 0 100 6"
@@ -12,8 +11,8 @@ const WavyUnderline = ({ gradientId = "blueYellowGradient", className }) => (
   >
     <defs>
       <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} /> {/* Blue */}
-        <stop offset="100%" style={{ stopColor: '#FACC15', stopOpacity: 1 }} /> {/* Yellow */}
+        <stop offset="0%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#FACC15', stopOpacity: 1 }} />
       </linearGradient>
     </defs>
     <path
@@ -25,74 +24,67 @@ const WavyUnderline = ({ gradientId = "blueYellowGradient", className }) => (
   </svg>
 );
 
-
 export function PricingCards() {
   return (
-    // Outer container with increased max-width
-    // Changed max-w-5xl to max-w-6xl
-    <div className="max-w-7xl  mx-auto px-4 py-16">
-      <div className="text-center">
-          <h2 className="text-4xl font-bold text-secondary mb-2">Pricing</h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-16"></div>
-        </div>
-        <br/>
-      {/* Main container using flexbox for layout */}
-      <div className="flex flex-col md:flex-row gap-0 relative mb-16">
+    <section className="max-w-7xl mx-auto px-4 py-20">
+      {/* Title */}
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-secondary">
+          Pricing
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mt-3 rounded-full" />
+      </div>
 
-
-        {/* Card 1 - Pricing Info (Dark Theme) */}
+      {/* Cards */}
+      <div className="flex flex-col md:flex-row gap-10 items-stretch">
+        {/* Card 1 - Pricing Info */}
         <Card
           className={cn(
-            "w-full md:w-1/2 bg-primary text-white rounded-xl", // Stays md:w-1/2 to share the new wider space
-            "transition-all duration-300 z-10",
-            "hover:shadow-lg"
+            "w-full md:w-1/2 bg-primary text-white rounded-2xl shadow-xl",
+            "transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]"
           )}
         >
-          <CardHeader className="pb-4 pt-8">
-            <div className="font-semibold text-white-400 tracking-widest uppercase text-xl">
+          <CardHeader className="pb-4 pt-8 px-6">
+            <div className="text-xl font-semibold tracking-wide uppercase text-white/90">
               + Cost and Logistics
             </div>
           </CardHeader>
-          <CardContent className="space-y-8 py-8">
-            {/* Individual Price */}
+          <CardContent className="space-y-10 py-8 px-6">
             <div>
-              <div className="text-m text-white">Price (for individual participation):</div>
-              <div className="inline-block relative">
-                <div className="text-white font-bold text-2xl mt-1">
-                  INR 3,500/-
-                </div>
-                <WavyUnderline className="w-50%" />
+              <p className="text-white text-base mb-1">Price (Individual):</p>
+              <div className="relative inline-block">
+                <div className="text-3xl font-bold text-white">INR 3,500/-</div>
+                <WavyUnderline className="w-96%" />
               </div>
             </div>
 
-            {/* Group Price */}
-            
+            {/* You can uncomment and use this if needed */}
+            {/* <div>
+              <p className="text-white text-base mb-1">Group Pricing:</p>
+              <div className="text-xl font-semibold">INR X,XXX/-</div>
+            </div> */}
           </CardContent>
         </Card>
 
-        {/* Card 2 - Format & Facilities (Light Theme - Offset) */}
+        {/* Card 2 - Format & Facilities */}
         <Card
           className={cn(
-            "w-full h-max md:w-1/2 bg-secondary text-white-800 rounded-2xl shadow-2xl", // Stays md:w-1/2
-            "transition-all duration-300",
-            "hover:shadow-2xl",
-            "-mt-0 md:-mt-6 md:-ml-8",
-            "z-0"
+            "w-full md:w-1/2 bg-secondary text-white rounded-2xl shadow-2xl",
+            "transition-all duration-300 hover:shadow-3xl hover:scale-[1.01]",
+            "md:-mt-6 md:-ml-4 z-10"
           )}
         >
           <CardContent className="space-y-6 py-12 px-8">
-             <div className="text-m font-medium text-white-700">
-               + Hybrid Format: Students attend the first two rounds online. Final round attendance is optional to be attended both online/offline.
-            </div>
-             <div className="text-m font-medium text-white-700">
-               + Includes learning resources, competition access, and hospitality provisions
-            </div>
-             
+            <p className="text-base font-medium leading-relaxed text-black">
+              + <strong>Hybrid Format:</strong> Students attend the first two rounds online. The final round can be attended online or offline (optional).
+            </p>
+            <p className="text-base font-medium leading-relaxed text-black">
+              + <strong>Inclusions:</strong> Learning resources, competition access, and hospitality provisions are all included.
+            </p>
           </CardContent>
         </Card>
-
       </div>
-    </div>
+    </section>
   );
 }
 

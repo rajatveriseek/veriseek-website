@@ -51,7 +51,7 @@ export default function ProgramTimeline() {
       image: "/entry-round.jpeg",
       content: {
         sessions: [
-          { time: "", title: "The Entry Round" },
+          { time: "", title: "The Entry Round (Online)" },
         ],
         description: "Solve a short decision-making challenge designed to test how you think, not what you know."
       }
