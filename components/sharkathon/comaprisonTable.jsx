@@ -124,10 +124,10 @@ export default function SharkathonComparison() {
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="p-4 border border-gray-300 text-left w-1/4">Feature</th>
-                <th className="p-4 text-black border border-gray-800 text-center w-1/4">Sharkathon</th>
-                <th className="p-4 text-black border border-gray-800 text-center w-1/4">MUN</th>
-                <th className="p-4 text-black border border-gray-800 text-center w-1/4">Olympiads</th>
+                <th className="p-4  text-left w-1/4">Feature</th>
+                <th className="p-4 text-black  text-center w-1/4">Sharkathon</th>
+                <th className="p-4 text-black  text-center w-1/4">MUN</th>
+                <th className="p-4 text-black  text-center w-1/4">Olympiads</th>
               </tr>
             </thead>
             <tbody>
