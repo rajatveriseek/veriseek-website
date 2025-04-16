@@ -20,6 +20,7 @@ import ImageCarousel from "@/components/sharkathon/carousel.jsx"
 import SharkathonBenefits from "@/components/sharkathon/getSharkathon"
 import HeroSection from "@/components/sharkathon/heroSection"
 import ProgramFlowImage from "@/components/sharkathon/dates"
+import ProgramTimeline from "@/components/sharkathon/timeline_v2"
 
 
 export const metadata = {
@@ -37,7 +38,7 @@ export default function SharkathonPage() {
       <SimulationProcess />
       <section className="py-16 bg-primary" id="process">
         <div className="container">
-            <SharkathonTimeline />
+            <ProgramTimeline/>
             
         </div>
       </section>
