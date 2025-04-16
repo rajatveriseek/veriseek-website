@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star, DollarSign, Briefcase, BookOpen, Award, Users } from 'lucide-react';
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function SharkathonComparison() {
   const features = [
@@ -108,50 +109,78 @@ export default function SharkathonComparison() {
   ];
 
   return (
-    <div className="w-full py-12 px-4 md:px-6">
+    <div className="w-full py-12 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-primary mb-4">How Does <img 
-    src="/logo.png" 
-    alt="Sharkathon" 
-    className="h-10 inline-block align-text-bottom"
-  /> Compare?</h1>
-        
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-primary mb-4">
+          How Does <img src="/logo.png" alt="Sharkathon" className="h-10 inline-block align-text-bottom" /> Compare?
+        </h1>
+
         <p className="text-center text-lg mb-12">
           Sharkathon is not just another competition, it's a <span className="font-semibold text-blue-700">high-impact learning experience</span> designed to equip students with <span className="font-semibold">real-world business and investment skills</span>.
         </p>
-        
-        <div className="overflow-x-auto">
+
+        {/* Table for medium and larger screens */}
+        <div className="hidden md:block overflow-x-auto bg-white rounded-xl shadow-lg">
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="p-4 bg-gray-100 border-b-2 border-gray-300 text-left w-1/4">Feature</th>
-                <th className="p-4 bg-gray-700 text-black border-b-2 border-gray-800 text-center w-1/4">Sharkathon</th>
-                <th className="p-4 bg-gray-700 text-black border-b-2 border-gray-800 text-center w-1/4">MUN</th>
-                <th className="p-4 bg-gray-700 text-black border-b-2 border-gray-800 text-center w-1/4">Olympiads</th>
+                <th className="p-4 border border-gray-300 text-left w-1/4">Feature</th>
+                <th className="p-4 text-black border border-gray-800 text-center w-1/4">Sharkathon</th>
+                <th className="p-4 text-black border border-gray-800 text-center w-1/4">MUN</th>
+                <th className="p-4 text-black border border-gray-800 text-center w-1/4">Olympiads</th>
               </tr>
             </thead>
             <tbody>
-              {features.map((feature, index) => (
-                <tr key={feature.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                  <td className="p-4 border-b border-gray-200">
-                    <div className="flex items-center">
-                      {feature.icon}
-                      <span className="ml-2 font-medium">{feature.name}</span>
-                    </div>
-                  </td>
-                  <td className={`p-4 border-b border-gray-200 ${feature.sharkathon.highlight ? "bg-blue-50" : ""}`}>
-                    <div className="text-sm">{feature.sharkathon.text}</div>
-                  </td>
-                  <td className="p-4 border-b border-gray-200">
-                    <div className="text-sm">{feature.mun.text}</div>
-                  </td>
-                  <td className="p-4 border-b border-gray-200">
-                    <div className="text-sm">{feature.olympiads.text}</div>
-                  </td>
-                </tr>
-              ))}
+              {features.map((feature, index) => {
+                const rowBg = index % 2 === 0 ? "bg-white" : "bg-secondary";
+                return (
+                  <tr key={feature.id} className={rowBg}>
+                    <td className="p-4 border border-gray-200">
+                      <div className="flex items-center">
+                        {feature.icon}
+                        <span className="ml-2 font-medium">{feature.name}</span>
+                      </div>
+                    </td>
+                    <td className={`p-4 border border-gray-200 ${feature.sharkathon.highlight ? "bg-blue-100 font-semibold" : ""}`}>
+                      <div className="text-sm">{feature.sharkathon.text}</div>
+                    </td>
+                    <td className="p-4 border border-gray-200">
+                      <div className="text-sm">{feature.mun.text}</div>
+                    </td>
+                    <td className="p-4 border border-gray-200">
+                      <div className="text-sm">{feature.olympiads.text}</div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+        </div>
+
+        {/* Cards for small screens */}
+        <div className="block md:hidden space-y-6">
+          {features.map((feature) => (
+            <Card key={feature.id} className="shadow-md">
+              <CardHeader className="flex flex-row items-center gap-3">
+                {feature.icon}
+                <h3 className="text-lg font-semibold">{feature.name}</h3>
+              </CardHeader>
+              <CardContent className="grid grid-cols-1 gap-4 text-sm">
+                <div className={`rounded-md p-3 ${feature.sharkathon.highlight ? 'bg-blue-100 font-medium' : 'bg-gray-50'}`}>
+                  <p className="text-blue-900 font-semibold mb-1">Sharkathon</p>
+                  <p>{feature.sharkathon.text}</p>
+                </div>
+                <div className="rounded-md p-3 bg-gray-50">
+                  <p className="text-gray-800 font-semibold mb-1">MUN</p>
+                  <p>{feature.mun.text}</p>
+                </div>
+                <div className="rounded-md p-3 bg-gray-50">
+                  <p className="text-gray-800 font-semibold mb-1">Olympiads</p>
+                  <p>{feature.olympiads.text}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </div>
