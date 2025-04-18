@@ -60,7 +60,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link href="/rules" className="text-gray-300 hover:text-secondary text-sm">
-                  Rules & Regulations
+                  Rules & Regulations (Terms and Conditions)
                 </Link>
               </li>
               <li>
