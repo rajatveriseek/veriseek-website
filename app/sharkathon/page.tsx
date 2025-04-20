@@ -54,41 +54,28 @@ export default function SharkathonPage() {
         </div>
       </section>
       
-      <SharkathonComparison />  
+      
 
-      <section className="py-10 px-0 bg-primary" id="process">
+     
+
+        <PricingCards />
+
+        <section className="py-10 px-0 bg-primary" id="process">
         <div className="container">
           
 
-        <PricingCards />
+        <SneakPeekSection />
 
           
         </div>
       </section>
       
-      <SneakPeekSection />
+      
           
 
 
 
-      {/* Registration Form */}
-      <section className="py-16 bg-gray-50" id="register">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-primary">Register for Sharkathon</h2>
-            <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-              Take the first step toward an incredible investment evaluation journey
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-          <section id="register">
-            <RegistrationForm />
-          </section>
-
-          </div>
-        </div>
-      </section>
+      
 
       {/* FAQ Section */}
       <section className="py-16">
