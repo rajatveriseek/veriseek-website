@@ -9,7 +9,7 @@ export default function ProfileCards() {
       title: "Nandan Capital, Ex McKinsey and Wharton Alum",
       company: "",
       image: "/rajat-bg-bw.png",
-      linkedin: "https://linkedin.com/in/rajatkumar",
+      linkedin: "https://www.linkedin.com/in/rajat-kumar-004533",
       logos: [
         { src: "/wharton.png", alt: "Wharton" },
         { src: "/nandancapital.png", alt: "nandan capital" },
@@ -21,7 +21,7 @@ export default function ProfileCards() {
       title: "CTO CarDekho, Alum IIT Delhi & MIT",
       company: "",
       image: "/mayank-bg-bw.png",
-      linkedin: "https://linkedin.com/in/mayankkapoor",
+      linkedin: "https://www.linkedin.com/in/mayankkapoor/",
       logos: [
         { src: "/iit.png", alt: "IIT" },
         { src: "/mit2.png", alt: "mit" },
@@ -33,7 +33,7 @@ export default function ProfileCards() {
       title: "Founder NUUK, Alum IIT Delhi & IIM Ahmedabad",
       company: "",
       image: "/shalabh-bg-bw.png",
-      linkedin: "https://linkedin.com/in/shalabhgupta",
+      linkedin: "https://www.linkedin.com/in/shalabh-gupta/",
       logos: [
         { src: "/iima.png", alt: "Logo 1" },
         { src: "/nuuk.png", alt: "Logo 2" },
