@@ -4,6 +4,9 @@ import { useState,useEffect} from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Zap } from "lucide-react";
+
 
 const quizData = [
   {
@@ -116,6 +119,34 @@ const SneakPeekSection = () => {
     setIsCorrect(null);
     setShowCorrect(false);
   };
+
+    // Action Buttons Component
+    const ActionButtons = () => (
+      <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-4 items-center justify-center pt-6">
+        <Button
+          asChild
+          size="lg"
+          className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
+        >
+          <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
+            <Zap className="w-3 h-3 md:w-4 md:h-4" />
+            <span>SIGN UP NOW</span>
+          </Link>
+        </Button>
+  
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
+        >
+          <Link href="#process" className="flex items-center justify-center gap-1 md:gap-2">
+            <span>KNOW MORE</span>
+            <span>↓</span>
+          </Link>
+        </Button>
+      </div>
+    );
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -236,7 +267,7 @@ const SneakPeekSection = () => {
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
               <span className="hidden xs:inline">Previous</span>
             </Button>
-            <span className="text-s sm:text-sm text-primary font-bold">
+            <span className="text-s sm:text-sm text-white font-bold">
               {currentIndex + 1} / {totalQuestions}
             </span>
             <Button onClick={nextQuestion} className="text-xs sm:text-sm px-2 sm:px-4" size="sm">
@@ -244,7 +275,9 @@ const SneakPeekSection = () => {
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1" />
             </Button>
           </div>
+          
         </div>
+        <ActionButtons/>
       </div>
     </section>
   );
