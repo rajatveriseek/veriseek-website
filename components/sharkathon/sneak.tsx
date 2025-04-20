@@ -134,17 +134,7 @@ const SneakPeekSection = () => {
           </Link>
         </Button>
   
-        <Button
-          asChild
-          size="lg"
-          variant="outline"
-          className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
-        >
-          <Link href="#process" className="flex items-center justify-center gap-1 md:gap-2">
-            <span>KNOW MORE</span>
-            <span>↓</span>
-          </Link>
-        </Button>
+
       </div>
     );
 
@@ -187,7 +177,7 @@ const SneakPeekSection = () => {
             <CardContent className="p-0 sm:p-2">
               <div className="text-left mb-4">
                 <span className="text-sm font-semibold">Q{currentIndex + 1}.</span>
-                <div className="text-sm sm:text-base mt-1">
+                <div className="text-sm font-bold sm:text-base mt-1">
                   {formatQuestionText(currentQuiz.question)}
                 </div>
               </div>

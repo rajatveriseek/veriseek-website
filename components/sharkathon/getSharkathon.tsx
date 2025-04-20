@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { FileText, GraduationCap, Users, BriefcaseBusiness } from 'lucide-react';
+import Link from 'next/link';
+import { Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function SharkathonBenefits() {
   const benefits = [
@@ -30,6 +33,23 @@ export default function SharkathonBenefits() {
       description: "Take part in high-stakes challenges that mirror actual startup investment rounds."
     }
   ];
+  const ActionButtons = () => (
+    <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-4 items-center justify-center pt-8">
+      <Button
+        asChild
+        size="lg"
+        className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
+      >
+        <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
+          <Zap className="w-3 h-3 md:w-4 md:h-4" />
+          <span>SIGN UP NOW</span>
+        </Link>
+      </Button>
+
+     
+    </div>
+  );
+
 
   return (
     <div className="w-full mx-auto px-4 sm:px-6 py-12 bg-primary">
@@ -73,6 +93,7 @@ export default function SharkathonBenefits() {
           </div>
         </div>
       </div>
+      <ActionButtons/>
     </div>
   );
 }

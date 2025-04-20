@@ -32,22 +32,22 @@ const HeroHeadline = () => (
 
 const HeroDescription = () => (
   <p className="text-base md:text-lg lg:text-xl opacity-90 leading-relaxed border-l-4 border-yellow-400 pl-4">
-    Dive into an <span className="font-bold text-yellow-300">immersive experience</span> where you'll think and act like a shark investor. Analyse real businesses, grill entrepreneurs, and make <span className="font-bold text-yellow-300">strategic investment decisions</span>.
+    Dive into an <span className="font-bold text-yellow-300">immersive experience</span> where you'll think and act like a <span className="font-bold text-yellow-300">shark investor</span> . Analyse real businesses, grill entrepreneurs, and make <span className="font-bold text-yellow-300">strategic investment decisions</span>.
   </p>
 );
 
 const AlumniLogos = () => (
   <div className="flex flex-wrap justify-center items-center gap-4">
-    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
       <img src="/iima.png" alt="IIMA logo" className="h-12 sm:h-16" />
     </div>
-    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
       <img src="/iit.png" alt="IIT logo" className="h-12 sm:h-16" />
     </div>
-    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
       <img src="/wharton.png" alt="Wharton logo" className="h-12 sm:h-16" />
     </div>
-    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
       <img src="/mit.png" alt="MIT logo" className="h-12 sm:h-16" />
     </div>
   </div>
@@ -82,21 +82,30 @@ const ActionButtons = () => (
         <span>↓</span>
       </Link>
     </Button>
-            <p>Mode: <br/><span className="text-yellow-300">Online/Offline</span></p>
-            <p>Starts from: <br/> <span className="text-yellow-300">13 July 2025</span></p>
+            
 
   </div>
 );
 
 const EligibilityBadge = () => (
-   <div className="absolute -bottom-4 -left-4 bg-white p-2 md:p-3 rounded-lg shadow-xl border-2 border-yellow-400 z-20"> {/* Added z-20 */}
-    <div className="flex items-center gap-2">
-      <div className="bg-yellow-400 p-1 md:p-2 rounded-full">
-        <Trophy className="h-4 w-4 md:h-5 md:w-5 text-blue-900" />
+  <div className="absolute -bottom-4 -left-4 bg-white p-2 md:p-3 rounded-lg shadow-xl border-2 border-yellow-400 z-20">
+    <div className="flex flex-row items-start gap-6">
+      {/* Eligibility Block */}
+      <div className="flex flex-col">
+      <p className="text-blue-900 font-bold text-sm md:text-base leading-snug">ELIGIBILITY</p>
+      <p className="text-black font-medium text-xs md:text-sm">Classes 9th to 12th</p>
       </div>
-      <div>
-        <p className="text-blue-900 font-bold text-base md:text-lg">ELIGIBILITY</p>
-        <p className="text-xs text-gray-700 font-medium">CLASSES 9th - 12th</p>
+
+      {/* Mode Block */}
+      <div className="flex flex-col border-l border-gray-300 pl-6">
+        <p className="text-blue-900 font-bold text-sm md:text-base leading-snug">MODE</p>
+        <p className="text-black font-medium text-xs md:text-sm">Online/Offline</p>
+      </div>
+
+      {/* Start Date Block */}
+      <div className="flex flex-col border-l border-gray-300 pl-6">
+        <p className="text-blue-900 font-bold text-sm md:text-base leading-snug">STARTS FROM</p>
+        <p className="text-black font-medium text-xs md:text-sm">13 July 2025</p>
       </div>
     </div>
   </div>
