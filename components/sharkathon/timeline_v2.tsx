@@ -1,6 +1,9 @@
 "use client"
 import { useState, useRef } from 'react';
 import { FiCalendar } from 'react-icons/fi';
+import Link from 'next/link';
+import { Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function ProgramTimeline() {
   const [selectedWeek, setSelectedWeek] = useState(1);
@@ -62,7 +65,7 @@ export default function ProgramTimeline() {
       image: "/business-case.jpeg",
       content: {
         sessions: [
-          { time: "", title: "Business Case Round" },
+          { time: "", title: "Business Case Round (Online)" },
         ],
         description: "Look at a company's numbers and story, then submit your recommendation on what they should do next."
       }
@@ -73,7 +76,7 @@ export default function ProgramTimeline() {
       image: "/finals.jpeg",
       content: {
         sessions: [
-          { time: "", title: "Finals" },
+          { time: "", title: "Finals (Offline/Online)" },
         ],
         description: "Break down real startup pitches, question the founders to finally decide will you invest or not. Then pitch your verdict to actual investors, or probably Sharks"
       }
@@ -81,6 +84,34 @@ export default function ProgramTimeline() {
   ];
 
   const selectedWeekData = weeks.find(week => week.number === selectedWeek) || weeks[0];
+
+  // Action Buttons Component
+  const ActionButtons = () => (
+    <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-4 items-center justify-center pt-2">
+      <Button
+        asChild
+        size="lg"
+        className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
+      >
+        <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
+          <Zap className="w-3 h-3 md:w-4 md:h-4" />
+          <span>SIGN UP NOW</span>
+        </Link>
+      </Button>
+
+      <Button
+        asChild
+        size="lg"
+        variant="outline"
+        className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
+      >
+        <Link href="#process" className="flex items-center justify-center gap-1 md:gap-2">
+          <span>KNOW MORE</span>
+          <span>↓</span>
+        </Link>
+      </Button>
+    </div>
+  );
 
   return (
     <div className="text-white py-12">
@@ -143,9 +174,9 @@ export default function ProgramTimeline() {
 
           {/* Content Cards */}
           <div className="flex-grow flex flex-col md:flex-row items-stretch gap-6">
-            {/* Description Box - Removed bg color */}
+            {/* Description Box */}
             <div className="flex-1 backdrop-blur-sm border border-gray-700/30 rounded-xl p-6 md:p-8 shadow-xl transition-all duration-300 ease-in-out md:min-h-[300px] flex flex-col">
-              {/* Title now has the same transition as description */}
+              {/* Title */}
               <div className={`transition-opacity duration-300 ease-in-out ${
                 isTransitioning ? 'opacity-0' : 'opacity-100'
               }`}>
@@ -154,6 +185,8 @@ export default function ProgramTimeline() {
                   {selectedWeekData.content.sessions[0]?.title || `Step ${selectedWeekData.number} Details`}
                 </h2>
               </div>
+              
+              {/* Description */}
               <div className={`text-gray-200 leading-relaxed text-base md:text-lg flex-grow transition-opacity duration-300 ease-in-out ${
                 isTransitioning ? 'opacity-0' : 'opacity-100'
               }`}>
@@ -176,9 +209,16 @@ export default function ProgramTimeline() {
             </div>
           </div>
         </div>
+        
+        {/* Action Buttons - Now positioned below both columns and centered */}
+        <div className={`mt-10 md:mt-12 mx-auto max-w-lg transition-opacity duration-300 ease-in-out ${
+          isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}>
+          <ActionButtons />
+        </div>
       </div>
 
-      {/* Add some custom CSS for the glow effect */}
+      {/* Custom CSS */}
       <style jsx>{`
         .shadow-glow {
           box-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(56, 189, 248, 0.3);

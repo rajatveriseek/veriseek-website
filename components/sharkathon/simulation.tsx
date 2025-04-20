@@ -9,18 +9,18 @@ const SimulationProcess = () => {
     {
       icon: <FaChartLine size={60} />,
       title: "The Entry Round",
-      description: "Assess your business acumen through a proctored online test designed to challenge your analytical skills, critical thinking and problem-solving skills."
+      description: "Solve a short decision-making challenge designed to test how you think, not what you know."
     },
     {
       icon: <FaBriefcase size={60} />,
       title: "Business Case Round",
-      description: "Analyse real-world business scenarios, evaluate data, and develop strategic insights.",
+      description: "Look at a company's numbers and story, then submit your recommendation on what they should do next.",
       centerText: true // Flag to center text
     },
     {
       icon: <FaHandshake size={60} />,
       title: "Finals",
-      description: "Engage with real entrepreneurs, ask critical investment questions, and decide, would you invest? Gain direct exposure to how top investors think."
+      description: "Break down real startup pitches, question the founders to finally decide will you invest or not. Then pitch your verdict to actual investors, or probably Sharks"
     }
   ];
 

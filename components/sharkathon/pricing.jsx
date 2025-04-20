@@ -29,7 +29,7 @@ export function PricingCards() {
     <section className="max-w-7xl mx-auto px-4 py-20">
       {/* Title */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-secondary">
+        <h2 className="text-4xl md:text-5xl font-bold text-primary">
           Pricing
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mt-3 rounded-full" />
@@ -49,7 +49,7 @@ export function PricingCards() {
               + Cost and Logistics
             </div>
           </CardHeader>
-          <CardContent className="space-y-10 py-8 px-6">
+          <CardContent className="space-y-10 py-4 px-6">
             <div>
               <p className="text-white text-base mb-1">Price (Individual):</p>
               <div className="relative inline-block">

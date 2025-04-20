@@ -37,21 +37,26 @@ const HeroDescription = () => (
 );
 
 const AlumniLogos = () => (
-  <div className="border-2 border-yellow-400/50 bg-secondary p-3 md:p-4 rounded-lg backdrop-blur-lg transform hover:scale-[1.01] transition-all">
-    <div className="flex flex-col items-center space-y-3">
-      <div className="text-center">
-        <p className="font-bold text-2xl text-white">Built by elite alumni from</p>
-      </div>
-      <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4"> {/* Added flex-wrap for safety */}
-        {/* Ensure these paths are correct */}
-        <img src="/iima.png" alt="IIMA logo" className="h-12 sm:h-16 transition-transform hover:scale-110" />
-        <img src="/iit.png" alt="IIT logo" className="h-12 sm:h-16 transition-transform hover:scale-110" />
-        <img src="/wharton.png" alt="Wharton logo" className="h-12 sm:h-16 transition-transform hover:scale-110" />
-        <img src="/mit.png" alt="MIT logo" className="h-12 sm:h-16 transition-transform hover:scale-110" />
-      </div>
+  <div className="flex flex-wrap justify-center items-center gap-4">
+    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/iima.png" alt="IIMA logo" className="h-12 sm:h-16" />
+    </div>
+    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/iit.png" alt="IIT logo" className="h-12 sm:h-16" />
+    </div>
+    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/wharton.png" alt="Wharton logo" className="h-12 sm:h-16" />
+    </div>
+    <div className="p-3 bg-secondary border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/mit.png" alt="MIT logo" className="h-12 sm:h-16" />
     </div>
   </div>
 );
+
+
+
+
+
 
 const ActionButtons = () => (
   <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-4 items-center pt-2">
@@ -60,7 +65,7 @@ const ActionButtons = () => (
       size="lg"
       className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg shadow-yellow-400/30 border-2 border-yellow-400 hover:scale-105 transition-transform hover:shadow-yellow-400/50 text-sm md:text-base py-2 px-3 md:px-4"
     >
-      <Link href="#register" className="flex items-center justify-center gap-1 md:gap-2">
+      <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
         <Zap className="w-3 h-3 md:w-4 md:h-4" />
         <span>SIGN UP NOW</span>
       </Link>
@@ -70,7 +75,7 @@ const ActionButtons = () => (
       asChild
       size="lg"
       variant="outline"
-      className="w-full sm:w-auto border-2 border-yellow-400 text-yellow-400 hover:text-blue-900 hover:bg-yellow-400 font-bold shadow-lg hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4" // Adjusted hover state for outline
+      className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg shadow-yellow-400/30 border-2 border-yellow-400 hover:scale-105 transition-transform hover:shadow-yellow-400/50 text-sm md:text-base py-2 px-3 md:px-4" // Adjusted hover state for outline
     >
       <Link href="#process" className="flex items-center justify-center gap-1 md:gap-2">
         <span>KNOW MORE</span>
@@ -130,7 +135,11 @@ const HeroSection = () => {
             <ApplicationStatusBanner />
             <HeroHeadline />
             <HeroDescription />
+            <>
+            <p className="text-left font-bold text-2xl text-white mb-4">Built by alumni from</p>
             <AlumniLogos />
+          </>
+
             <ActionButtons />
           </div>
 
