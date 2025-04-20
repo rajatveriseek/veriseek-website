@@ -70,7 +70,7 @@ const Header = () => {
           ))}
           <Link href="/register" className="w-full">
             <Button className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-md border-2 border-secondary">
-              Register Now
+              Sign Up Now
             </Button>
           </Link>
         </nav>
@@ -100,7 +100,7 @@ const Header = () => {
               </Link>
             ))}
             <Link href="/register" className="w-full">
-              <Button className="bg-secondary text-primary hover:bg-secondary/90 w-full">Register Now</Button>
+              <Button className="bg-secondary text-primary hover:bg-secondary/90 w-full">Sign Up Now</Button>
             </Link>
           </nav>
         </div>

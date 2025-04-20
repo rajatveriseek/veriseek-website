@@ -82,7 +82,7 @@ function LinkedInFilled({ size = 24, color = "currentColor" }) {
 
 function ProfileCard({ profile }) {
   return (
-    <div className="rounded-lg overflow-hidden bg-secondary border border-gray-800 relative h-6xl w-64 pb-2 shadow-2xl">
+    <div className="rounded-lg overflow-hidden bg-white border border-gray-800 relative h-6xl w-64 pb-2 shadow-2xl">
       {/* Yellow brush stroke effect in background */}
       <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-yellow-400 opacity-70 rounded-full blur-xl transform translate-x-8 -translate-y-8 z-0"></div>
       
