@@ -59,7 +59,7 @@ const AlumniLogos = () => (
 
 
 const ActionButtons = () => (
-  <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-4 items-center pt-2">
+  <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-6 items-center pt-2">
     <Button
       asChild
       size="lg"
@@ -82,6 +82,9 @@ const ActionButtons = () => (
         <span>↓</span>
       </Link>
     </Button>
+            <p>Mode: <br/><span className="text-yellow-300">Online/Offline</span></p>
+            <p>Starts from: <br/> <span className="text-yellow-300">13 July 2025</span></p>
+
   </div>
 );
 
