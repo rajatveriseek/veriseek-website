@@ -99,17 +99,7 @@ export default function ProgramTimeline() {
         </Link>
       </Button>
 
-      <Button
-        asChild
-        size="lg"
-        variant="outline"
-        className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
-      >
-        <Link href="#process" className="flex items-center justify-center gap-1 md:gap-2">
-          <span>KNOW MORE</span>
-          <span>↓</span>
-        </Link>
-      </Button>
+     
     </div>
   );
 

@@ -58,15 +58,29 @@ const SimulationProcess = () => {
         </div>
 
         {/* Expert Panel Section */}
-        <div className="bg-secondary rounded-xl shadow-lg mt-12 max-w-4xl mx-auto transform transition-all duration-300 hover:shadow-xl">
-          <div className="p-8 border-l-4" style={{ borderColor: navyBlue }}>
-            <h4 className="text-xl font-bold mb-3" style={{ color: navyBlue }}>Expert Judging Panel</h4>
-            <p className="text-black  leading-relaxed">
-              Evaluation by eminent venture capital, debt firms, and leading CXOs from startups, 
-              ensuring high-level scrutiny and real-world relevance.
-            </p>
-          </div>
-        </div>
+        {/* Expert Panel Section */}
+<div className="bg-secondary rounded-xl shadow-lg mt-12 max-w-4xl mx-auto transform transition-all duration-300 hover:shadow-xl">
+  <div className="p-6 border-l-4 flex items-center gap-4" style={{ borderColor: navyBlue }}>
+    {/* Shark Image */}
+    <img 
+      src="/shark.png" 
+      alt="Shark Icon" 
+      className="w-20 h-20 object-contain"
+    />
+
+    {/* Text */}
+    <div>
+      <h4 className="text-xl font-bold mb-3" style={{ color: navyBlue }}>
+        Expert Judging Panel
+      </h4>
+      <p className="text-black leading-relaxed">
+        Evaluation by eminent venture capital, debt firms, and leading CXOs from startups, probably even <span className='font-bold'>Sharks</span>, 
+        ensuring high-level scrutiny and real-world relevance.
+      </p>
+    </div>
+  </div>
+</div>
+
       </div>
     </section>
   );
