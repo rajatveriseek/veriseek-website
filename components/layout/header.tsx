@@ -68,7 +68,7 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
-          <Link href="/sharkathon#register" className="w-full">
+          <Link href="/register" className="w-full">
             <Button className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-md border-2 border-secondary">
               Register Now
             </Button>
@@ -99,7 +99,7 @@ const Header = () => {
                 {link.name}
               </Link>
             ))}
-            <Link href="/sharkathon#register" className="w-full">
+            <Link href="/register" className="w-full">
               <Button className="bg-secondary text-primary hover:bg-secondary/90 w-full">Register Now</Button>
             </Link>
           </nav>
