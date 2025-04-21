@@ -37,29 +37,24 @@ const HeroDescription = () => (
 );
 
 const AlumniLogos = () => (
-  <div className="flex flex-wrap justify-center items-center gap-4">
-    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/iima.png" alt="IIMA logo" className="h-12 sm:h-16" />
+  <div className="flex flex-wrap justify-center sm:justify-center gap-2 sm:gap-4">
+    <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/iima.png" alt="IIMA logo" className="h-10 sm:h-16" />
     </div>
-    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/iit.png" alt="IIT logo" className="h-12 sm:h-16" />
+    <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/iit.png" alt="IIT logo" className="h-10 sm:h-16" />
     </div>
-    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/wharton.png" alt="Wharton logo" className="h-12 sm:h-16" />
+    <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/wharton.png" alt="Wharton logo" className="h-10 sm:h-16" />
     </div>
-    <div className="p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/mit.png" alt="MIT logo" className="h-12 sm:h-16" />
+    <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
+      <img src="/mit.png" alt="MIT logo" className="h-10 sm:h-16" />
     </div>
   </div>
 );
 
-
-
-
-
-
 const ActionButtons = () => (
-  <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-6 items-center pt-2">
+  <div className="flex flex-col sm:flex-row sm:flex-nowrap gap-3 md:gap-6 items-center pt-2">
     <Button
       asChild
       size="lg"
@@ -82,30 +77,28 @@ const ActionButtons = () => (
         <span>↓</span>
       </Link>
     </Button>
-            
-
   </div>
 );
 
 const EligibilityBadge = () => (
-  <div className="absolute -bottom-4 -left-4 bg-white p-2 md:p-3 rounded-lg shadow-xl border-2 border-yellow-400 z-20">
-    <div className="flex flex-row items-start gap-6">
+  <div className="absolute -bottom-4 -left-4 bg-white p-1 sm:p-2 md:p-3 rounded-lg shadow-xl border-2 border-yellow-400 z-20 scale-90 sm:scale-100">
+    <div className="flex flex-row items-start gap-2 sm:gap-6 text-xs sm:text-base">
       {/* Eligibility Block */}
       <div className="flex flex-col">
-      <p className="text-blue-900 font-bold text-sm md:text-base leading-snug">ELIGIBILITY</p>
-      <p className="text-black font-medium text-xs md:text-sm">Classes 9th to 12th</p>
+        <p className="text-blue-900 font-bold text-xs sm:text-sm md:text-base leading-tight">ELIGIBILITY</p>
+        <p className="text-black font-medium text-xs md:text-sm">Classes 9th to 12th</p>
       </div>
 
       {/* Mode Block */}
-      <div className="flex flex-col border-l border-gray-300 pl-6">
-        <p className="text-blue-900 font-bold text-sm md:text-base leading-snug">MODE</p>
+      <div className="flex flex-col border-l border-gray-300 pl-2 sm:pl-6">
+        <p className="text-blue-900 font-bold text-xs sm:text-sm md:text-base leading-tight">MODE</p>
         <p className="text-black font-medium text-xs md:text-sm">Online/Offline</p>
       </div>
 
       {/* Start Date Block */}
-      <div className="flex flex-col border-l border-gray-300 pl-6">
-        <p className="text-blue-900 font-bold text-sm md:text-base leading-snug">STARTS FROM</p>
-        <p className="text-black font-medium text-xs md:text-sm">13 July 2025</p>
+      <div className="flex flex-col border-l border-gray-300 pl-2 sm:pl-6">
+        <p className="text-blue-900 font-bold text-xs sm:text-sm md:text-base leading-tight">STARTS FROM</p>
+        <p className="text-black font-medium text-xs md:text-sm">13th July 2025</p>
       </div>
     </div>
   </div>
@@ -139,7 +132,7 @@ const HeroSection = () => {
       {/* Spacer for potential fixed header */}
       <div className="h-16 md:h-20"></div>
 
-      <div className="container relative z-10 py-8 md:py-0 flex-grow flex items-center">
+      <div className="container relative z-10 py-8 md:py-0 flex-grow flex items-center px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
 
           {/* Left Column Content */}
@@ -148,9 +141,9 @@ const HeroSection = () => {
             <HeroHeadline />
             <HeroDescription />
             <>
-            <p className="text-left font-bold text-2xl text-white mb-4">Built by alumni from</p>
-            <AlumniLogos />
-          </>
+              <p className="text-left font-bold text-xl sm:text-2xl text-white mb-2 sm:mb-4">Built by alumni from</p>
+              <AlumniLogos />
+            </>
 
             <ActionButtons />
           </div>
@@ -165,7 +158,6 @@ const HeroSection = () => {
       <BackgroundDecorations />
 
       {/* Shared Animation styles */}
-      {/* Kept global styles here as they might be less component-specific or simpler to manage globally */}
       <style jsx global>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(45deg); }
