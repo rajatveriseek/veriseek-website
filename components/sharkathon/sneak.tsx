@@ -162,7 +162,7 @@ const SneakPeekSection = () => {
         <Card className="shadow-md border rounded-xl bg-white p-4 sm:p-6 md:p-8">
           <CardContent className="text-center p-0 sm:p-2">
             <h2 className="text-2xl sm:text-3xl font-bold text-primary">
-              Want a Sneak Peek into Sharkathon?
+              Want a sneak peek into Sharkathon?
             </h2>
             <p className="text-gray-600 mt-2 sm:mt-3 text-base sm:text-lg">
               Curious about the challenges ahead? Get a glimpse of the kind of
