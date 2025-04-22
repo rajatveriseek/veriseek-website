@@ -37,7 +37,7 @@ const HeroDescription = () => (
 );
 
 const AlumniLogos = () => (
-  <div className="flex flex-wrap justify-center sm:justify-center gap-2 sm:gap-4">
+  <div className="flex flex-wrap justify-left sm:justify-left gap-2 sm:gap-4">
     <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
       <img src="/iima.png" alt="IIMA logo" className="h-10 sm:h-16" />
     </div>
