@@ -50,7 +50,7 @@ export default function ProgramTimeline() {
     },
     {
       number: 3,
-      date: "13th July 2025",
+      date: "19th July 2025",
       image: "/entry-round.jpeg",
       content: {
         sessions: [
@@ -72,7 +72,7 @@ export default function ProgramTimeline() {
     },
     {
       number: 5,
-      date: "3rd August 2025",
+      date: "26th July 2025",
       image: "/finals.jpeg",
       content: {
         sessions: [
