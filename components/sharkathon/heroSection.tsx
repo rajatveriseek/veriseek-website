@@ -98,7 +98,7 @@ const EligibilityBadge = () => (
       {/* Start Date Block */}
       <div className="flex flex-col border-l border-gray-300 pl-2 sm:pl-6">
         <p className="text-blue-900 font-bold text-xs sm:text-sm md:text-base leading-tight">STARTS FROM</p>
-        <p className="text-black font-medium text-xs md:text-sm">13th July 2025</p>
+        <p className="text-black font-medium text-xs md:text-sm">19th July 2025</p>
       </div>
     </div>
   </div>
