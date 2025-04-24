@@ -61,7 +61,7 @@ export default function ProgramTimeline() {
     },
     {
       number: 4,
-      date: "25th July 2025",
+      date: "26th July 2025",
       image: "/business-case.jpeg",
       content: {
         sessions: [
@@ -72,7 +72,7 @@ export default function ProgramTimeline() {
     },
     {
       number: 5,
-      date: "26th July 2025",
+      date: "3rd August 2025",
       image: "/finals.jpeg",
       content: {
         sessions: [
