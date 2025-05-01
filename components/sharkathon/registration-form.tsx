@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card"; //Updated import
+import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { submitRegistration } from "@/app/actions/registration";
 
@@ -58,7 +58,7 @@ const RegistrationForm = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, shouldRedirectToPayment: boolean = false) => {
     e.preventDefault();
 
     if (
@@ -80,14 +80,25 @@ const RegistrationForm = () => {
     setFormError("");
 
     try {
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-      formData.append("program", "sharkathon");
+      // Get the form element by searching the DOM
+      const form = document.querySelector('form') as HTMLFormElement;
+      
+      if (!form) {
+        throw new Error("Form element not found");
+      }
+      
+      const formDataToSubmit = new FormData(form);
+      formDataToSubmit.append("program", "sharkathon");
 
-      const result = await submitRegistration(formData);
+      const result = await submitRegistration(formDataToSubmit);
 
       if (result.success) {
-        setFormSubmitted(true);
+        if (shouldRedirectToPayment) {
+          // Redirect to payment page
+          window.location.href = "https://rzp.io/rzp/asKBH0Ak";
+        } else {
+          setFormSubmitted(true);
+        }
       } else {
         setFormError(result.message);
       }
@@ -141,7 +152,7 @@ const RegistrationForm = () => {
   return (
     <Card className="border-none shadow-lg">
       <CardContent className="p-8">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e, false)}>
           {formError && (
             <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-md">
               {formError}
@@ -305,19 +316,37 @@ const RegistrationForm = () => {
               </Label>
             </div>
 
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end gap-4 mt-6">
               <Button
                 type="submit"
-                className="bg-primary text-white hover:bg-primary/90"
+                className="bg-secondary text-white hover:bg-secondary/90"
                 disabled={!formData.agreeTerms || isSubmitting}
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Submitting...
+                    Processing...
                   </>
                 ) : (
-                  "Submit Registration"
+                  "Enquire Now"
+                )}
+              </Button>
+              <Button
+                type="button"
+                className="bg-primary text-white hover:bg-primary/90"
+                disabled={!formData.agreeTerms || isSubmitting}
+                onClick={(e) => {
+                  // Call the same submit handler but with the payment flag set to true
+                  handleSubmit(e, true);
+                }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  "Pay Now"
                 )}
               </Button>
             </div>
