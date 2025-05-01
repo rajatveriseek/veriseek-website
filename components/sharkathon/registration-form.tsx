@@ -319,7 +319,7 @@ const RegistrationForm = () => {
             <div className="flex justify-end gap-4 mt-6">
               <Button
                 type="submit"
-                className="bg-secondary text-white hover:bg-secondary/90"
+                className="bg-primary text-white hover:bg-primary/90"
                 disabled={!formData.agreeTerms || isSubmitting}
               >
                 {isSubmitting ? (
@@ -328,7 +328,7 @@ const RegistrationForm = () => {
                     Processing...
                   </>
                 ) : (
-                  "Enquire Now"
+                  "Enquire More"
                 )}
               </Button>
               <Button
