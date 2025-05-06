@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,6 +22,8 @@ const RegistrationForm = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
+  const [showPaymentButton, setShowPaymentButton] = useState(false);
+  const razorpayButtonRef = useRef<HTMLDivElement | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,6 +35,32 @@ const RegistrationForm = () => {
     howHeard: "",
     agreeTerms: false,
   });
+
+  useEffect(() => {
+    // Clean up any existing script when the component unmounts
+    return () => {
+      const existingScript = document.querySelector('script[data-payment_button_id="pl_QQV7B1juwvKxrM"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
+  const loadRazorpayScript = () => {
+    if (razorpayButtonRef.current) {
+      // Clear any existing content
+      while (razorpayButtonRef.current.firstChild) {
+        razorpayButtonRef.current.removeChild(razorpayButtonRef.current.firstChild);
+      }
+
+      // Create and append the script
+      const script = document.createElement('script');
+      script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+      script.setAttribute('data-payment_button_id', 'pl_QQV7B1juwvKxrM');
+      script.async = true;
+      razorpayButtonRef.current.appendChild(script);
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -58,7 +86,7 @@ const RegistrationForm = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent, shouldRedirectToPayment: boolean = false) => {
+  const handleSubmit = async (e: React.FormEvent, shouldShowPayment: boolean = false) => {
     e.preventDefault();
 
     if (
@@ -93,9 +121,11 @@ const RegistrationForm = () => {
       const result = await submitRegistration(formDataToSubmit);
 
       if (result.success) {
-        if (shouldRedirectToPayment) {
-          // Redirect to payment page
-          window.location.href = "https://rzp.io/rzp/asKBH0Ak";
+        if (shouldShowPayment) {
+          // Show the Razorpay payment button
+          setShowPaymentButton(true);
+          // We need to load the script after the component has updated with showPaymentButton = true
+          setTimeout(() => loadRazorpayScript(), 0);
         } else {
           setFormSubmitted(true);
         }
@@ -143,6 +173,34 @@ const RegistrationForm = () => {
             className="bg-primary text-white hover:bg-primary/90"
           >
             Register Another Student
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (showPaymentButton) {
+    return (
+      <Card className="border-none shadow-lg">
+        <CardContent className="p-8 text-center">
+          <h3 className="text-2xl font-bold text-primary mb-4">
+            Complete Your Payment
+          </h3>
+          <p className="text-gray-600 mb-6">
+            Your registration information has been saved. Please complete the payment to finalize your registration.
+          </p>
+          
+          {/* Razorpay payment button will be inserted here */}
+          <div ref={razorpayButtonRef} className="mb-6"></div>
+          
+          <Button
+            onClick={() => {
+              setShowPaymentButton(false);
+            }}
+            variant="outline"
+            className="mt-4"
+          >
+            Back to Registration
           </Button>
         </CardContent>
       </Card>
@@ -333,7 +391,7 @@ const RegistrationForm = () => {
               </Button>
               <Button
                 type="button"
-                className="bg-primary text-white hover:bg-primary/90"
+                className="bg-secondary text-primary hover:bg-secondary/90"
                 disabled={!formData.agreeTerms || isSubmitting}
                 onClick={(e) => {
                   // Call the same submit handler but with the payment flag set to true
