@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Download } from "lucide-react";
 
 const WavyUnderline = ({ gradientId = "blueYellowGradient", className }) => (
   <svg
@@ -54,7 +55,7 @@ export function PricingCards() {
               <p className="text-white text-base mb-1">Price (Individual):</p>
               <div className="relative inline-block">
                 <div className="text-3xl font-bold text-white">INR 3,500/-</div>
-                <WavyUnderline className="w-96%" />
+                <WavyUnderline className="w-full" />
               </div>
             </div>
 
@@ -81,6 +82,35 @@ export function PricingCards() {
             <p className="text-base font-medium leading-relaxed text-black">
               + <strong>Inclusions:</strong> Learning resources, competition access, and hospitality provisions are all included.
             </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Download Box */}
+      <div className="mt-20">
+        <Card
+          className={cn(
+            "w-full max-w-2xl mx-auto bg-secondary border border-gray-200 rounded-2xl shadow-lg",
+            "transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
+          )}
+        >
+          <CardContent className="flex flex-col md:flex-row items-center justify-between p-6">
+            <div className="mb-4 md:mb-0">
+              <h3 className="text-xl font-semibold text-gray-800">For detailed information</h3>
+              <p className="text-black mt-1">Download our comprehensive information deck</p>
+            </div>
+            <a 
+              href="/Sharkathon-deck.pdf" 
+              download
+              className={cn(
+                "flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full",
+                "font-medium transition-all duration-200 hover:bg-primary/90",
+                "shadow-md hover:shadow-lg"
+              )}
+            >
+              <Download size={18} />
+              Download PDF
+            </a>
           </CardContent>
         </Card>
       </div>
