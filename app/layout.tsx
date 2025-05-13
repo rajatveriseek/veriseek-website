@@ -1,13 +1,11 @@
-import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script"; // ✅ Add this for GA scripts
+import Script from "next/script";
 
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { cn } from "@/lib/utils";
-import Analytics from "./analytics"; // ✅ Import the client-side tracking component
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -28,10 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* ✅ Google Analytics Scripts */}
+        {/* Google Analytics Tag */}
         <Script
-          async
           src="https://www.googletagmanager.com/gtag/js?id=G-8Y6T7J4893"
+          strategy="afterInteractive"
         />
         <Script
           id="google-analytics"
@@ -47,8 +45,6 @@ export default function RootLayout({
         />
       </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
-        {/* ✅ Track route changes */}
-        <Analytics />
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
