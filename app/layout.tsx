@@ -1,12 +1,15 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import Header from "@/components/layout/header"
-import Footer from "@/components/layout/footer"
-import { cn } from "@/lib/utils"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Script from "next/script"; // ✅ Add this for GA scripts
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+import "./globals.css";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
+import { cn } from "@/lib/utils";
+import Analytics from "./analytics"; // ✅ Import the client-side tracking component
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Veriseek Education | Bridging Academic Learning and Professional Skills",
@@ -14,17 +17,38 @@ export const metadata: Metadata = {
     "Veriseek Education is an innovative platform that bridges the gap between traditional academic learning and real-world professional skills through competitions like Sharkathon.",
   keywords:
     "student competitions, educational workshops, Sharkathon, real-world skills, business skills for students, pitch competition, entrepreneurship education, student entrepreneur program, financial literacy for students",
-    generator: 'v0.dev'
-}
+  generator: "v0.dev",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ Google Analytics Scripts */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-8Y6T7J4893"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-8Y6T7J4893');
+            `,
+          }}
+        />
+      </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+        {/* ✅ Track route changes */}
+        <Analytics />
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
@@ -32,9 +56,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }
-
-
-
-import './globals.css'
