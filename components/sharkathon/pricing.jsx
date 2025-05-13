@@ -100,7 +100,7 @@ export function PricingCards() {
               <p className="text-black mt-1">Download our comprehensive information deck</p>
             </div>
             <a 
-              href="/Sharkathon-deck.pdf" 
+              href="./Sharkathon-deck.pdf" 
               download
               className={cn(
                 "flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full",
