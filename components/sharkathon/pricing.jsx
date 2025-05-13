@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Download } from "lucide-react";
+import { getAssetUrl } from "@/lib/image-utils";
 
 const WavyUnderline = ({ gradientId = "blueYellowGradient", className }) => (
   <svg
@@ -97,11 +98,12 @@ export function PricingCards() {
           <CardContent className="flex flex-col md:flex-row items-center justify-between p-6">
             <div className="mb-4 md:mb-0">
               <h3 className="text-xl font-semibold text-gray-800">For detailed information</h3>
-              <p className="text-black mt-1">Download our comprehensive information deck</p>
+              <p className="text-balck mt-1">Download our comprehensive information deck</p>
             </div>
             <a 
-              href="./Sharkathon-deck.pdf" 
-              download
+              href={getAssetUrl("information-deck")}
+              target="_blank"
+              rel="noopener noreferrer"
               className={cn(
                 "flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full",
                 "font-medium transition-all duration-200 hover:bg-primary/90",
