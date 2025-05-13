@@ -1,7 +1,7 @@
-// Image utility functions
+// Image and document utility functions
 
-// Map of image IDs to their paths
-const imageMap: Record<string, string> = {
+// Map of asset IDs to their paths
+const assetMap: Record<string, string> = {
   // Hero images
   "hero-students":
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-02-14%20at%2009.31.05_4af1bbdd.jpg-ev8RWkuiymZJxd7zDh3KeZhgd6O0Xg.jpeg",
@@ -49,24 +49,44 @@ const imageMap: Record<string, string> = {
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-03-05%20at%2020.40.15_22d3c962.jpg-IdTTpD1iwsllTb8cVqRPf8imgAni4O.jpeg",
 
   // Logo
-  logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Veriseek_Education_transparent_logo%5B1%5D-Im04SbZjcWVWMUuepPnYnfxlZs28TH.png",
+  "logo": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Veriseek_Education_transparent_logo%5B1%5D-Im04SbZjcWVWMUuepPnYnfxlZs28TH.png",
+
+  // Documents
+  "information-deck": "/sharkathon-deck.pdf"
 }
 
 /**
- * Get the URL for an image by its ID
+ * Get the URL for an asset by its ID
+ * @param id The asset ID
+ * @returns The asset URL or a placeholder if not found
+ */
+export function getAssetUrl(id: string): string {
+  return assetMap[id] || `/placeholder.svg?height=400&width=600`
+}
+
+/**
+ * Get the URL for an image by its ID (alias for backward compatibility)
  * @param id The image ID
  * @returns The image URL or a placeholder if not found
  */
 export function getImageUrl(id: string): string {
-  return imageMap[id] || `/placeholder.svg?height=400&width=600`
+  return getAssetUrl(id)
 }
 
 /**
- * Check if an image exists
+ * Check if an asset exists
+ * @param id The asset ID
+ * @returns True if the asset exists, false otherwise
+ */
+export function assetExists(id: string): boolean {
+  return id in assetMap
+}
+
+/**
+ * Check if an image exists (alias for backward compatibility)
  * @param id The image ID
  * @returns True if the image exists, false otherwise
  */
 export function imageExists(id: string): boolean {
-  return id in imageMap
+  return assetExists(id)
 }
-
