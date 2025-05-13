@@ -6,6 +6,8 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/next"
+
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -25,26 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Google Analytics Tag */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-8Y6T7J4893"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-8Y6T7J4893');
-            `,
-          }}
-        />
-      </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+        <Analytics/>
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
