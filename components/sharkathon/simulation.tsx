@@ -59,60 +59,59 @@ const SimulationProcess = () => {
           ))}
         </div>
 
-        {/* Expert Panel and Download Box in single row */}
-        <div className="flex flex-col md:flex-row gap-6 mt-8 max-w-5xl mx-auto">
-          {/* Expert Panel Section - Taking 2/3 of the space */}
-          <div className="bg-secondary rounded-xl shadow-lg md:w-2/3 transform transition-all duration-300 hover:shadow-xl">
-            <div className="p-6 border-l-4 flex items-center gap-4 h-full" style={{ borderColor: navyBlue }}>
+        {/* Expert Panel Section */}
+        <div className="mt-12 max-w-4xl mx-auto">
+          <div className="bg-secondary rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-xl">
+            <div className="p-4 border-l-4 flex items-center gap-4" style={{ borderColor: navyBlue }}>
               {/* Shark Image */}
               <img 
                 src="/shark.png" 
                 alt="Shark Icon" 
-                className="w-20 h-20 object-contain"
+                className="w-16 h-16 object-contain"
               />
 
               {/* Text */}
               <div>
-                <h4 className="text-xl font-bold mb-3" style={{ color: navyBlue }}>
+                <h4 className="text-lg font-bold mb-1" style={{ color: navyBlue }}>
                   Expert Judging Panel
                 </h4>
-                <p className="text-black leading-relaxed">
+                <p className="text-black text-sm">
                   Evaluation by eminent venture capital, debt firms, and leading CXOs from startups, probably even <span className='font-bold'>Sharks</span>, 
                   ensuring high-level scrutiny and real-world relevance.
                 </p>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Download Box - Taking 1/3 of the space */}
-          <div className="md:w-1/3">
-            <Card
-              className={cn(
-                "w-full h-full bg-primary border border-gray-200 rounded-2xl shadow-lg",
-                "transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
-              )}
-            >
-              <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-                <div className="mb-4 text-center">
-                  <h3 className="text-xl font-semibold text-secondary">For detailed information</h3>
-                  <p className="text-white mt-1">Download our comprehensive information deck</p>
-                </div>
-                <a 
-                  href="/deck.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "flex items-center gap-2 px-6 py-3 bg-secondary text-black rounded-full",
-                    "font-medium transition-all duration-200 hover:-translate-y-2 hover:shadow-xl",
-                    "shadow-md hover:shadow-lg"
-                  )}
-                >
-                  <Download size={18} />
-                  Download PDF
-                </a>
-              </CardContent>
-            </Card>
-          </div>
+        {/* Download Box */}
+        <div className="mt-6 max-w-2xl mx-auto">
+          <Card
+            className={cn(
+              "w-full bg-primary border border-gray-200 rounded-2xl shadow-lg",
+              "transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
+            )}
+          >
+            <CardContent className="flex flex-col md:flex-row items-center justify-between p-4">
+              <div className="mb-2 md:mb-0">
+                <h3 className="text-lg font-semibold text-secondary">For detailed information</h3>
+                <p className="text-white text-sm">Download our comprehensive information deck</p>
+              </div>
+              <a 
+                href="/deck.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "flex items-center gap-2 px-4 py-2 bg-secondary text-black rounded-full",
+                  "font-medium transition-all duration-200 hover:-translate-y-1 hover:shadow-md",
+                  "shadow-sm"
+                )}
+              >
+                <Download size={16} />
+                Download PDF
+              </a>
+            </CardContent>
+          </Card>
         </div>
 
       </div>
