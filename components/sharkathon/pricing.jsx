@@ -90,22 +90,22 @@ export function PricingCards() {
       <div className="mt-20">
         <Card
           className={cn(
-            "w-full max-w-2xl mx-auto bg-secondary border border-gray-200 rounded-2xl shadow-lg",
+            "w-full max-w-2xl mx-auto bg-primary border border-gray-200 rounded-2xl shadow-lg",
             "transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
           )}
         >
           <CardContent className="flex flex-col md:flex-row items-center justify-between p-6">
             <div className="mb-4 md:mb-0">
-              <h3 className="text-xl font-semibold text-gray-800">For detailed information</h3>
-              <p className="text-black mt-1">Download our comprehensive information deck</p>
+              <h3 className="text-xl font-semibold text-secondary">For detailed information</h3>
+              <p className="text-white mt-1">Download our comprehensive information deck</p>
             </div>
             <a 
               href="/deck.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                "flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full",
-                "font-medium transition-all duration-200 hover:bg-primary/90",
+                "flex items-center gap-2 px-6 py-3 bg-secondary text-black rounded-full",
+                "font-medium transition-all duration-200 hover:-translate-y-2 hover:shadow-xl",
                 "shadow-md hover:shadow-lg"
               )}
             >
