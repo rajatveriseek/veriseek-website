@@ -328,7 +328,7 @@ const RegistrationForm = () => {
                     Processing...
                   </>
                 ) : (
-                  "Enquire More"
+                  "Inquire More"
                 )}
               </Button>
               <Button
