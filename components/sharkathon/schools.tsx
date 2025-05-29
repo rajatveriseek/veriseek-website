@@ -2,20 +2,16 @@
 import React from 'react';
 
 export default function SchoolMarquee() {
-  // Sample school logos - replace these with your actual school logo paths
   const schoolLogos = [
-    { src: "/schools/amity.jpg", alt: "Amity School", name: "Amity School" },
-    { src: "/schools/kp.jpg", alt: "Kunskappaskolan school", name: "Kunskappaskolan school" },
-    { src: "/schools/gwh.jpg", alt: "Greenwood high", name: "Greenwood high" },
+    { src: "/schools/amity.png", alt: "Amity School", name: "Amity School" },
+    { src: "/schools/kp.png", alt: "Kunskappaskolan school", name: "Kunskappaskolan school" },
+    { src: "/schools/gwh.png", alt: "Greenwood high", name: "Greenwood high" },
     { src: "/schools/cps.png", alt: "centre point", name: "centre point" },
   ];
 
-  // Duplicate the array to create seamless loop
-  const duplicatedLogos = [...schoolLogos, ...schoolLogos];
-
   return (
     <div className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 py-12 overflow-hidden">
-      {/* Header Section */}
+      {/* Header */}
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold text-gray-800 mb-4">
           Schools Already Participating
@@ -26,20 +22,17 @@ export default function SchoolMarquee() {
         </p>
       </div>
 
-      {/* Marquee Container */}
-      <div className="relative">
-        {/* Gradient overlays for smooth fade effect */}
-        
-        
-        {/* Scrolling logos container */}
-        <div className="flex animate-marquee items-center">
-          {duplicatedLogos.map((school, index) => (
+      {/* Marquee */}
+      <div className="relative w-full overflow-hidden">
+        <div className="flex w-max animate-marquee whitespace-nowrap">
+          {/* Duplicated once only */}
+          {[...schoolLogos, ...schoolLogos].map((school, index) => (
             <div
               key={index}
-              className="flex-shrink-0 mx-12 group cursor-pointer"
+              className="flex-shrink-0 mx-[140px] group cursor-pointer"
             >
               <div className={`flex items-center justify-center ${
-                school.name === "centre point" || school.name === "Amity School" ? "w-32 h-32" : "w-24 h-24"
+                school.name === "centre point" || school.name === "Amity School" ? "w-48 h-32" : "w-32 h-24"
               }`}>
                 <img 
                   src={school.src} 
@@ -59,7 +52,7 @@ export default function SchoolMarquee() {
         </p>
       </div>
 
-      {/* Custom CSS for marquee animation */}
+      {/* Smoother Marquee Animation */}
       <style dangerouslySetInnerHTML={{
         __html: `
           @keyframes marquee {
@@ -70,11 +63,11 @@ export default function SchoolMarquee() {
               transform: translateX(-50%);
             }
           }
-          
+
           .animate-marquee {
-            animation: marquee 30s linear infinite;
+            animation: marquee 25s linear infinite;
           }
-          
+
           .animate-marquee:hover {
             animation-play-state: paused;
           }
