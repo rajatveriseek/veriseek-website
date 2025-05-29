@@ -120,13 +120,13 @@ function ProfileCard({ profile }) {
           </p>
           
           {/* Logos */}
-          <div className="flex items-left max-w-10 gap-2 mt-3">
+          <div className="flex items-left max-w-16 gap-2 mt-3">
             {profile.logos.map((logo, idx) => (
               <img 
                 key={idx}
                 src={logo.src} 
                 alt={logo.alt}
-                className="h-10 object-contain"
+                className={`object-contain ${logo.alt === 'calvin klein' ? 'pt-2 h-10 w-20' : 'h-10'}`}
               />
             ))}
           </div>
