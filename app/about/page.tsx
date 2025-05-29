@@ -67,7 +67,7 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Meet Our Founders</h2>
+            <h2 className="text-3xl font-bold text-primary">Meet Our Directors</h2>
             <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
               Visionary leaders with a passion for transforming education
             </p>
@@ -85,7 +85,7 @@ export default function AboutPage() {
                   className="rounded-full mb-4 object-cover"
                 />
                 <h3 className="text-xl font-bold text-primary">Rajat Kumar</h3>
-                <p className="text-secondary font-medium mb-2">Co-Founder & CEO</p>
+                
                 <p className="text-gray-600 mb-4">
                   Former McKinsey consultant with an MBA from Wharton. Passionate about educational innovation and
                   entrepreneurship.
@@ -122,7 +122,7 @@ export default function AboutPage() {
                   className="rounded-full mb-4 object-cover"
                 />
                 <h3 className="text-xl font-bold text-primary">Durba Ray</h3>
-                <p className="text-secondary font-medium mb-2">Co-Founder & COO</p>
+                
                 <p className="text-gray-600 mb-4">
                   Former executive at Airtel with a degree from University of Rochester. Expert in educational program
                   development.
