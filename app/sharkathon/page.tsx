@@ -22,6 +22,7 @@ import HeroSection from "@/components/sharkathon/heroSection"
 import ProgramFlowImage from "@/components/sharkathon/dates"
 import ProgramTimeline from "@/components/sharkathon/timeline_v2"
 import ProfileCards from "@/components/sharkathon/mentor2"
+import SchoolMarquee from "@/components/sharkathon/schools"
 
 
 export const metadata = {
@@ -44,6 +45,7 @@ export default function SharkathonPage() {
         </div>
       </section>
       <ProfileCards/>
+      <SchoolMarquee/>
       <section className="py-10 px-0 bg-primary" id="process">
         <div className="container">
           
