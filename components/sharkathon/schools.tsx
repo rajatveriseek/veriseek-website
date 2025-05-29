@@ -29,8 +29,7 @@ export default function SchoolMarquee() {
       {/* Marquee Container */}
       <div className="relative">
         {/* Gradient overlays for smooth fade effect */}
-        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-blue-50 to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-indigo-50 to-transparent z-10"></div>
+        
         
         {/* Scrolling logos container */}
         <div className="flex animate-marquee items-center">
