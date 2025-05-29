@@ -29,7 +29,7 @@ export default function SchoolMarquee() {
           {[...schoolLogos, ...schoolLogos].map((school, index) => (
             <div
               key={index}
-              className="flex-shrink-0 mx-[140px] group cursor-pointer"
+              className="flex-shrink-0 mx-[120px] group cursor-pointer"
             >
               <div className={`flex items-center justify-center ${
                 school.name === "centre point" || school.name === "Amity School" ? "w-48 h-32" : "w-32 h-24"
