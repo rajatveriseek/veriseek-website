@@ -7,7 +7,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next"
-import { GoogleAnalytics } from './analytics';
+import GoogleAnalytics from "./analytics";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -27,11 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <GoogleAnalytics />
-      </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
-        
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+            <GoogleAnalytics ga_id= 
+            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+          )}
         <Analytics/>
         <div className="relative flex min-h-screen flex-col">
           <Header />
