@@ -11,6 +11,9 @@ import GoogleAnalytics from "./analytics";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
+// Replace 'YOUR_GA_ID_HERE' with your actual Google Analytics ID (e.g., 'G-XXXXXXXXXX')
+const GOOGLE_ANALYTICS_ID = ' G-DJ59N085L0';
+
 export const metadata: Metadata = {
   title: "Veriseek Education | Bridging Academic Learning and Professional Skills",
   description:
@@ -28,9 +31,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
-        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
-            <GoogleAnalytics ga_id= 
-            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+        {GOOGLE_ANALYTICS_ID && (
+            <GoogleAnalytics ga_id={GOOGLE_ANALYTICS_ID} />
           )}
         <Analytics/>
         <div className="relative flex min-h-screen flex-col">
