@@ -19,6 +19,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { submitRegistration } from "@/app/actions/registration";
 
 const RegistrationForm = () => {
+  const [showForm, setShowForm] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
@@ -110,6 +111,50 @@ const RegistrationForm = () => {
     }
   };
 
+  const handlePayNowDirect = () => {
+    window.location.href = "https://rzp.io/rzp/asKBH0Ak";
+  };
+
+  const resetForm = () => {
+    setFormSubmitted(false);
+    setShowForm(false);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      school: "",
+      schoolCity: "",
+      grade: "",
+      howHeard: "",
+      agreeTerms: false,
+    });
+  };
+
+  // Initial buttons view
+  if (!showForm && !formSubmitted) {
+    return (
+      <Card className="border-none shadow-lg">
+        <CardContent className="p-8 text-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => setShowForm(true)}
+              className="bg-primary text-white hover:bg-primary/90 px-8 py-3"
+            >
+              Enquire Now
+            </Button>
+            <Button
+              onClick={handlePayNowDirect}
+              className="bg-green-600 text-white hover:bg-green-700 px-8 py-3"
+            >
+              Pay Now
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (formSubmitted) {
     return (
       <Card className="border-none shadow-lg">
@@ -125,25 +170,20 @@ const RegistrationForm = () => {
           <p className="text-gray-600 mb-6">
             Thank you for registering for Sharkathon!
           </p>
-          <Button
-            onClick={() => {
-              setFormSubmitted(false);
-              setFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                phone: "",
-                school: "",
-                schoolCity: "",
-                grade: "",
-                howHeard: "",
-                agreeTerms: false,
-              });
-            }}
-            className="bg-primary text-white hover:bg-primary/90"
-          >
-            Register Another Student
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={resetForm}
+              className="bg-primary text-white hover:bg-primary/90"
+            >
+              Register Another Student
+            </Button>
+            <Button
+              onClick={handlePayNowDirect}
+              className="bg-green-600 text-white hover:bg-green-700"
+            >
+              Pay Now
+            </Button>
+          </div>
         </CardContent>
       </Card>
     );
@@ -152,6 +192,16 @@ const RegistrationForm = () => {
   return (
     <Card className="border-none shadow-lg">
       <CardContent className="p-8">
+        <div className="mb-6">
+          <Button
+            onClick={() => setShowForm(false)}
+            variant="outline"
+            className="mb-4"
+          >
+            ← Back to Options
+          </Button>
+        </div>
+
         <form onSubmit={(e) => handleSubmit(e, false)}>
           {formError && (
             <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-md">
@@ -333,7 +383,7 @@ const RegistrationForm = () => {
               </Button>
               <Button
                 type="button"
-                className="bg-primary text-white hover:bg-primary/90"
+                className="bg-green-600 text-white hover:bg-green-700"
                 disabled={!formData.agreeTerms || isSubmitting}
                 onClick={(e) => {
                   // Call the same submit handler but with the payment flag set to true
