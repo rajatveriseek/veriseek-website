@@ -134,18 +134,18 @@ const RegistrationForm = () => {
   // Initial buttons view
   if (!showForm && !formSubmitted) {
     return (
-      <Card className="border-none shadow-lg">
+      <Card className="border-none shadow-lg bg-yellow-400">
         <CardContent className="p-8 text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               onClick={() => setShowForm(true)}
-              className="bg-primary text-white hover:bg-primary/90 px-8 py-3"
+              className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-3 font-bold"
             >
-              Enquire Now
+              Inquire Now
             </Button>
             <Button
               onClick={handlePayNowDirect}
-              className="bg-green-600 text-white hover:bg-green-700 px-8 py-3"
+              className="bg-blue-900 text-yellow-400 hover:bg-blue-800 px-8 py-3 font-bold"
             >
               Pay Now
             </Button>
@@ -366,7 +366,7 @@ const RegistrationForm = () => {
               </Label>
             </div>
 
-            <div className="flex justify-end gap-4 mt-6">
+            <div className="flex justify-end mt-6">
               <Button
                 type="submit"
                 className="bg-primary text-white hover:bg-primary/90"
@@ -379,24 +379,6 @@ const RegistrationForm = () => {
                   </>
                 ) : (
                   "Inquire More "
-                )}
-              </Button>
-              <Button
-                type="button"
-                className="bg-green-600 text-white hover:bg-green-700"
-                disabled={!formData.agreeTerms || isSubmitting}
-                onClick={(e) => {
-                  // Call the same submit handler but with the payment flag set to true
-                  handleSubmit(e, true);
-                }}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Processing...
-                  </>
-                ) : (
-                  "Pay Now"
                 )}
               </Button>
             </div>
