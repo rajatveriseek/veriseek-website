@@ -136,17 +136,17 @@ const RegistrationForm = () => {
     return (
       <div className="flex justify-center">
           <Card className=" border-none shadow-lg bg-yellow-400">
-          <CardContent className="w-screen p-8 text-center">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <CardContent className=" p-8 text-center">
+            <div className="flex flex-col sm:flex-row gap-16 justify-center">
               <Button
                 onClick={() => setShowForm(true)}
-                className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-3 font-bold"
+                className="bg-white text-blue-900 hover:bg-gray-100 px-32 py-8 font-bold"
               >
                 Inquire Now
               </Button>
               <Button
                 onClick={handlePayNowDirect}
-                className="bg-blue-900 text-yellow-400 hover:bg-blue-800 px-8 py-3 font-bold"
+                className="bg-blue-900 text-yellow-400 hover:bg-blue-800 px-32 py-8 font-bold"
               >
                 Pay Now
               </Button>
