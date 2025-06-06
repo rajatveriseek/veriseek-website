@@ -135,7 +135,7 @@ const RegistrationForm = () => {
   if (!showForm && !formSubmitted) {
     return (
       <div className="flex justify-center">
-          <Card className=" border-none shadow-lg bg-yellow-400">
+          <Card className=" border-none shadow-2xl bg-yellow-400">
           <CardContent className=" p-8 text-center">
             <div className="flex flex-col sm:flex-row gap-16 justify-center">
               <Button
