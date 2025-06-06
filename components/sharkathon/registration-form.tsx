@@ -140,13 +140,13 @@ const RegistrationForm = () => {
             <div className="flex flex-col sm:flex-row gap-16 justify-center">
               <Button
                 onClick={() => setShowForm(true)}
-                className="bg-white text-blue-900 hover:bg-gray-100 px-32 py-8 font-bold"
+                className="bg-white text-blue-900 hover:bg-gray-100 px-32 py-8 font-bold text-lg"
               >
                 Inquire Now
               </Button>
               <Button
                 onClick={handlePayNowDirect}
-                className="bg-blue-900 text-yellow-400 hover:bg-blue-800 px-32 py-8 font-bold"
+                className="bg-blue-900 text-yellow-400 hover:bg-blue-800 px-32 py-8 font-bold text-lg"
               >
                 Pay Now
               </Button>
