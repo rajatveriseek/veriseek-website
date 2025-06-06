@@ -8,6 +8,7 @@ export default function SchoolMarquee() {
     { src: "/schools/gwh.png", alt: "Greenwood high", name: "Greenwood high" },
     { src: "/schools/cps.png", alt: "centre point", name: "centre point" },
     { src: "/schools/heritage.png", alt: "heritage", name: "heritage" },
+    { src: "/schools/pathway.png", alt: "pathway", name: "pathway" },
   ];
 
   return (
@@ -33,7 +34,7 @@ export default function SchoolMarquee() {
               className="flex-shrink-0 mx-[120px] group cursor-pointer"
             >
               <div className={`flex items-center justify-center ${
-                school.name === "centre point" || school.name === "Amity School" || school.name ==="heritage" ? "w-48 h-32" : "w-32 h-24"
+                school.name === "centre point" || school.name === "Amity School" || school.name ==="pathway" || school.name ==="heritage" ? "w-48 h-32" : "w-32 h-24"
               }`}>
                 <img 
                   src={school.src} 
