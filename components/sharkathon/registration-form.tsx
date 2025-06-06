@@ -134,7 +134,7 @@ const RegistrationForm = () => {
   // Initial buttons view
   if (!showForm && !formSubmitted) {
     return (
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-16 pb-32">
           <Card className=" border-none shadow-2xl bg-yellow-400">
           <CardContent className=" p-8 text-center">
             <div className="flex flex-col sm:flex-row gap-16 justify-center">
