@@ -64,13 +64,8 @@ const RegistrationForm = () => {
 
     if (
       !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
       !formData.phone ||
       !formData.school ||
-      !formData.schoolCity ||
-      !formData.grade ||
-      !formData.howHeard ||
       !formData.agreeTerms
     ) {
       setFormError("Please fill in all required fields and agree to the terms");
@@ -230,27 +225,25 @@ const RegistrationForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name *</Label>
+                  <Label htmlFor="lastName">Last Name</Label>
                   <Input
                     id="lastName"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address *</Label>
+                  <Label htmlFor="email">Email Address</Label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -280,18 +273,17 @@ const RegistrationForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="schoolCity">School City *</Label>
+                  <Label htmlFor="schoolCity">School City</Label>
                   <Input
                     id="schoolCity"
                     name="schoolCity"
                     value={formData.schoolCity}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="grade">Grade Level *</Label>
+                  <Label htmlFor="grade">Grade Level</Label>
                   <Select
                     name="grade"
                     value={formData.grade}
@@ -301,7 +293,6 @@ const RegistrationForm = () => {
                         grade: value,
                       }));
                     }}
-                    required
                   >
                     <SelectTrigger id="grade">
                       <SelectValue placeholder="Select grade" />
@@ -318,7 +309,7 @@ const RegistrationForm = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="howHeard">
-                    How did you hear about Sharkathon? *
+                    How did you hear about Sharkathon?
                   </Label>
                   <Select
                     name="howHeard"
@@ -326,7 +317,6 @@ const RegistrationForm = () => {
                     onValueChange={(value) =>
                       handleSelectChange("howHeard", value)
                     }
-                    required
                   >
                     <SelectTrigger id="howHeard">
                       <SelectValue placeholder="Select an option" />
