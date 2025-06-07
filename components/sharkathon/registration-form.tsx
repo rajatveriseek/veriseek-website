@@ -64,13 +64,8 @@ const RegistrationForm = () => {
 
     if (
       !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
       !formData.phone ||
       !formData.school ||
-      !formData.schoolCity ||
-      !formData.grade ||
-      !formData.howHeard ||
       !formData.agreeTerms
     ) {
       setFormError("Please fill in all required fields and agree to the terms");
@@ -219,7 +214,7 @@ const RegistrationForm = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name *</Label>
+                  <Label htmlFor="firstName">Name *</Label>
                   <Input
                     id="firstName"
                     name="firstName"
@@ -230,27 +225,13 @@ const RegistrationForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name *</Label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address *</Label>
+                  <Label htmlFor="email">Email Address</Label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -265,9 +246,7 @@ const RegistrationForm = () => {
                     required
                   />
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="school">School Name *</Label>
                   <Input
@@ -278,74 +257,13 @@ const RegistrationForm = () => {
                     required
                   />
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="schoolCity">School City *</Label>
-                  <Input
-                    id="schoolCity"
-                    name="schoolCity"
-                    value={formData.schoolCity}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="grade">Grade Level *</Label>
-                  <Select
-                    name="grade"
-                    value={formData.grade}
-                    onValueChange={(value) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        grade: value,
-                      }));
-                    }}
-                    required
-                  >
-                    <SelectTrigger id="grade">
-                      <SelectValue placeholder="Select grade" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="9">9th Grade</SelectItem>
-                      <SelectItem value="10">10th Grade</SelectItem>
-                      <SelectItem value="11">11th Grade</SelectItem>
-                      <SelectItem value="12">12th Grade</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <input type="hidden" name="grade" value={formData.grade} />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="howHeard">
-                    How did you hear about Sharkathon? *
-                  </Label>
-                  <Select
-                    name="howHeard"
-                    value={formData.howHeard}
-                    onValueChange={(value) =>
-                      handleSelectChange("howHeard", value)
-                    }
-                    required
-                  >
-                    <SelectTrigger id="howHeard">
-                      <SelectValue placeholder="Select an option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="school">School</SelectItem>
-                      <SelectItem value="social">Social Media</SelectItem>
-                      <SelectItem value="friend">Friend/Family</SelectItem>
-                      <SelectItem value="search">Search Engine</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <input
-                    type="hidden"
-                    name="howHeard"
-                    value={formData.howHeard}
-                  />
-                </div>
               </div>
+
+              {/* Hidden fields to maintain form data structure */}
+              <input type="hidden" name="lastName" value={formData.lastName} />
+              <input type="hidden" name="schoolCity" value={formData.schoolCity} />
+              <input type="hidden" name="grade" value={formData.grade} />
+              <input type="hidden" name="howHeard" value={formData.howHeard} />
             </div>
 
             <div className="flex items-center space-x-2 mt-4">
