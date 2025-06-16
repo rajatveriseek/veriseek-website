@@ -9,6 +9,7 @@ export default function SchoolMarquee() {
     { src: "/schools/cps.png", alt: "centre point", name: "centre point" },
     { src: "/schools/heritage.png", alt: "heritage", name: "heritage" },
     { src: "/schools/pathway.png", alt: "pathway", name: "pathway" },
+    { src: "/schools/doon.png", alt: "doon", name: "doon" },
   ];
 
   return (
