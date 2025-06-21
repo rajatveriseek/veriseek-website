@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { Mail, MapPin, Phone, Instagram } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Contact Us | Veriseek Education",
@@ -64,6 +64,12 @@ export default function ContactPage() {
                     Gurugram, Haryana 122002
                   </address>
                 </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <Instagram size={24} className="mr-2 text-secondary" />
+                <Link href="https://www.instagram.com/veriseek_edu?igsh=MXRnbGx6c2k1cjluaQ==" className="text-lg text-black-300 hover:text-secondary">
+                  Instagram- veriseek_edu
+                </Link>
               </div>
             </div>
           </div>
