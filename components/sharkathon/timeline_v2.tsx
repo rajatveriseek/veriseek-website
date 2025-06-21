@@ -39,7 +39,7 @@ export default function ProgramTimeline() {
     },
     {
       number: 2,
-      date: "1st July 2025",
+      date: "15th July 2025",
       image: "/study-resources.jpeg",
       content: {
         sessions: [

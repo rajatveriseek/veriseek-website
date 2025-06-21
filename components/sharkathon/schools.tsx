@@ -10,6 +10,7 @@ export default function SchoolMarquee() {
     { src: "/schools/heritage.png", alt: "heritage", name: "heritage" },
     { src: "/schools/pathway.png", alt: "pathway", name: "pathway" },
     { src: "/schools/doon.png", alt: "doon", name: "doon" },
+    { src: "/schools/eklavya.png", alt: "eklavya", name: "eklavya" },
   ];
 
   return (
@@ -35,7 +36,7 @@ export default function SchoolMarquee() {
               className="flex-shrink-0 mx-[120px] group cursor-pointer"
             >
               <div className={`flex items-center justify-center ${
-                school.name === "centre point" || school.name === "Amity School" || school.name ==="pathway" || school.name ==="heritage" ? "w-48 h-32" : "w-32 h-24"
+                school.name === "centre point" || school.name === "Amity School" || school.name ==="pathway" || school.name ==="eklavya" || school.name ==="heritage" ? "w-48 h-32" : "w-32 h-24"
               }`}>
                 <img 
                   src={school.src} 
