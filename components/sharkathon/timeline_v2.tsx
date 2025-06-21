@@ -28,7 +28,7 @@ export default function ProgramTimeline() {
   const weeks = [
         {
       number: 1,
-      date: "15th 2025",
+      date: "15th July 2025",
       image: "/register.jpeg",
       content: {
         sessions: [
