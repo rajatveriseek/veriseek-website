@@ -28,7 +28,7 @@ export default function ProgramTimeline() {
   const weeks = [
         {
       number: 1,
-      date: "20th June 2025",
+      date: "15th 2025",
       image: "/register.jpeg",
       content: {
         sessions: [
@@ -39,7 +39,7 @@ export default function ProgramTimeline() {
     },
     {
       number: 2,
-      date: "15th July 2025",
+      date: "15th June 2025",
       image: "/study-resources.jpeg",
       content: {
         sessions: [

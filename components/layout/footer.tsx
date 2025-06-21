@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, Phone, MapPin, Instagram } from "lucide-react"
+import { Mail, Phone, MapPin } from "lucide-react"
 
 // Import the image utility
 import { getImageUrl } from "@/lib/image-utils"
@@ -98,7 +98,13 @@ const Footer = () => {
                 </Link>
               </li>
               <li className="flex items-center">
-                <Instagram size={18} className="mr-2 text-secondary" />
+                <Image
+                  src={"/instagram-logo.png"}
+                  alt="Instagram"
+                  width={18}
+                  height={18}
+                  className="mr-2"
+                />
                 <Link href="https://www.instagram.com/veriseek_edu?igsh=MXRnbGx6c2k1cjluaQ==" className="text-sm text-gray-300 hover:text-secondary">
                   Instagram- veriseek_edu
                 </Link>
@@ -116,4 +122,3 @@ const Footer = () => {
 }
 
 export default Footer
-
