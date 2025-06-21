@@ -74,7 +74,7 @@ export default function ContactPage() {
                   height={18}
                   className="mr-2"               
                  />
-                <Link href="https://www.instagram.com/veriseek_edu?igsh=MXRnbGx6c2k1cjluaQ==" className="text-sm text-black-300 hover:text-secondary">
+                <Link href="https://www.instagram.com/veriseekeducation?igsh=MTdjdzE1NW03bjZ0bQ==" className="text-sm text-black-300 hover:text-secondary">
                   Instagram- veriseek_edu
                 </Link>
               </div>
