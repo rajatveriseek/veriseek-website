@@ -8,7 +8,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(true); // Start as playing for autoplay
-  const [isMuted, setIsMuted] = useState(false); // Start unmuted
+  const [isMuted, setIsMuted] = useState(true); // Start unmuted
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Toggle play/pause state
