@@ -3,8 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Trophy, Zap } from 'lucide-react';
-import ImageCarousel from "@/components/sharkathon/carousel.jsx"; // Assuming this exists
-
+import VideoPlayer from "@/components/sharkathon/videoPlayer"; // Import the new video player
 // --- Sub-Components ---
 
 const ApplicationStatusBanner = () => (
@@ -81,7 +80,7 @@ const ActionButtons = () => (
 );
 
 const EligibilityBadge = () => (
-  <div className="absolute -bottom-4 -left-4 bg-white p-1 sm:p-2 md:p-3 rounded-lg shadow-xl border-2 border-yellow-400 z-20 scale-90 sm:scale-100">
+  <div className="absolute bottom-4 -left-4 bg-white p-1 sm:p-2 md:p-3 rounded-lg shadow-xl border-2 border-yellow-400 z-20 scale-90 sm:scale-100">
     <div className="flex flex-row items-start gap-2 sm:gap-6 text-xs sm:text-base">
       {/* Eligibility Block */}
       <div className="flex flex-col">
@@ -104,19 +103,31 @@ const EligibilityBadge = () => (
   </div>
 );
 
-const ImageSection = () => (
+ const ImageSection = () => (
   <div className="relative mt-8 lg:mt-0">
-    {/* Decorative blur effect */}
-    <div className="absolute -inset-4 bg-gradient-to-r from-teal-400 to-purple-500 rounded-2xl opacity-15 blur-lg"></div>
-    {/* Carousel container */}
-    <div className="relative overflow-hidden rounded-xl border-2 border-yellow-400/30 shadow-lg">
-      <ImageCarousel />
+    {/* Title for the video */}
+    {/* Use flexbox to align text and the logo image horizontally */}
+    <h2 className="text-2xl md:text-4xl font-bold text-center text-white mb-4 flex justify-center items-center gap-3">
+      <span>What is</span>
+      <img
+        src="/logo.png" // Make sure this path is correct
+        alt="SHARKATHON"
+        // Use a fixed height and `w-auto` to make the logo fit neatly with the text.
+        // The previous classes (`max-w-xs w-full`) were too large for this context.
+        className="h-8 md:h-10 w-auto"
+      />
+      <span>?</span>
+    </h2>
+    
+    {/* Video container */}
+    <div className="relative overflow-hidden rounded-xl border-2 border-yellow-400/30 aspect-[9/16] max-w-xs mx-auto">
+      <VideoPlayer src="/veriseek-education.mp4" /> {/* Make sure this path is correct in your public folder */}
     </div>
+    
     {/* Eligibility Badge - positioned relative to this container */}
     <EligibilityBadge />
   </div>
 );
-
 const BackgroundDecorations = () => (
   <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
     <div className="absolute top-1/4 -left-20 w-64 h-64 bg-yellow-400/5 rounded-full blur-3xl"></div>
