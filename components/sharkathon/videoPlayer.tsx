@@ -48,7 +48,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
         }
       },
       {
-        threshold: 0.5, // Trigger when 50% of the video is out of view
+        threshold: 0.9, // Trigger when 50% of the video is out of view
       }
     );
 
