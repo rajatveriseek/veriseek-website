@@ -9,10 +9,30 @@ interface VideoPlayerProps {
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(true); // Start as playing for autoplay
   const [isMuted, setIsMuted] = useState(false); // Start unmuted
+  const [hasUserInteracted, setHasUserInteracted] = useState(false); // Track user interaction
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // This will work after user interaction
+  const playWithSound = async () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      setIsMuted(false);
+      await videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  // Track user interaction and enable sound
+  const handleUserInteraction = () => {
+    if (!hasUserInteracted) {
+      setHasUserInteracted(true);
+      playWithSound();
+    }
+  };
 
   // Toggle play/pause state
   const handlePlayPause = () => {
+    handleUserInteraction(); // Enable sound on first interaction
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -26,6 +46,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
 
   // Toggle mute/unmute state
   const handleMuteToggle = () => {
+    handleUserInteraction(); // Enable sound on first interaction
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
@@ -64,6 +85,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
     };
   }, []);
 
+  // ADD THIS: Global click handler to detect any user interaction
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      if (!hasUserInteracted) {
+        handleUserInteraction();
+      }
+    };
+
+    // Add event listener for any click on the document
+    document.addEventListener('click', handleGlobalClick);
+
+    return () => {
+      document.removeEventListener('click', handleGlobalClick);
+    };
+  }, [hasUserInteracted]);
+
   // ADD THIS: Handle autoplay gracefully
   useEffect(() => {
     const playVideo = async () => {
@@ -92,17 +129,25 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
   }, []);
 
   return (
-    <div className="relative w-full h-90% group">
+    <div className="relative w-full h-90% group" onClick={handleUserInteraction}>
       <video
         ref={videoRef}
         className="w-full h-full object-cover"
         src={src}
         autoPlay // Video autoplays on load
+        muted={!hasUserInteracted} // Muted until user interaction
         playsInline
         onEnded={handleVideoEnd} // Add onEnded event handler
       >
         Your browser does not support the video tag.
       </video>
+
+      {/* Show unmute hint if video is muted */}
+      {!hasUserInteracted && (
+        <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+          🔊 Tap for sound
+        </div>
+      )}
 
       {/* Controls Overlay */}
       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-30 opacity-0 group-hover:opacity-100 transition-all duration-300">
