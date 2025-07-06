@@ -8,7 +8,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(true); // Start as playing for autoplay
-  const [isMuted, setIsMuted] = useState(true); // Start unmuted
+  const [isMuted, setIsMuted] = useState(false); // Start unmuted
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Toggle play/pause state
@@ -62,6 +62,33 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src }) => {
         observer.unobserve(videoRef.current);
       }
     };
+  }, []);
+
+  // ADD THIS: Handle autoplay gracefully
+  useEffect(() => {
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          await videoRef.current.play();
+          setIsPlaying(true);
+        } catch (error) {
+          // Autoplay failed, likely due to browser policy
+          console.log('Autoplay failed:', error);
+          setIsPlaying(false);
+          // Optionally mute and try again
+          videoRef.current.muted = true;
+          setIsMuted(true);
+          try {
+            await videoRef.current.play();
+            setIsPlaying(true);
+          } catch (mutedError) {
+            console.log('Muted autoplay also failed:', mutedError);
+          }
+        }
+      }
+    };
+
+    playVideo();
   }, []);
 
   return (
