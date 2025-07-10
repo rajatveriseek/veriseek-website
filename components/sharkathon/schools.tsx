@@ -18,12 +18,10 @@ export default function SchoolMarquee() {
       {/* Header */}
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold text-gray-800 mb-4">
-          Students From Institutions
+          Students From Prestigious Institutions
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-          Join these prestigious institutions that have already registered for the competition
-        </p>
+
       </div>
 
       {/* Marquee */}
