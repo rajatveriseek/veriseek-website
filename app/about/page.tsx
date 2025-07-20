@@ -250,9 +250,9 @@ export default function AboutPage() {
                   </span>
                 </li>
               </ul>
-              <Button asChild className="bg-primary text-white hover:bg-primary/90 mt-4">
+              {/* <Button asChild className="bg-primary text-white hover:bg-primary/90 mt-4">
                 <Link href="/sharkathon#register">Register Now</Link>
-              </Button>
+              </Button> */}
             </div>
             <div className="order-1 lg:order-2">
               {/* Replace the educational approach image */}
@@ -271,13 +271,13 @@ export default function AboutPage() {
               Join Sharkathon today and embark on an exciting journey of critical thinking, analysis, and investment
               evaluation.
             </p>
-            <Button
+            {/* <Button
               asChild
               size="lg"
               className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-lg border-2 border-secondary transition-all hover:scale-105"
             >
               <Link href="#register">Register Now</Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </section>

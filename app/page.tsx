@@ -27,7 +27,7 @@ export default function Home() {
               <div className="inline-block bg-secondary text-primary px-4 py-2 rounded-full text-sm font-bold tracking-wide transform hover:scale-105 transition-all">
                 <div className="flex items-center gap-2">
                   <ArrowRight className="w-4 h-4" />
-                  <span>NOW ACCEPTING APPLICATIONS</span>
+                  <span>Registration Closed. See you next year!</span>
                 </div>
               </div>
               <div className="space-y-4">
@@ -174,9 +174,9 @@ export default function Home() {
                   asChild
                   className="bg-primary text-white hover:bg-primary/90 mt-2 font-bold shadow-lg border border-primary/20 transition-transform hover:scale-105"
                 >
-                  <Link href="/sharkathon" className="flex items-center">
+                  {/* <Link href="/sharkathon" className="flex items-center">
                     Register Now <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  </Link> */}
                 </Button>
               </CardContent>
             </Card>
@@ -207,13 +207,13 @@ export default function Home() {
               Join Sharkathon today and embark on an exciting journey of
               critical thinking, analysis, and investment evaluation.
             </p>
-            <Button
+            {/* <Button
               asChild
               size="lg"
               className="bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform"
             >
               <Link href="/sharkathon#register">Register Now</Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </section>

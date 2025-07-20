@@ -10,7 +10,7 @@ const ApplicationStatusBanner = () => (
   <div className="inline-block bg-yellow-400 text-blue-900 px-3 md:px-4 py-1 md:py-2 rounded-full text-sm md:text-lg font-bold tracking-wide transform hover:scale-105 transition-all mt-4 md:mt-6">
     <div className="flex items-center gap-1 md:gap-2">
       <Zap className="w-3 h-3 md:w-4 md:h-4" />
-      <span>NOW ACCEPTING APPLICATIONS</span>
+      <span>Registrations closed. See you next year!</span>
     </div>
   </div>
 );
@@ -59,10 +59,10 @@ const ActionButtons = () => (
       size="lg"
       className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg shadow-yellow-400/30 border-2 border-yellow-400 hover:scale-105 transition-transform hover:shadow-yellow-400/50 text-sm md:text-base py-2 px-3 md:px-4"
     >
-      <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
+      {/* <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
         <Zap className="w-3 h-3 md:w-4 md:h-4" />
         <span>SIGN UP NOW</span>
-      </Link>
+      </Link> */}
     </Button>
 
     <Button

@@ -123,7 +123,7 @@ const SneakPeekSection = () => {
     // Action Buttons Component
     const ActionButtons = () => (
       <div className="flex flex-row flex-wrap sm:flex-nowrap gap-3 md:gap-4 items-center justify-center pt-6">
-        <Button
+        {/* <Button
           asChild
           size="lg"
           className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
@@ -132,7 +132,7 @@ const SneakPeekSection = () => {
             <Zap className="w-3 h-3 md:w-4 md:h-4" />
             <span>SIGN UP NOW</span>
           </Link>
-        </Button>
+        </Button> */}
   
 
       </div>
