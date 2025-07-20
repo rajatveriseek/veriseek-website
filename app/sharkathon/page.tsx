@@ -202,14 +202,14 @@ export default function SharkathonPage() {
               Join Sharkathon today and embark on an exciting journey of critical thinking, analysis, and investment
               evaluation.
             </p>
-            <Button
+            {/* <Button
               asChild
               size="lg"
               className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-lg border-2 border-secondary transition-all hover:scale-105"
               onClick={() => handleRegisterClick('final_cta')}
             >
               <Link href="#register">Register Now</Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </section>

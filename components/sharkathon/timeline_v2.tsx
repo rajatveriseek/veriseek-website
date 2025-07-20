@@ -94,10 +94,10 @@ export default function ProgramTimeline() {
         size="lg"
         className="w-full sm:w-auto bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform text-sm md:text-base py-2 px-3 md:px-4"
       >
-        <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
+        {/* <Link href="/register" className="flex items-center justify-center gap-1 md:gap-2">
           <Zap className="w-3 h-3 md:w-4 md:h-4" />
           <span>SIGN UP NOW</span>
-        </Link>
+        </Link> */}
       </Button>
     </div>
   );

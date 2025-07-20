@@ -68,11 +68,11 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
-          <Link href="/register" className="w-full">
+          {/* <Link href="/register" className="w-full">
             <Button className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-md border-2 border-secondary">
               Sign Up Now
             </Button>
-          </Link>
+          </Link> */}
         </nav>
 
         {/* Mobile Menu Button */}
