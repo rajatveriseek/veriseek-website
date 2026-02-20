@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 interface VCContactProps {
   email?: string;
   mobile?: string;
@@ -11,10 +13,49 @@ export default function VCFellowshipContact({
   mobile = "+91 9953371191",
   imageSrc,
 }: VCContactProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const card = entry.target.querySelector('.vc-contact-card');
+            const image = entry.target.querySelector('.vc-contact-image');
+            
+            if (card) card.classList.add('vc-animate');
+            if (image) image.classList.add('vc-animate');
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        @keyframes vc-contact-slide-left {
+          from { opacity: 0; transform: translateX(-32px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes vc-contact-slide-right {
+          from { opacity: 0; transform: translateX(32px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
 
         .vc-contact-section {
           background: #011638;
@@ -48,6 +89,11 @@ export default function VCFellowshipContact({
           z-index: 1;
           display: flex;
           flex-direction: column;
+          opacity: 0;
+          transform: translateX(-32px);
+        }
+        .vc-contact-card.vc-animate {
+          animation: vc-contact-slide-left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .vc-contact-heading {
@@ -133,6 +179,11 @@ export default function VCFellowshipContact({
           z-index: 1;
           align-self: stretch;
           height: 180px;
+          opacity: 0;
+          transform: translateX(32px);
+        }
+        .vc-contact-image.vc-animate {
+          animation: vc-contact-slide-right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
         }
 
         .vc-contact-image img {
@@ -172,7 +223,7 @@ export default function VCFellowshipContact({
         }
       `}</style>
 
-      <section className="vc-contact-section">
+      <section className="vc-contact-section" ref={sectionRef}>
 
         {/* Left — contact card */}
         <div className="vc-contact-card">

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 function ArrowIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
@@ -43,10 +45,55 @@ export default function VCFellowshipPricing({
   applyHref = "https://rzp.io/rzp/IfWaHBUQ",
   onApply   = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
 }: VCPricingProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const header = entry.target.querySelector('.vcp-header');
+            const left = entry.target.querySelector('.vcp-left');
+            const right = entry.target.querySelector('.vcp-right');
+            
+            if (header) header.classList.add('vcp-animate');
+            if (left) left.classList.add('vcp-animate');
+            if (right) right.classList.add('vcp-animate');
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        @keyframes vcp-header-fade {
+          from { opacity: 0; transform: translateY(-16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes vcp-left-slide {
+          from { opacity: 0; transform: translateX(-32px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes vcp-right-slide {
+          from { opacity: 0; transform: translateX(32px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
 
         .vcp-section {
           background: #f5c842;
@@ -57,6 +104,11 @@ export default function VCFellowshipPricing({
         .vcp-header {
           text-align: center;
           margin-bottom: 52px;
+          opacity: 0;
+          transform: translateY(-16px);
+        }
+        .vcp-header.vcp-animate {
+          animation: vcp-header-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         .vcp-title {
           font-size: clamp(26px, 3.5vw, 38px);
@@ -91,6 +143,11 @@ export default function VCFellowshipPricing({
           display: flex;
           flex-direction: column;
           justify-content: center;
+          opacity: 0;
+          transform: translateX(-32px);
+        }
+        .vcp-left.vcp-animate {
+          animation: vcp-left-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .vcp-left-label {
@@ -136,6 +193,11 @@ export default function VCFellowshipPricing({
           justify-content: center;
           position: relative;
           overflow: hidden;
+          opacity: 0;
+          transform: translateX(32px);
+        }
+        .vcp-right.vcp-animate {
+          animation: vcp-right-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
         }
         .vcp-right::after {
           content: '';
@@ -250,7 +312,7 @@ export default function VCFellowshipPricing({
         }
       `}</style>
 
-      <section className="vcp-section">
+      <section className="vcp-section" ref={sectionRef}>
         <div className="vcp-header">
           <h2 className="vcp-title">
             Programme{" "}

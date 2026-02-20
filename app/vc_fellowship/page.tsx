@@ -16,7 +16,7 @@ export default function SharkathonPage() {
     <>
       {/* Page Content */}
       <VCFellowshipHero2
-        heroImageSrc="/images/students-session.JPG"
+        heroImageSrc="/images/P1101556.JPG"
         brochureHref="/vc-fellowship-brochure.pdf"
       />
 

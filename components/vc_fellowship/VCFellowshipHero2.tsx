@@ -21,6 +21,10 @@ const GLOBAL_CSS = `
     0%, 100% { opacity: 0.12; }
     50%       { opacity: 0.22; }
   }
+  @keyframes vc-viewportSlideUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
   .vc-anim-0 { animation: vc-fadeUp 0.7s 0.05s ease both; }
   .vc-anim-1 { animation: vc-fadeUp 0.7s 0.20s ease both; }
@@ -28,6 +32,7 @@ const GLOBAL_CSS = `
   .vc-anim-3 { animation: vc-fadeUp 0.7s 0.48s ease both; }
   .vc-anim-4 { animation: vc-fadeUp 0.7s 0.60s ease both; }
   .vc-bg-anim { animation: vc-fadeIn 1.2s ease both; }
+  .vc-viewport-anim { animation: vc-viewportSlideUp 0.8s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 
   .vc-orb-1 {
     position: absolute; top: 25%; left: -80px;
@@ -209,6 +214,7 @@ export default function VCFellowshipHero({
   colleges     = ["/images/mit2.png", "/images/wharton.png", "/images/iit.png", "/images/isb-logo1.webp"],
 }: VCFellowshipHeroProps) {
   const injected = useRef(false);
+  const infoSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (injected.current) return;
@@ -217,6 +223,30 @@ export default function VCFellowshipHero({
     tag.setAttribute("data-vc-hero", "1");
     tag.textContent = GLOBAL_CSS;
     document.head.appendChild(tag);
+  }, []);
+
+  useEffect(() => {
+    if (!infoSectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("vc-viewport-anim");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(infoSectionRef.current);
+
+    return () => {
+      if (infoSectionRef.current) {
+        observer.unobserve(infoSectionRef.current);
+      }
+    };
   }, []);
 
   const defaultDesc = (
@@ -381,7 +411,7 @@ export default function VCFellowshipHero({
       </section>
 
       {/* ── INFO STRIP ───────────────────────────────────────────────────── */}
-      <section className="vc-info-strip" style={{ textAlign: "left", alignItems: "stretch" }}>
+      <section className="vc-info-strip" ref={infoSectionRef} style={{ textAlign: "left", alignItems: "stretch" }}>
 
         <div
           style={{
@@ -393,7 +423,7 @@ export default function VCFellowshipHero({
             maxWidth: 1100,
             margin: "0 auto",
           }}
-          className="vc-info-grid"
+          className="vc-info-grid vc-viewport-anim"
         >
 
           {/* ── LEFT: text column ── */}
