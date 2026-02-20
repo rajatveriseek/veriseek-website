@@ -146,6 +146,15 @@ const GLOBAL_CSS = `
     .vc-hero-buttons { flex-direction: column !important; align-items: center !important; }
     .vc-btn-primary, .vc-btn-secondary { justify-content: center; width: 100%; max-width: 280px; padding: 15px 20px !important; }
   }
+
+  @keyframes vcBounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
 `;
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
@@ -371,21 +380,12 @@ export default function VCFellowshipHero({
         </div>
 
         {/* Scroll-hint chevron */}
-        <div
-          className="vc-anim-4"
-          style={{
-            position: "absolute",
-            bottom: 32,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 2,
-            opacity: 0.40,
-          }}
-          aria-hidden="true"
-        >
-          <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="#fff" strokeWidth="2">
-            <path d="M1 1l10 10L21 1" />
-          </svg>
+        <div className="vc-anim-4" style={{ position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)", zIndex: 2 }} aria-hidden="true">
+          <div style={{ opacity: 0.80, animation: "vcBounce 1.2s ease-in-out infinite" }}>
+            <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="#fff" strokeWidth="2">
+              <path d="M1 1l10 10L21 1" />
+            </svg>
+          </div>
         </div>
       </section>
 
