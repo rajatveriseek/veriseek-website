@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const DAYS = [
   {
@@ -44,17 +44,50 @@ const DAYS = [
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-  @keyframes vcf-flow-header-fade {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* ── Viewport Loading Animations ── */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  @keyframes vcf-flow-block-slide {
-    from { opacity: 0; transform: translateX(-32px); }
-    to { opacity: 1; transform: translateX(0); }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
-  @keyframes vcf-session-pop {
-    from { opacity: 0; transform: scale(0.85) translateY(12px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
   }
 
   .vcf-flow-section {
@@ -82,10 +115,6 @@ const CSS = `
     margin-bottom: 72px;
     position: relative;
     z-index: 1;
-    opacity: 0;
-  }
-  .vcf-flow-header.vcf-animate {
-    animation: vcf-flow-header-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
   .vcf-flow-eyebrow {
     display: inline-flex;
@@ -136,17 +165,6 @@ const CSS = `
     gap: 0;
     align-items: flex-start;
     margin-bottom: 64px;
-    opacity: 0;
-    transform: translateX(-32px);
-  }
-  .vcf-day-block.vcf-animate {
-    animation: vcf-flow-block-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-  .vcf-day-block.vcf-animate:nth-child(2) {
-    animation-delay: 0.1s;
-  }
-  .vcf-day-block.vcf-animate:nth-child(3) {
-    animation-delay: 0.2s;
   }
   .vcf-day-block:last-child { margin-bottom: 0; }
 
@@ -225,15 +243,11 @@ const CSS = `
     display: flex;
     align-items: flex-start;
     gap: 16px;
-    opacity: 0;
-    transform: scale(0.85) translateY(12px);
-  }
-  .vcf-session.vcf-animate {
-    animation: vcf-session-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    transition: transform 0.2s ease;
   }
   .vcf-session:first-child { padding-top: 0; }
   .vcf-session:last-child { border-bottom: none; padding-bottom: 0; }
-  .vcf-session:hover { transform: translateX(4px) scale(1); }
+  .vcf-session:hover { transform: translateX(4px); }
 
   /* Number bubble */
   .vcf-session-num {
@@ -278,8 +292,6 @@ const CSS = `
 
 export default function VCProgrammeFlow() {
   const injected = useRef(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (injected.current) return;
     injected.current = true;
@@ -289,53 +301,8 @@ export default function VCProgrammeFlow() {
     document.head.appendChild(tag);
   }, []);
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    // Header and day blocks observer
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const header = entry.target.querySelector('.vcf-flow-header');
-            const dayBlocks = entry.target.querySelectorAll('.vcf-day-block');
-            if (header) header.classList.add('vcf-animate');
-            dayBlocks.forEach((block) => block.classList.add('vcf-animate'));
-            sectionObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    sectionObserver.observe(sectionRef.current);
-
-    // Sessions observer for individual staggered animation
-    const sessionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('vcf-animate');
-            sessionObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -30px 0px" }
-    );
-
-    const sessions = sectionRef.current.querySelectorAll('.vcf-session');
-    sessions.forEach((session) => {
-      sessionObserver.observe(session);
-    });
-
-    return () => {
-      sectionObserver.disconnect();
-      sessionObserver.disconnect();
-    };
-  }, []);
-
   return (
-    <section className="vcf-flow-section" ref={sectionRef}>
+    <section className="vcf-flow-section">
 
       {/* Header */}
       <div className="vcf-flow-header">

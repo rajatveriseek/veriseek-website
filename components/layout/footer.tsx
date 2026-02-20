@@ -90,7 +90,7 @@ const Footer = () => {
 
         /* Section eyebrow label */
         .vs-footer-label {
-          font-size: 10px;
+          font-size: 12px;
           font-weight: 700;
           letter-spacing: 3px;
           text-transform: uppercase;
