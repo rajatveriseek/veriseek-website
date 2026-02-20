@@ -90,7 +90,7 @@ const GLOBAL_CSS = `
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
+    height: 76px;
   }
   .vc-college-badge:hover {
     border-color: #f5c842 !important;
