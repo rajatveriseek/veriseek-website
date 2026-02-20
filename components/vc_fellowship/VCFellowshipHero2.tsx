@@ -29,7 +29,6 @@ const GLOBAL_CSS = `
   .vc-anim-4 { animation: vc-fadeUp 0.7s 0.60s ease both; }
   .vc-bg-anim { animation: vc-fadeIn 1.2s ease both; }
 
-  /* Animated background orbs matching Sharkathon's BackgroundDecorations */
   .vc-orb-1 {
     position: absolute; top: 25%; left: -80px;
     width: 320px; height: 320px;
@@ -47,7 +46,6 @@ const GLOBAL_CSS = `
     pointer-events: none;
   }
 
-  /* Primary CTA — yellow fill like Sharkathon's "SIGN UP NOW" button */
   .vc-btn-primary {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 14px 32px; border-radius: 100px; font-size: 14px;
@@ -65,7 +63,6 @@ const GLOBAL_CSS = `
     transform: scale(1.04);
   }
 
-  /* Secondary CTA — outline yellow, matches Sharkathon "KNOW MORE" */
   .vc-btn-secondary {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 14px 32px; border-radius: 100px; font-size: 14px;
@@ -81,18 +78,19 @@ const GLOBAL_CSS = `
     transform: scale(1.04);
   }
 
-  /* College badges — match Sharkathon's logo container style */
+  /* College badge container */
   .vc-college-badge {
-    padding: 6px 20px;
+    padding: 6px 14px;
     border: 2px solid rgba(245,200,66,0.50);
     border-radius: 10px;
-    font-size: 12px; font-weight: 700;
-    letter-spacing: 0.5px; color: #011638;
     background: #ffffff;
-    font-family: 'DM Sans', sans-serif;
     cursor: default;
     transition: all 0.2s;
     box-shadow: 0 2px 8px rgba(1,22,56,0.06);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
   }
   .vc-college-badge:hover {
     border-color: #f5c842 !important;
@@ -100,8 +98,18 @@ const GLOBAL_CSS = `
     box-shadow: 0 4px 16px rgba(1,22,56,0.12) !important;
   }
 
-  /* Info strip gradient underline rule — matches Sharkathon's
-     "w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600" section dividers */
+  /* ── Universal logo image constraint ──
+     Applies to: eyebrow logos, association pill logos, college badge logos */
+  .vc-college-badge img,
+  .vc-association-pill img,
+  .vc-eyebrow-logos img {
+    height: 20px;
+    max-width: 80px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
   .vc-section-rule {
     width: 96px; height: 4px;
     background: linear-gradient(to right, #60a5fa, #2563eb);
@@ -109,19 +117,16 @@ const GLOBAL_CSS = `
     margin: 0 auto 12px;
   }
 
-  /* Association pill — echoes Sharkathon's "Expert Judging Panel" callout
-     with navy left-border accent */
   .vc-association-pill {
     display: inline-flex; align-items: center;
     padding: 8px 20px 8px 16px;
     border-left: 4px solid #f5c842;
     background: rgba(1,22,56,0.05);
     border-radius: 0 8px 8px 0;
-    gap: 10px;
+    gap: 12px;
     font-family: 'DM Sans', sans-serif;
   }
 
-  /* Info strip itself — white card feeling like Sharkathon's bg-white sections */
   .vc-info-strip {
     background: #eef0f2;
     padding: 64px clamp(20px, 6vw, 80px) 72px;
@@ -132,13 +137,12 @@ const GLOBAL_CSS = `
     font-family: 'DM Sans', sans-serif;
     position: relative;
   }
-  /* Subtle top border accent line matching Sharkathon's section rhythm */
   .vc-info-strip::before {
     content: '';
     position: absolute;
     top: 0; left: 50%; transform: translateX(-50%);
     width: 80px; height: 4px;
-    background: linear-gradient(to right, #f5c842, #f5c842);
+    background: #f5c842;
     border-radius: 0 0 4px 4px;
   }
 
@@ -148,12 +152,8 @@ const GLOBAL_CSS = `
   }
 
   @keyframes vcBounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(8px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(8px); }
   }
 `;
 
@@ -197,16 +197,16 @@ interface VCFellowshipHeroProps {
 export default function VCFellowshipHero({
   heroImageSrc,
   infoImageSrc,
-  applyHref    = "#apply",
+  applyHref    = "https://rzp.io/rzp/IfWaHBUQ",
   brochureHref = "#brochure",
-  onApply,
+  onApply = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
   onBrochure,
-  eyebrow      = "IN ASSOCIATION WITH NANDAN CAPITAL",
+  eyebrow      = "IN ASSOCIATION WITH",
   heading      = "VC Fellowship",
   subheading   = "Think Like a Venture Capitalist",
   description,
   association  = "Nandan Capital",
-  colleges     = ["MIT", "Wharton", "IIT Delhi", "ISB"],
+  colleges     = ["/images/mit2.png", "/images/wharton.png", "/images/iit.png", "/images/isb-logo1.webp"],
 }: VCFellowshipHeroProps) {
   const injected = useRef(false);
 
@@ -245,11 +245,9 @@ export default function VCFellowshipHero({
           overflow: "hidden",
         }}
       >
-        {/* Sharkathon-style ambient orbs */}
         <div className="vc-orb-1" />
         <div className="vc-orb-2" />
 
-        {/* Full-bleed background image */}
         {heroImageSrc && (
           <img
             src={heroImageSrc}
@@ -267,25 +265,17 @@ export default function VCFellowshipHero({
           />
         )}
 
-        {/* Dark overlay — same depth as Sharkathon hero */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
             background: heroImageSrc
-              ? `linear-gradient(
-                  to bottom,
-                  rgba(1,22,56,0.72) 0%,
-                  rgba(1,22,56,0.48) 30%,
-                  rgba(1,22,56,0.52) 60%,
-                  rgba(1,22,56,0.78) 100%
-                )`
+              ? `linear-gradient(to bottom, rgba(1,22,56,0.72) 0%, rgba(1,22,56,0.48) 30%, rgba(1,22,56,0.52) 60%, rgba(1,22,56,0.78) 100%)`
               : "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(30,90,200,0.22) 0%, transparent 70%)",
           }}
         />
 
-        {/* Edge vignette */}
         <div
           aria-hidden="true"
           style={{
@@ -296,7 +286,6 @@ export default function VCFellowshipHero({
           }}
         />
 
-        {/* Hero text */}
         <div
           style={{
             position: "relative",
@@ -310,11 +299,12 @@ export default function VCFellowshipHero({
             maxWidth: 860,
           }}
         >
-          {/* Eyebrow — yellow flanking lines, same pattern as Sharkathon section dividers */}
+          {/* Eyebrow — logos constrained via .vc-eyebrow-logos img CSS rule */}
           <div
             className="vc-anim-0"
             style={{
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
               gap: 12,
@@ -329,9 +319,13 @@ export default function VCFellowshipHero({
             <span style={{ display: "inline-block", width: 28, height: 2, background: "#f5c842", flexShrink: 0 }} />
             {eyebrow}
             <span style={{ display: "inline-block", width: 28, height: 2, background: "#f5c842", flexShrink: 0 }} />
+            {/* vc-eyebrow-logos class constrains these images to height:20px */}
+            <div className="vc-eyebrow-logos" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <img src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png" alt="Nandan Capital Logo" style={{ height: 64, width: "auto", maxWidth: 80, objectFit: "contain", display: "block", background: "white", borderRadius: 4 }} />
+              <img src="/images/himlandcapitaladvisors_logo-removebg-preview.png" alt="Himland Capital Logo" style={{ height: 64, width: "auto", maxWidth: 80, objectFit: "contain", display: "block", background: "white", borderRadius: 4 }} />
+            </div>
           </div>
 
-          {/* H1 */}
           <h1
             className="vc-anim-1"
             style={{
@@ -348,7 +342,6 @@ export default function VCFellowshipHero({
             {heading}
           </h1>
 
-          {/* Italic subheading — yellow-gold matching "BECOME THE NEXT BIG SHARK" */}
           <p
             className="vc-anim-2"
             style={{
@@ -365,7 +358,6 @@ export default function VCFellowshipHero({
             {subheading}
           </p>
 
-          {/* CTA Buttons */}
           <div
             className="vc-anim-3 vc-hero-buttons"
             style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}
@@ -379,7 +371,6 @@ export default function VCFellowshipHero({
           </div>
         </div>
 
-        {/* Scroll-hint chevron */}
         <div className="vc-anim-4" style={{ position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)", zIndex: 2 }} aria-hidden="true">
           <div style={{ opacity: 0.80, animation: "vcBounce 1.2s ease-in-out infinite" }}>
             <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="#fff" strokeWidth="2">
@@ -392,7 +383,6 @@ export default function VCFellowshipHero({
       {/* ── INFO STRIP ───────────────────────────────────────────────────── */}
       <section className="vc-info-strip" style={{ textAlign: "left", alignItems: "stretch" }}>
 
-        {/* Two-column grid: text left, image right */}
         <div
           style={{
             display: "grid",
@@ -409,7 +399,6 @@ export default function VCFellowshipHero({
           {/* ── LEFT: text column ── */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
 
-            {/* Section rule + heading */}
             <div className="vc-section-rule" style={{ margin: "0 0 12px 0" }} />
             <h2
               style={{
@@ -424,7 +413,6 @@ export default function VCFellowshipHero({
               About the Programme
             </h2>
 
-            {/* Description */}
             <p
               style={{
                 fontSize: "clamp(15px, 1.5vw, 17px)",
@@ -436,7 +424,7 @@ export default function VCFellowshipHero({
               {description ?? defaultDesc}
             </p>
 
-            {/* Association — yellow left-border callout */}
+            {/* Association pill — logos constrained via .vc-association-pill img CSS rule */}
             {association && (
               <div className="vc-association-pill" style={{ marginBottom: 44 }}>
                 <span
@@ -446,29 +434,19 @@ export default function VCFellowshipHero({
                     textTransform: "uppercase",
                     color: "rgba(1,22,56,0.45)",
                     fontFamily: "'DM Sans', sans-serif",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   In Association with
                 </span>
-                <span
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 13,
-                    fontWeight: 700,
-                    color: "#011638",
-                    letterSpacing: "1px",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {association}
-                </span>
+                <img src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png" alt="Nandan Capital" style={{ height: 64, width: "auto", maxWidth: 100, objectFit: "contain", display: "block" }} />
+                <img src="/images/himlandcapitaladvisors_logo-removebg-preview.png" alt="Himland Capital" style={{ height: 64, width: "auto", maxWidth: 100, objectFit: "contain", display: "block" }} />
+                <img src="/images/IMG_5883.PNG" alt="" style={{ height: 64, width: "auto", maxWidth: 100, objectFit: "contain", display: "block" }} />
               </div>
             )}
 
-            {/* Thin rule */}
             <div style={{ width: 48, height: 1, background: "rgba(1,22,56,0.10)", marginBottom: 28 }} />
 
-            {/* "Built by alumni from" label */}
             <p
               style={{
                 fontSize: 10,
@@ -483,10 +461,12 @@ export default function VCFellowshipHero({
               Built by alumni from
             </p>
 
-            {/* Badges */}
+            {/* College badges — logos constrained via .vc-college-badge img CSS rule */}
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {colleges.map((c) => (
-                <span key={c} className="vc-college-badge">{c}</span>
+                <span key={c} className="vc-college-badge">
+                  <img src={c} alt="" style={{ height: 60, width: "auto", maxWidth: 72, objectFit: "contain", display: "block" }} />
+                </span>
               ))}
             </div>
           </div>
@@ -494,52 +474,33 @@ export default function VCFellowshipHero({
           {/* ── RIGHT: image column ── */}
           <div
             style={{
-              display: "flex",
               borderRadius: 16,
               overflow: "hidden",
               border: "2px solid rgba(245,200,66,0.30)",
               boxShadow: "0 16px 48px rgba(1,22,56,0.12)",
               background: "rgba(1,22,56,0.06)",
-              position: "relative",
             }}
           >
             {infoImageSrc ? (
               <img
                 src={infoImageSrc}
                 alt="Programme overview"
-                style={{ width: "100%", height: "100%", objectFit: "fill", display: "block" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
             ) : (
-              /* Placeholder when no image is passed — yellow-accent branded block */
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: "linear-gradient(135deg, rgba(1,22,56,0.04) 0%, rgba(245,200,66,0.08) 100%)",
-                  gap: 12,
-                }}
-              >
-                {/* <div style={{ width: 56, height: 4, background: "#f5c842", borderRadius: 99 }} />
-                <span style={{ fontSize: 12, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(1,22,56,0.30)", fontFamily: "'DM Sans', sans-serif" }}>
-                  Add infoImageSrc
-                </span> */}
-                <img src="/images/students-session.JPG" alt="" />
-              </div>
+              <img
+                src="/images/IMG_8176.jpg"
+                alt=""
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
             )}
           </div>
 
         </div>
 
-        {/* Responsive: stack on mobile */}
         <style>{`
           @media (max-width: 720px) {
-            .vc-info-grid {
-              grid-template-columns: 1fr !important;
-            }
+            .vc-info-grid { grid-template-columns: 1fr !important; }
           }
         `}</style>
       </section>

@@ -102,9 +102,9 @@ interface VCFellowshipHeroProps {
 
 export default function VCFellowshipHero({
   heroImageSrc,
-  applyHref    = "#apply",
+  applyHref    = "https://rzp.io/rzp/IfWaHBUQ",
   brochureHref = "#brochure",
-  onApply,
+  onApply = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
   onBrochure,
   eyebrow      = "Summer Skills Week",
   heading      = "VC Fellowship",
