@@ -5,6 +5,15 @@ import { useEffect, useRef } from "react";
 const SECTION_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
+  @keyframes vcf-slide-in-left {
+    from { opacity: 0; transform: translateX(-48px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes vcf-slide-in-right {
+    from { opacity: 0; transform: translateX(48px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
   .vcf-section-wrap {
     width: 100%;
     background: #eec643;
@@ -32,6 +41,11 @@ const SECTION_CSS = `
     border: 2px solid rgba(1,22,56,0.15);
     box-shadow: 0 20px 56px rgba(1,22,56,0.18);
     position: relative;
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  .vcf-img-wrap.vcf-animate {
+    animation: vcf-slide-in-left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
   .vcf-img-wrap img {
     width: 100%; height: 100%;
@@ -59,6 +73,11 @@ const SECTION_CSS = `
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  .vcf-card.vcf-animate {
+    animation: vcf-slide-in-right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
   }
 
   .vcf-card-heading {
@@ -166,6 +185,7 @@ export default function VCFellowshipSection({
   onApply = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
 }: VCFellowshipSectionProps) {
   const injected = useRef(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (injected.current) return;
@@ -176,8 +196,35 @@ export default function VCFellowshipSection({
     document.head.appendChild(tag);
   }, []);
 
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const imgWrap = entry.target.querySelector('.vcf-img-wrap');
+            const card = entry.target.querySelector('.vcf-card');
+            if (imgWrap) imgWrap.classList.add('vcf-animate');
+            if (card) card.classList.add('vcf-animate');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="vcf-section-wrap">
+    <section className="vcf-section-wrap" ref={sectionRef}>
       <div className="vcf-inner">
 
         {/* ── Left: image ── */}

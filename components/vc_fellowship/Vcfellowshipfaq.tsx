@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const FAQS = [
   {
@@ -23,11 +23,52 @@ const FAQS = [
 
 export default function VCFellowshipFAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const header = entry.target.querySelector('.vcfaq-header');
+            const items = entry.target.querySelectorAll('.vcfaq-item');
+            
+            if (header) header.classList.add('vcfaq-animate');
+            items.forEach((item) => {
+              item.classList.add('vcfaq-animate');
+            });
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        @keyframes vcfaq-header-fade {
+          from { opacity: 0; transform: translateY(-16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes vcfaq-item-slide {
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
 
         /* Section — white bg, matches Sharkathon FAQ section */
         .vcfaq-section {
@@ -40,6 +81,11 @@ export default function VCFellowshipFAQ() {
         .vcfaq-header {
           text-align: center;
           margin-bottom: 52px;
+          opacity: 0;
+          transform: translateY(-16px);
+        }
+        .vcfaq-header.vcfaq-animate {
+          animation: vcfaq-header-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .vcfaq-eyebrow {
@@ -95,6 +141,23 @@ export default function VCFellowshipFAQ() {
           overflow: hidden;
           transition: box-shadow 0.25s ease, transform 0.25s ease;
           position: relative;
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        .vcfaq-item.vcfaq-animate {
+          animation: vcfaq-item-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .vcfaq-item:nth-child(1).vcfaq-animate {
+          animation-delay: 0.1s;
+        }
+        .vcfaq-item:nth-child(2).vcfaq-animate {
+          animation-delay: 0.2s;
+        }
+        .vcfaq-item:nth-child(3).vcfaq-animate {
+          animation-delay: 0.3s;
+        }
+        .vcfaq-item:nth-child(4).vcfaq-animate {
+          animation-delay: 0.4s;
         }
 
         .vcfaq-item:hover {
@@ -174,7 +237,7 @@ export default function VCFellowshipFAQ() {
         }
       `}</style>
 
-      <section className="vcfaq-section">
+      <section className="vcfaq-section" ref={sectionRef}>
 
         {/* Header */}
         <div className="vcfaq-header">

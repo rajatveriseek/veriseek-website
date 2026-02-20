@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 const MENTORS = [
   {
     name: "Mr. Rajat Kumar",
     role: "Nandan Capital, Ex McKinsey and Wharton Alum",
     labels: ["Wharton", "McKinsey", "Nandan Capital", "EY"],
-    tags: ["/images/wharton.png", "/images/McKinseyCompany_logo-dark.png", "/images/Nandan Final Logo_page-0001_12.jpg", "/images/ey.png"],
+    tags: ["/images/wharton.png", "/images/McKinseyCompany_logo-dark.png", "/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png", "/images/ey.png"],
     initials: "RK",
     image: "/images/rajat_kumar.jpg",
     linkedin: "https://www.linkedin.com/in/rajat-kumar-004533/",
@@ -23,7 +25,7 @@ const MENTORS = [
     name: "Mr. Siddhant Gupta",
     role: "Founder, Himland Capital",
     labels: ["ISB", "Himland Capital", "Sixth Sense", "Deloitte"],
-    tags: ["/images/isb-logo1.webp", "/images/himlandcapitaladvisors_logo.jpg", "/images/sixth sense.png", "/images/deloitte.png"],
+    tags: ["/images/isb-logo1_1.jpg", "/images/himlandcapitaladvisors_logo.jpg", "/images/sixth sense.png", "/images/deloitte.png"],
     initials: "SG",
     image: "/images/siddhant_gupta.jpg",
     linkedin: "https://www.linkedin.com/in/siddhant-gupta-/",
@@ -50,14 +52,14 @@ function LogoBadge({ src, alt }: { src: string; alt: string }) {
         borderRadius: 8,
         background: "#ffffff",
         boxShadow: "0 1px 4px rgba(1,22,56,0.06)",
-        height: 36,
+        height: 56,
       }}
     >
       <img
         src={src}
         alt={alt}
         style={{
-          height: 20,
+          height: 48,
           maxWidth: 70,
           width: "auto",
           objectFit: "contain",
@@ -69,10 +71,45 @@ function LogoBadge({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function VCFellowshipMentors() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const cards = entry.target.querySelectorAll('.vc-mentor-card');
+            cards.forEach((card, index) => {
+              setTimeout(() => {
+                card.classList.add('vc-animate');
+              }, index * 100);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        @keyframes vc-mentor-fadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
 
         .vc-mentors-section {
           background: #f5c842;
@@ -82,7 +119,7 @@ export default function VCFellowshipMentors() {
 
         .vc-mentors-header {
           text-align: center;
-          margin-bottom: 56px;
+          margin-bottom: 36px;
         }
         .vc-mentors-title {
           font-size: clamp(28px, 3.5vw, 40px);
@@ -111,7 +148,6 @@ export default function VCFellowshipMentors() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 24px;
-          max-width: 1000px;
           margin: 0 auto;
         }
 
@@ -124,6 +160,11 @@ export default function VCFellowshipMentors() {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        .vc-mentor-card.vc-animate {
+          animation: vc-mentor-fadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         .vc-mentor-card:hover {
           transform: translateY(-5px);
@@ -134,7 +175,7 @@ export default function VCFellowshipMentors() {
         .vc-mentor-photo-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 3 / 3.4;
+          aspect-ratio: 3 / 3;
           overflow: hidden;
           background: #1a3a5c;
         }
@@ -230,7 +271,7 @@ export default function VCFellowshipMentors() {
         }
       `}</style>
 
-      <section className="vc-mentors-section">
+      <section className="vc-mentors-section" ref={sectionRef}>
 
         <div className="vc-mentors-header">
           <h2 className="vc-mentors-title">
