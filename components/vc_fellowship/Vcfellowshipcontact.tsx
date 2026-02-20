@@ -18,11 +18,11 @@ export default function VCFellowshipContact({
 
         .vc-contact-section {
           background: #011638;
-          padding: 64px clamp(20px, 8vw, 120px);
+          padding: 40px clamp(20px, 8vw, 120px);
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: clamp(20px, 4vw, 48px);
-          align-items: stretch;
+          align-items: start;
           font-family: 'DM Sans', sans-serif;
           position: relative;
           overflow: hidden;
@@ -39,11 +39,11 @@ export default function VCFellowshipContact({
           pointer-events: none;
         }
 
-        /* Card fills full height of the row */
+        /* Card — natural height, no stretch */
         .vc-contact-card {
           background: rgba(255,255,255,0.97);
           border-radius: 16px;
-          padding: 44px 40px;
+          padding: 32px 36px;
           position: relative;
           z-index: 1;
           display: flex;
@@ -51,28 +51,29 @@ export default function VCFellowshipContact({
         }
 
         .vc-contact-heading {
-          font-size: clamp(24px, 2.8vw, 32px);
+          font-size: clamp(20px, 2.2vw, 28px);
           font-weight: 700;
           color: #0a0a0a;
-          line-height: 1.25;
-          margin-bottom: 28px;
+          line-height: 1.2;
+          margin-bottom: 20px;
           font-family: 'DM Sans', sans-serif;
           letter-spacing: -0.4px;
+          white-space: nowrap;
         }
 
         .vc-contact-divider {
           width: 100%;
           height: 1px;
           background: rgba(0,0,0,0.08);
-          margin-bottom: 28px;
+          margin-bottom: 20px;
         }
 
-        /* Full-width stacked items — no wrapping */
+        /* Side-by-side contact items */
         .vc-contact-details {
           display: flex;
-          flex-direction: column;
-          gap: 20px;
-          flex: 1;
+          flex-direction: row;
+          gap: 24px;
+          align-items: center;
         }
 
         .vc-contact-item {
@@ -80,6 +81,7 @@ export default function VCFellowshipContact({
           align-items: center;
           gap: 14px;
           min-width: 0;
+          flex: 1;
         }
 
         /* Yellow circle icon — matches Sharkathon's yellow icon circles */
@@ -123,13 +125,14 @@ export default function VCFellowshipContact({
           text-decoration: underline;
         }
 
-        /* Image — stretches to match card height via align-items: stretch on parent */
+        /* Image — same height as card by matching grid row */
         .vc-contact-image {
           border-radius: 16px;
           overflow: hidden;
           position: relative;
           z-index: 1;
-          min-height: 280px;
+          align-self: stretch;
+          height: 180px;
         }
 
         .vc-contact-image img {
@@ -162,8 +165,9 @@ export default function VCFellowshipContact({
 
         @media (max-width: 700px) {
           .vc-contact-section { grid-template-columns: 1fr !important; }
-          .vc-contact-image { display: none !important; }
+          .vc-contact-image { min-height: 220px !important; }
           .vc-contact-card { padding: 32px 24px !important; }
+          .vc-contact-details { flex-direction: column !important; gap: 16px !important; }
           .vc-contact-value { white-space: normal !important; word-break: break-all; }
         }
       `}</style>
@@ -173,8 +177,7 @@ export default function VCFellowshipContact({
         {/* Left — contact card */}
         <div className="vc-contact-card">
           <h2 className="vc-contact-heading">
-            Reach out<br />
-            to the{" "}
+            Reach out to the{" "}
             <em style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>
               Support Team
             </em>
@@ -184,7 +187,7 @@ export default function VCFellowshipContact({
 
           <div className="vc-contact-details">
 
-            {/* Email — full width row */}
+            {/* Email */}
             <div className="vc-contact-item">
               <div className="vc-contact-icon-wrap">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -198,7 +201,10 @@ export default function VCFellowshipContact({
               </div>
             </div>
 
-            {/* Mobile — full width row */}
+            {/* Vertical divider */}
+            <div style={{ width: 1, alignSelf: "stretch", background: "rgba(0,0,0,0.10)", flexShrink: 0 }} />
+
+            {/* Mobile */}
             <div className="vc-contact-item">
               <div className="vc-contact-icon-wrap">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

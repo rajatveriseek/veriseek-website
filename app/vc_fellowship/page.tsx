@@ -24,7 +24,7 @@ export default function SharkathonPage() {
         <VCFellowshipMentors />
         <VCFellowshipExpect imageSrc="/images/students-session.JPG"/>
         <VCFellowshipPricing />
-        <VCFellowshipContact />
+        <VCFellowshipContact  imageSrc="/images/students-session.JPG"/>
         <VCFellowshipFAQ />
     </React.Fragment>
   )

@@ -192,7 +192,7 @@ export default function VCFellowshipHero({
   brochureHref = "#brochure",
   onApply,
   onBrochure,
-  eyebrow      = "Summer Skills Week",
+  eyebrow      = "IN ASSOCIATION WITH NANDAN CAPITAL",
   heading      = "VC Fellowship",
   subheading   = "Think Like a Venture Capitalist",
   description,
