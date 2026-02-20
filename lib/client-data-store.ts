@@ -229,6 +229,12 @@ class ClientDataStore {
 
   // Load data from localStorage or use mock data
   private loadFromLocalStorage() {
+    if (typeof window === "undefined") {
+      this.registrations = mockRegistrations
+      this.contactSubmissions = mockContactSubmissions
+      this.newsletterSubscriptions = mockNewsletterSubscriptions
+      return
+    }
     try {
       // Try to load from localStorage
       const storedRegistrations = localStorage.getItem(STORAGE_KEYS.REGISTRATIONS)
@@ -252,6 +258,7 @@ class ClientDataStore {
 
   // Save data to localStorage
   private saveToLocalStorage() {
+    if (typeof window === "undefined") return
     try {
       localStorage.setItem(STORAGE_KEYS.REGISTRATIONS, JSON.stringify(this.registrations))
       localStorage.setItem(STORAGE_KEYS.CONTACT_SUBMISSIONS, JSON.stringify(this.contactSubmissions))
