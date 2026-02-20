@@ -162,8 +162,8 @@ interface VCFellowshipSectionProps {
 
 export default function VCFellowshipSection({
   imageSrc,
-  applyHref = "#apply",
-  onApply,
+  applyHref = "https://rzp.io/rzp/IfWaHBUQ",
+  onApply = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
 }: VCFellowshipSectionProps) {
   const injected = useRef(false);
 
@@ -188,7 +188,7 @@ export default function VCFellowshipSection({
             <div className="vcf-img-placeholder">
               {/* <div style={{ width: 48, height: 3, background: "#011638", borderRadius: 99, opacity: 0.25 }} />
               <span>Add imageSrc prop</span> */}
-                <img src="/images/students-session.JPG" alt="" />
+                <img src="/images/P1101636.JPG" alt="" />
             </div>
           )}
         </div>

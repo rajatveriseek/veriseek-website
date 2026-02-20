@@ -40,8 +40,8 @@ export default function VCFellowshipPricing({
   fee       = "INR 15,000",
   dates     = "15–16 March 2026",
   venue     = "Shiv Nadar University, Greater Noida",
-  applyHref = "#apply",
-  onApply,
+  applyHref = "https://rzp.io/rzp/IfWaHBUQ",
+  onApply   = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
 }: VCPricingProps) {
   return (
     <>
@@ -57,18 +57,6 @@ export default function VCFellowshipPricing({
         .vcp-header {
           text-align: center;
           margin-bottom: 52px;
-        }
-        .vcp-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 12px;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: #011638;
-          opacity: 0.6;
-          margin-bottom: 16px;
         }
         .vcp-title {
           font-size: clamp(26px, 3.5vw, 38px);
@@ -86,20 +74,20 @@ export default function VCFellowshipPricing({
           opacity: 0.20;
         }
 
-        /* Unified block — zero gap, one rounded container */
+        /* 2fr:3fr — left gets less room to suit its single bullet */
         .vcp-block {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 2fr 3fr;
           margin: 0 auto;
-          border-radius: 16px;
+          max-width: 960px;
+          border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 20px 60px rgba(1,22,56,0.28);
         }
 
-        /* LEFT panel */
         .vcp-left {
           background: #eef0f2;
-          padding: 44px 40px;
+          padding: 44px 36px;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -111,19 +99,18 @@ export default function VCFellowshipPricing({
           letter-spacing: 3px;
           text-transform: uppercase;
           color: #011638;
-          margin-bottom: 28px;
+          opacity: 0.55;
+          margin-bottom: 24px;
         }
 
         .vcp-bullet {
           display: flex;
           align-items: flex-start;
           gap: 16px;
-          margin-bottom: 22px;
           font-size: 14px;
           line-height: 1.65;
           color: #011638;
         }
-        .vcp-bullet:last-child { margin-bottom: 0; }
         .vcp-bullet strong { color: #011638; font-weight: 700; }
 
         .vcp-plus {
@@ -141,7 +128,6 @@ export default function VCFellowshipPricing({
           margin-top: 1px;
         }
 
-        /* RIGHT panel */
         .vcp-right {
           background: #011638;
           padding: 44px 40px;
@@ -163,12 +149,12 @@ export default function VCFellowshipPricing({
         }
 
         .vcp-fee-label {
-          font-size: 16px;
+          font-size: 10px;
           font-weight: 700;
           letter-spacing: 3px;
           text-transform: uppercase;
           color: #f5c842;
-          margin-bottom: 16px;
+          margin-bottom: 12px;
           position: relative;
           z-index: 1;
         }
@@ -177,12 +163,12 @@ export default function VCFellowshipPricing({
           display: flex;
           align-items: baseline;
           gap: 10px;
-          margin-bottom: 32px;
+          margin-bottom: 28px;
           position: relative;
           z-index: 1;
         }
         .vcp-fee-amount {
-          font-size: clamp(44px, 6vw, 48px);
+          font-size: clamp(36px, 5vw, 44px);
           font-weight: 700;
           color: #ffffff;
           letter-spacing: -2px;
@@ -190,12 +176,12 @@ export default function VCFellowshipPricing({
           font-family: 'DM Sans', sans-serif;
         }
         .vcp-fee-gst {
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 600;
           color: rgba(255,255,255,0.40);
           letter-spacing: 1px;
           align-self: flex-end;
-          margin-bottom: 6px;
+          margin-bottom: 4px;
         }
 
         .vcp-divider {
@@ -219,8 +205,8 @@ export default function VCFellowshipPricing({
           display: flex;
           align-items: center;
           gap: 12px;
-          font-size: 16px;
-          font-weight: 600;
+          font-size: 15px;
+          font-weight: 500;
           color: rgba(255,255,255,0.88);
         }
         .vcp-meta-icon {
@@ -239,7 +225,7 @@ export default function VCFellowshipPricing({
           border-radius: 100px;
           background: #f5c842;
           color: #011638;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 700;
           letter-spacing: 1.5px;
           text-transform: uppercase;
@@ -253,28 +239,19 @@ export default function VCFellowshipPricing({
           z-index: 1;
         }
         .vcp-btn:hover {
-          background: transparent !important;
-          color: #f5c842 !important;
+          background: transparent;
+          color: #f5c842;
           box-shadow: none;
         }
 
         @media (max-width: 700px) {
-          .vcp-block { grid-template-columns: 1fr !important; }
-          .vcp-left {
-            border-right: none !important;
-          }
-          .vcp-left, .vcp-right { padding: 32px 24px !important; }
+          .vcp-block { grid-template-columns: 1fr; }
+          .vcp-left, .vcp-right { padding: 32px 24px; }
         }
       `}</style>
 
       <section className="vcp-section">
-
         <div className="vcp-header">
-          {/* <div className="vcp-eyebrow">
-            <span style={{ display: "inline-block", width: 28, height: 2, background: "#011638", flexShrink: 0 }} />
-            VC Fellowship
-            <span style={{ display: "inline-block", width: 28, height: 2, background: "#011638", flexShrink: 0 }} />
-          </div> */}
           <h2 className="vcp-title">
             Programme{" "}
             <em style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>
@@ -291,15 +268,7 @@ export default function VCFellowshipPricing({
             <p className="vcp-left-label">What's Included</p>
             <div className="vcp-bullet">
               <span className="vcp-plus">+</span>
-              <span>Lunch costs are <strong>included in the fee</strong></span>
-            </div>
-            <div className="vcp-bullet">
-              <span className="vcp-plus">+</span>
-              <span>Students will be required to be on campus from <strong>9:00 AM to 5:00 PM</strong> on both days</span>
-            </div>
-            <div className="vcp-bullet">
-              <span className="vcp-plus">+</span>
-              <span>Accommodation can be arranged on request at <strong>additional cost</strong></span>
+              <span>Students will be required to be on campus from <strong>9:00 AM to 6:00 PM</strong> on both days</span>
             </div>
           </div>
 
