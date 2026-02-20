@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
 const EXPECTATIONS = [
   {
     icon: (
@@ -61,58 +59,10 @@ const EXPECTATIONS = [
 ];
 
 export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const header = entry.target.querySelector('.vcfe-header');
-            const items = entry.target.querySelectorAll('.vcfe-item');
-            const image = entry.target.querySelector('.vcfe-img-wrap');
-            
-            if (header) header.classList.add('vcfe-animate');
-            if (image) image.classList.add('vcfe-animate');
-            
-            items.forEach((item) => {
-              item.classList.add('vcfe-animate');
-            });
-            
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    observer.observe(sectionRef.current);
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        @keyframes vcfe-header-fade {
-          from { opacity: 0; transform: translateY(-16px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes vcfe-item-slide {
-          from { opacity: 0; transform: translateX(-24px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes vcfe-image-slide-in {
-          from { opacity: 0; transform: translateX(24px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
 
         /* ── Section ── */
         .vcfe-section {
@@ -125,11 +75,6 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
         .vcfe-header {
           text-align: left;
           margin-bottom: 56px;
-          opacity: 0;
-          transform: translateY(-16px);
-        }
-        .vcfe-header.vcfe-animate {
-          animation: vcfe-header-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .vcfe-eyebrow {
@@ -190,26 +135,6 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           position: relative;
           overflow: hidden;
-          opacity: 0;
-          transform: translateX(-24px);
-        }
-        .vcfe-item.vcfe-animate {
-          animation: vcfe-item-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .vcfe-item:nth-child(1).vcfe-animate {
-          animation-delay: 0.1s;
-        }
-        .vcfe-item:nth-child(2).vcfe-animate {
-          animation-delay: 0.2s;
-        }
-        .vcfe-item:nth-child(3).vcfe-animate {
-          animation-delay: 0.3s;
-        }
-        .vcfe-item:nth-child(4).vcfe-animate {
-          animation-delay: 0.4s;
-        }
-        .vcfe-item:nth-child(5).vcfe-animate {
-          animation-delay: 0.5s;
         }
 
         .vcfe-item:hover {
@@ -273,11 +198,6 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
           box-shadow: 0 20px 56px rgba(1,22,56,0.14);
           background: rgba(1,22,56,0.06);
           position: relative;
-          opacity: 0;
-          transform: translateX(24px);
-        }
-        .vcfe-img-wrap.vcfe-animate {
-          animation: vcfe-image-slide-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .vcfe-img-wrap img {
@@ -312,7 +232,7 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
         }
       `}</style>
 
-      <section className="vcfe-section" ref={sectionRef} style={{
+      <section className="vcfe-section" style={{
             display: "flex",
             alignItems: "stretch", // VERY IMPORTANT
             gap: "40px",

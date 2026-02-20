@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
 const MENTORS = [
   {
     name: "Mr. Rajat Kumar",
@@ -71,45 +69,10 @@ function LogoBadge({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function VCFellowshipMentors() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const cards = entry.target.querySelectorAll('.vc-mentor-card');
-            cards.forEach((card, index) => {
-              setTimeout(() => {
-                card.classList.add('vc-animate');
-              }, index * 100);
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    observer.observe(sectionRef.current);
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        @keyframes vc-mentor-fadeUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
 
         .vc-mentors-section {
           background: #f5c842;
@@ -160,11 +123,6 @@ export default function VCFellowshipMentors() {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
-          opacity: 0;
-          transform: translateY(24px);
-        }
-        .vc-mentor-card.vc-animate {
-          animation: vc-mentor-fadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         .vc-mentor-card:hover {
           transform: translateY(-5px);
@@ -271,7 +229,7 @@ export default function VCFellowshipMentors() {
         }
       `}</style>
 
-      <section className="vc-mentors-section" ref={sectionRef}>
+      <section className="vc-mentors-section">
 
         <div className="vc-mentors-header">
           <h2 className="vc-mentors-title">

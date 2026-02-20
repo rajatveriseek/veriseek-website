@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 const FAQS = [
   {
@@ -23,51 +23,32 @@ const FAQS = [
 
 export default function VCFellowshipFAQ() {
   const [open, setOpen] = useState<number | null>(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const header = entry.target.querySelector('.vcfaq-header');
-            const items = entry.target.querySelectorAll('.vcfaq-item');
-            
-            if (header) header.classList.add('vcfaq-animate');
-            items.forEach((item) => {
-              item.classList.add('vcfaq-animate');
-            });
-            
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    observer.observe(sectionRef.current);
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-        @keyframes vcfaq-header-fade {
-          from { opacity: 0; transform: translateY(-16px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
-        @keyframes vcfaq-item-slide {
-          from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
+
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
 
         /* Section — white bg, matches Sharkathon FAQ section */
@@ -75,17 +56,14 @@ export default function VCFellowshipFAQ() {
           background: #ffffff;
           padding: 80px clamp(20px, 8vw, 120px);
           font-family: 'DM Sans', sans-serif;
+          animation: fadeInUp 0.6s ease-out;
         }
 
         /* Centered header — consistent Sharkathon pattern */
         .vcfaq-header {
           text-align: center;
           margin-bottom: 52px;
-          opacity: 0;
-          transform: translateY(-16px);
-        }
-        .vcfaq-header.vcfaq-animate {
-          animation: vcfaq-header-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          animation: fadeInUp 0.6s ease-out 0.1s both;
         }
 
         .vcfaq-eyebrow {
@@ -134,30 +112,19 @@ export default function VCFellowshipFAQ() {
           margin: 0 auto;
         }
 
+        /* Staggered entrance animation for items */
+        .vcfaq-item:nth-child(1) { animation: fadeInUp 0.5s ease-out 0.2s both; }
+        .vcfaq-item:nth-child(2) { animation: fadeInUp 0.5s ease-out 0.3s both; }
+        .vcfaq-item:nth-child(3) { animation: fadeInUp 0.5s ease-out 0.4s both; }
+        .vcfaq-item:nth-child(4) { animation: fadeInUp 0.5s ease-out 0.5s both; }
+
         /* Each item — navy card, matching Sharkathon's dark card language */
         .vcfaq-item {
           background: #011638;
           border-radius: 12px;
           overflow: hidden;
-          transition: box-shadow 0.25s ease, transform 0.25s ease;
+          transition: box-shadow 0.3s ease, transform 0.3s ease;
           position: relative;
-          opacity: 0;
-          transform: translateY(16px);
-        }
-        .vcfaq-item.vcfaq-animate {
-          animation: vcfaq-item-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .vcfaq-item:nth-child(1).vcfaq-animate {
-          animation-delay: 0.1s;
-        }
-        .vcfaq-item:nth-child(2).vcfaq-animate {
-          animation-delay: 0.2s;
-        }
-        .vcfaq-item:nth-child(3).vcfaq-animate {
-          animation-delay: 0.3s;
-        }
-        .vcfaq-item:nth-child(4).vcfaq-animate {
-          animation-delay: 0.4s;
         }
 
         .vcfaq-item:hover {
@@ -176,6 +143,7 @@ export default function VCFellowshipFAQ() {
           width: 3px;
           background: #f5c842;
           border-radius: 12px 0 0 12px;
+          animation: slideIn 0.3s ease-out;
         }
 
         /* Button row */
@@ -209,23 +177,25 @@ export default function VCFellowshipFAQ() {
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: background 0.2s, border 0.2s;
+          transition: background 0.3s ease, border 0.3s ease, transform 0.3s ease;
         }
         .vcfaq-icon-open {
           background: #f5c842;
           border: none;
           color: #011638;
+          transform: rotate(90deg);
         }
         .vcfaq-icon-closed {
           background: transparent;
           border: 1.5px solid rgba(245,200,66,0.35);
           color: #f5c842;
+          transform: rotate(0deg);
         }
 
         /* Answer reveal */
         .vcfaq-answer-wrap {
           overflow: hidden;
-          transition: max-height 0.35s ease;
+          transition: max-height 0.4s ease;
         }
 
         .vcfaq-answer {
@@ -234,10 +204,11 @@ export default function VCFellowshipFAQ() {
           color: rgba(255,255,255,0.60);
           padding: 0 26px 22px 26px;
           font-family: 'DM Sans', sans-serif;
+          animation: fadeInUp 0.4s ease-out 0.1s both;
         }
       `}</style>
 
-      <section className="vcfaq-section" ref={sectionRef}>
+      <section className="vcfaq-section">
 
         {/* Header */}
         <div className="vcfaq-header">
