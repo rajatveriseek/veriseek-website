@@ -20,7 +20,7 @@ export default function VCFellowshipContact({
           background: #011638;
           padding: 40px clamp(20px, 8vw, 120px);
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1.6fr 1fr;
           gap: clamp(20px, 4vw, 48px);
           align-items: start;
           font-family: 'DM Sans', sans-serif;
@@ -117,7 +117,7 @@ export default function VCFellowshipContact({
           font-family: 'DM Sans', sans-serif;
           text-decoration: none;
           transition: color 0.2s;
-          white-space: nowrap;
+          white-space: normal;
           letter-spacing: -0.2px;
         }
         .vc-contact-value:hover {
@@ -195,7 +195,7 @@ export default function VCFellowshipContact({
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
               </div>
-              <div style={{ minWidth: 0, overflow: "hidden" }}>
+              <div style={{ minWidth: 0}}>
                 <p className="vc-contact-label">Email ID</p>
                 <a href={`mailto:${email}`} className="vc-contact-value">{email}</a>
               </div>
