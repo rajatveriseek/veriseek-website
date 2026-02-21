@@ -139,7 +139,7 @@ const Footer = () => {
 
         .vs-footer-contact-item {
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           gap: 12px;
         }
 
@@ -248,12 +248,13 @@ const Footer = () => {
               {[
                 { label: "Home", href: "/" },
                 { label: "About Us", href: "/about" },
-                { label: "VC Fellowship", href : "/vc_fellowship" },
+                { label: "The Deal Room", href : "/the_deal_room" },
                 { label: "Sharkathon", href: "/sharkathon" },
                 { label: "Contact", href: "/contact" },
                 { label: "Privacy Policy", href: "/privacy" },
                 { label: "Terms & Conditions", href: "/rules" },
-                { label: "Refund Policy", href: "/refund" },
+                { label: "Refund Policy Sharkathon", href: "/refund" },
+                { label: "Refund Policy The Deal Room", href: "/refund_tdr" },
               ].map(({ label, href }) => (
                 <li key={href}>
                   <Link href={href} className="vs-footer-link">

@@ -1,0 +1,365 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+interface VCContactProps {
+  email?: string;
+  mobile?: string;
+  imageSrc?: string;
+}
+
+export default function VCFellowshipContact({
+  email = "team@veriseekeducation.com",
+  mobile = "+91 9953371191",
+  imageSrc,
+}: VCContactProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const card = entry.target.querySelector('.vc-contact-card');
+            const image = entry.target.querySelector('.vc-contact-image');
+
+            if (card) card.classList.add('vc-animate');
+            if (image) image.classList.add('vc-animate');
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        @keyframes vc-contact-slide-left {
+          from { opacity: 0; transform: translateX(-32px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes vc-contact-slide-right {
+          from { opacity: 0; transform: translateX(32px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes vc-contact-slide-up {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .vc-contact-section {
+          background: #011638;
+          padding: 40px clamp(20px, 8vw, 120px);
+          display: grid;
+          grid-template-columns: 1.6fr 1fr;
+          gap: clamp(20px, 4vw, 48px);
+          align-items: start;
+          font-family: 'DM Sans', sans-serif;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .vc-contact-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(ellipse 70% 80% at 10% 50%, rgba(30,90,200,0.18) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 60% at 90% 50%, rgba(245,200,66,0.06) 0%, transparent 60%);
+          pointer-events: none;
+        }
+
+        .vc-contact-card {
+          background: rgba(255,255,255,0.97);
+          border-radius: 16px;
+          padding: 32px 36px;
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          opacity: 0;
+          transform: translateX(-32px);
+        }
+        .vc-contact-card.vc-animate {
+          animation: vc-contact-slide-left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .vc-contact-heading {
+          font-size: clamp(18px, 2.2vw, 28px);
+          font-weight: 700;
+          color: #0a0a0a;
+          line-height: 1.2;
+          margin-bottom: 20px;
+          font-family: 'DM Sans', sans-serif;
+          letter-spacing: -0.4px;
+          white-space: nowrap;
+        }
+
+        .vc-contact-divider {
+          width: 100%;
+          height: 1px;
+          background: rgba(0,0,0,0.08);
+          margin-bottom: 20px;
+        }
+
+        .vc-contact-details {
+          display: flex;
+          flex-direction: row;
+          gap: 24px;
+          align-items: center;
+        }
+
+        .vc-contact-item {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          min-width: 0;
+          flex: 1;
+        }
+
+        .vc-contact-icon-wrap {
+          flex-shrink: 0;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #f5c842;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #011638;
+          box-shadow: 0 2px 8px rgba(245,200,66,0.30);
+        }
+
+        .vc-contact-label {
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(0,0,0,0.38);
+          margin-bottom: 3px;
+          font-family: 'DM Sans', sans-serif;
+          white-space: nowrap;
+        }
+
+        .vc-contact-value {
+          font-size: 15px;
+          font-weight: 700;
+          color: #011638;
+          font-family: 'DM Sans', sans-serif;
+          text-decoration: none;
+          transition: color 0.2s;
+          white-space: nowrap;
+          letter-spacing: -0.2px;
+        }
+        .vc-contact-value:hover {
+          color: #1a4fa0;
+          text-decoration: underline;
+        }
+
+        .vc-contact-image {
+          border-radius: 16px;
+          overflow: hidden;
+          position: relative;
+          z-index: 1;
+          align-self: stretch;
+          height: 180px;
+          opacity: 0;
+          transform: translateX(32px);
+        }
+        .vc-contact-image.vc-animate {
+          animation: vc-contact-slide-right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+        }
+
+        .vc-contact-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .vc-contact-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+        }
+
+        .vc-contact-placeholder span {
+          font-size: 11px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.20);
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .vc-contact-vertical-divider {
+          width: 1px;
+          align-self: stretch;
+          background: rgba(0,0,0,0.10);
+          flex-shrink: 0;
+        }
+
+        /* Tablet: tighten up heading and contact values */
+        @media (max-width: 900px) and (min-width: 701px) {
+          .vc-contact-heading {
+            white-space: normal;
+          }
+          .vc-contact-value {
+            font-size: 13px;
+            white-space: normal;
+            word-break: break-word;
+          }
+          .vc-contact-card {
+            padding: 28px 24px;
+          }
+        }
+
+        /* Mobile: stack everything vertically */
+        @media (max-width: 700px) {
+          .vc-contact-section {
+            grid-template-columns: 1fr;
+            padding: 32px 20px;
+            gap: 20px;
+          }
+
+          /* On mobile, image slides up instead of from the right */
+          .vc-contact-image {
+            transform: translateY(24px);
+            height: 220px;
+            order: -1; /* image above card on mobile */
+          }
+          .vc-contact-image.vc-animate {
+            animation: vc-contact-slide-up 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          }
+
+          .vc-contact-card {
+            padding: 28px 12px;
+          }
+
+          .vc-contact-heading {
+            white-space: normal;
+            font-size: clamp(18px, 5vw, 22px);
+            margin-bottom: 16px;
+          }
+
+          .vc-contact-details {
+            flex-direction: column;
+            gap: 16px;
+            align-items: stretch;
+          }
+
+          .vc-contact-vertical-divider {
+            width: 100%;
+            height: 1px;
+            align-self: auto;
+          }
+
+          .vc-contact-item {
+            flex: unset;
+            width: 100%;
+          }
+
+          .vc-contact-value {
+            white-space: normal;
+            word-break: break-word;
+            font-size: 14px;
+          }
+        }
+
+        /* Very small screens */
+        @media (max-width: 380px) {
+          .vc-contact-section {
+            padding: 24px 16px;
+          }
+          .vc-contact-icon-wrap {
+            width: 36px;
+            height: 36px;
+          }
+        }
+      `}</style>
+
+      <section className="vc-contact-section" ref={sectionRef}>
+
+        {/* Left — contact card */}
+        <div className="vc-contact-card">
+          <h2 className="vc-contact-heading">
+            Reach out to the{" "}
+            <em style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>
+              Support Team
+            </em>
+          </h2>
+
+          <div className="vc-contact-divider" />
+
+          <div className="vc-contact-details">
+
+            {/* Email */}
+            <div className="vc-contact-item">
+              <div className="vc-contact-icon-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <p className="vc-contact-label">Email ID</p>
+                <a href={`mailto:${email}`} className="vc-contact-value">{email}</a>
+              </div>
+            </div>
+
+            {/* Divider — vertical on desktop, horizontal on mobile (via CSS) */}
+            <div className="vc-contact-vertical-divider" />
+
+            {/* Mobile */}
+            <div className="vc-contact-item">
+              <div className="vc-contact-icon-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div style={{ minWidth: 0, overflow: "hidden" }}>
+                <p className="vc-contact-label">Mobile No.</p>
+                <a href={`tel:${mobile.replace(/\s/g, "")}`} className="vc-contact-value">{mobile}</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Right — image */}
+        <div className="vc-contact-image">
+          {imageSrc ? (
+            <img src={imageSrc} alt="The Deal Room team" />
+          ) : (
+            <div className="vc-contact-placeholder">
+              <div style={{ width: 48, height: 3, background: "#f5c842", borderRadius: 99, opacity: 0.30 }} />
+              <span>Add imageSrc prop</span>
+            </div>
+          )}
+        </div>
+
+      </section>
+    </>
+  );
+}

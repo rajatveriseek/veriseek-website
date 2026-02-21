@@ -1,0 +1,401 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+function ArrowIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+      <path d="M7 17L17 7M17 7H7M17 7v10" />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  );
+}
+
+function PinIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+
+interface VCPricingProps {
+  fee?: string;
+  dates?: string;
+  venue?: string;
+  applyHref?: string;
+  onApply?: () => void;
+}
+
+export default function VCFellowshipPricing({
+  fee       = "INR 15,000",
+  dates     = "14–15 March 2026",
+  venue     = "Shiv Nadar University, Greater Noida",
+  applyHref = "https://rzp.io/rzp/IfWaHBUQ",
+  onApply   = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
+}: VCPricingProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const header = entry.target.querySelector('.vcp-header');
+            const left = entry.target.querySelector('.vcp-left');
+            const right = entry.target.querySelector('.vcp-right');
+            
+            if (header) header.classList.add('vcp-animate');
+            if (left) left.classList.add('vcp-animate');
+            if (right) right.classList.add('vcp-animate');
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        @keyframes vcp-header-fade {
+          from { opacity: 0; transform: translateY(-16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes vcp-left-slide {
+          from { opacity: 0; transform: translateX(-32px) rotate(-1deg); }
+          to { opacity: 1; transform: translateX(0) rotate(-1deg); }
+        }
+        @keyframes vcp-right-slide {
+          from { opacity: 0; transform: translateX(32px) rotate(0deg); }
+          to { opacity: 1; transform: translateX(0) rotate(0deg); }
+        }
+
+        .vcp-section {
+          background: #f5c842;
+          padding: 80px clamp(20px, 8vw, 120px);
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .vcp-header {
+          text-align: center;
+          margin-bottom: 64px;
+          opacity: 0;
+          transform: translateY(-16px);
+        }
+        .vcp-header.vcp-animate {
+          animation: vcp-header-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .vcp-title {
+          font-size: clamp(26px, 3.5vw, 38px);
+          font-weight: 700;
+          color: #011638;
+          letter-spacing: -0.5px;
+          line-height: 1.2;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .vcp-rule {
+          width: 96px; height: 4px;
+          background: #011638;
+          border-radius: 99px;
+          margin: 14px auto 0;
+          opacity: 0.20;
+        }
+
+        /* Stacked cards container */
+        .vcp-stack {
+          position: relative;
+          max-width: 960px;
+          margin: 0 auto;
+          /* extra vertical room for the tilt + shadow */
+          padding: 24px 24px 24px 0;
+        }
+
+        /* WHITE card — sits behind, slightly rotated */
+        .vcp-left {
+          background: #eef0f2;
+          border-radius: 20px;
+          padding: 44px 36px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          /* position it so the blue card overlaps the right portion */
+          width: 52%;
+          min-height: 280px;
+          position: relative;
+          z-index: 1;
+          /* slight counter-clockwise tilt for depth */
+          transform: rotate(-1deg);
+          transform-origin: left center;
+          box-shadow:
+            0 8px 32px rgba(1,22,56,0.14),
+            0 2px 8px rgba(1,22,56,0.08);
+          opacity: 0;
+        }
+        .vcp-left.vcp-animate {
+          animation: vcp-left-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .vcp-left-label {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #011638;
+          opacity: 0.55;
+          margin-bottom: 24px;
+        }
+
+        .vcp-bullet {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          max-width: 250px;
+          font-size: 14px;
+          line-height: 1.65;
+          color: #011638;
+        }
+        .vcp-bullet strong { color: #011638; font-weight: 700; }
+
+        .vcp-plus {
+          flex-shrink: 0;
+          width: 26px; height: 26px;
+          border-radius: 50%;
+          background: #f5c842;
+          color: #011638;
+          font-size: 18px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 1;
+          margin-top: 1px;
+        }
+
+        /* BLUE card — overlaps right side of white card, sits on top */
+        .vcp-right {
+          background: #011638;
+          border-radius: 20px;
+          padding: 44px 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: absolute;
+          /* start from ~35% so it overlaps the white card's right edge */
+          left: 33%;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 2;
+          overflow: hidden;
+          box-shadow:
+            0 24px 64px rgba(1,22,56,0.40),
+            0 4px 16px rgba(1,22,56,0.20),
+            -8px 0 24px rgba(1,22,56,0.12);
+          opacity: 0;
+        }
+        .vcp-right.vcp-animate {
+          animation: vcp-right-slide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s forwards;
+        }
+        .vcp-right::after {
+          content: '';
+          position: absolute;
+          top: -60px; right: -60px;
+          width: 200px; height: 200px;
+          background: rgba(245,200,66,0.06);
+          border-radius: 50%;
+          filter: blur(60px);
+          pointer-events: none;
+        }
+
+        .vcp-fee-label {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #f5c842;
+          margin-bottom: 12px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .vcp-fee-row {
+          display: flex;
+          align-items: baseline;
+          gap: 10px;
+          margin-bottom: 28px;
+          position: relative;
+          z-index: 1;
+        }
+        .vcp-fee-amount {
+          font-size: clamp(32px, 4.5vw, 44px);
+          font-weight: 700;
+          color: #ffffff;
+          letter-spacing: -2px;
+          line-height: 1;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .vcp-fee-gst {
+          font-size: 16px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.40);
+          letter-spacing: 1px;
+          align-self: flex-end;
+          margin-bottom: 4px;
+        }
+
+        .vcp-divider {
+          width: 100%;
+          height: 1px;
+          background: rgba(255,255,255,0.08);
+          margin-bottom: 24px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .vcp-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 32px;
+          position: relative;
+          z-index: 1;
+        }
+        .vcp-meta-row {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 15px;
+          font-weight: 500;
+          color: rgba(255,255,255,0.88);
+        }
+        .vcp-meta-icon {
+          flex-shrink: 0;
+          color: #f5c842;
+          opacity: 0.80;
+        }
+
+        .vcp-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          width: 100%;
+          padding: 16px 28px;
+          border-radius: 100px;
+          background: #f5c842;
+          color: #011638;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          font-family: 'DM Sans', sans-serif;
+          text-decoration: none;
+          cursor: pointer;
+          border: 2px solid #f5c842;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 20px rgba(245,200,66,0.25);
+          position: relative;
+          z-index: 1;
+        }
+        .vcp-btn:hover {
+          background: transparent;
+          color: #f5c842;
+          box-shadow: none;
+        }
+
+        @media (max-width: 700px) {
+          .vcp-stack {
+            padding: 16px 0 40px 0;
+          }
+          .vcp-left {
+            width: 100%;
+            min-height: auto;
+            transform: rotate(0deg);
+          }
+          .vcp-right {
+            position: relative;
+            left: unset;
+            top: unset;
+            right: unset;
+            bottom: unset;
+            margin-top: -24px;
+            padding: 32px 24px;
+          }
+        }
+      `}</style>
+
+      <section className="vcp-section" ref={sectionRef}>
+        <div className="vcp-header">
+          <h2 className="vcp-title">
+            Programme{" "}
+            <em style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>
+              Pricing & Details
+            </em>
+          </h2>
+          <div className="vcp-rule" />
+        </div>
+
+        <div className="vcp-stack">
+
+          {/* WHITE card — behind */}
+          <div className="vcp-left">
+            <div className="vcp-bullet">
+              <span className="vcp-plus">+</span>
+              <span>Students will be required to be on campus from <strong>9:00 AM to 5:00 PM</strong> on both days</span>
+            </div>
+          </div>
+
+          {/* BLUE card — overlapping on top */}
+          <div className="vcp-right">
+            <p className="vcp-fee-label">Programme Fee</p>
+            <div className="vcp-fee-row">
+              <span className="vcp-fee-amount">{fee}</span>
+              <span className="vcp-fee-gst">+ GST</span>
+            </div>
+            <div className="vcp-divider" />
+            <div className="vcp-meta">
+              <div className="vcp-meta-row">
+                <span className="vcp-meta-icon"><CalendarIcon /></span>
+                {dates}
+              </div>
+              <div className="vcp-meta-row">
+                <span className="vcp-meta-icon"><PinIcon /></span>
+                {venue}
+              </div>
+            </div>
+            <a href={applyHref} onClick={onApply} className="vcp-btn">
+              Apply Now <ArrowIcon />
+            </a>
+          </div>
+
+        </div>
+      </section>
+    </>
+  );
+}
