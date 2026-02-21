@@ -30,7 +30,7 @@ const Header = () => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "VC Fellowship", href : "/vc_fellowship" },
+    { name: "The Deal Room", href : "/the_deal_room" },
     { name: "Sharkathon", href: "/sharkathon" },
     { name: "Contact", href: "/contact" },
   ]

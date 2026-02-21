@@ -2,24 +2,28 @@
 import React from "react";
 import Link from "next/link";
 
-import VCFellowshipHero2 from "@/components/vc_fellowship/VCFellowshipHero2";
-import VCFellowshipFAQ from "@/components/vc_fellowship/Vcfellowshipfaq";
-import VCFellowshipPricing from "@/components/vc_fellowship/Vcfellowshippricing";
-import VCFellowshipExpect from "@/components/vc_fellowship/Vcfellowshipexpect";
-import VCFellowshipContact from "@/components/vc_fellowship/Vcfellowshipcontact";
-import VCProgrammeFlow from "@/components/vc_fellowship/Vcfellowshipprogrammeflow";
-import VCFellowshipMentors from "@/components/vc_fellowship/Vcfellowshipmentors";
-import VCFellowshipSection from "@/components/vc_fellowship/Vcfellowshipsection";
+import VCFellowshipHero2 from "@/components/the_deal_room/VCFellowshipHero2";
+import VCFellowshipFAQ from "@/components/the_deal_room/Vcfellowshipfaq";
+import VCFellowshipPricing from "@/components/the_deal_room/Vcfellowshippricing";
+import VCFellowshipExpect from "@/components/the_deal_room/Vcfellowshipexpect";
+import VCFellowshipContact from "@/components/the_deal_room/Vcfellowshipcontact";
+import VCProgrammeFlow from "@/components/the_deal_room/Vcfellowshipprogrammeflow";
+import VCFellowshipMentors from "@/components/the_deal_room/Vcfellowshipmentors";
+import VCFellowshipSection from "@/components/the_deal_room/Vcfellowshipsection";
+import TheDealRoomHero from "@/components/the_deal_room/VCFellowshipHero3";
 
 export default function SharkathonPage() {
   return (
     <>
       {/* Page Content */}
-      <VCFellowshipHero2
+      {/* <VCFellowshipHero2
+        heroImageSrc="/images/P1101556.JPG"
+        brochureHref="/vc-fellowship-brochure.pdf"
+      /> */}
+      <TheDealRoomHero
         heroImageSrc="/images/P1101556.JPG"
         brochureHref="/vc-fellowship-brochure.pdf"
       />
-
       <VCFellowshipSection />
       <VCProgrammeFlow />
       <VCFellowshipMentors />
