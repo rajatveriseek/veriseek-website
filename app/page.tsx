@@ -24,12 +24,6 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-10">
-              <div className="inline-block bg-secondary text-primary px-4 py-2 rounded-full text-sm font-bold tracking-wide transform hover:scale-105 transition-all">
-                <div className="flex items-center gap-2">
-                  <ArrowRight className="w-4 h-4" />
-                  <span>Registration Closed. See you next year!</span>
-                </div>
-              </div>
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight pb-2">
                   Bridging Education and Real-World Skills
@@ -42,13 +36,6 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-4 pt-2">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform"
-                >
-                  <Link href="/sharkathon">Learn About Sharkathon</Link>
-                </Button>
                 <Button
                   asChild
                   size="lg"
@@ -199,7 +186,7 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-primary text-white">
+      {/* <section className="py-20 bg-primary text-white">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="text-3xl font-bold">Ready to Think Like an Investor?</h2>
@@ -207,16 +194,9 @@ export default function Home() {
               Join Sharkathon today and embark on an exciting journey of
               critical thinking, analysis, and investment evaluation.
             </p>
-            {/* <Button
-              asChild
-              size="lg"
-              className="bg-yellow-400 text-blue-900 hover:bg-yellow-300 font-extrabold shadow-lg border-2 border-yellow-400 hover:scale-105 transition-transform"
-            >
-              <Link href="/sharkathon#register">Register Now</Link>
-            </Button> */}
           </div>
         </div>
-      </section>
+      </section> */}
     </React.Fragment>
   );
 }
