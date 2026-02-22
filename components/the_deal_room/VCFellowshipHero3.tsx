@@ -192,7 +192,7 @@ interface TheDealRoomHeroProps {
 export default function TheDealRoomHero({
   heroImageSrc,
   applyHref    = "https://rzp.io/rzp/IfWaHBUQ",
-  brochureHref = "/images/The Deal Room.pdf",
+  brochureHref = "/images/The_Deal_Room.pdf",
   onApply      = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
   onBrochure,
   eyebrow      = "IN ASSOCIATION WITH",
@@ -391,7 +391,13 @@ export default function TheDealRoomHero({
           <a href={applyHref} onClick={onApply} className="vc-btn-primary">
             14th - 15th March | Apply Now <ArrowIcon />
           </a>
-          <a href={brochureHref} onClick={onBrochure} className="vc-btn-secondary">
+          <a
+            href={brochureHref}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            className="vc-btn-secondary"
+          >
             Download Brochure <DownloadIcon />
           </a>
         </div>

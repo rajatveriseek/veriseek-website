@@ -22,7 +22,7 @@ export default function SharkathonPage() {
       /> */}
       <TheDealRoomHero
         heroImageSrc="/images/P1101556.JPG"
-        brochureHref="/vc-fellowship-brochure.pdf"
+        brochureHref="/images/The_Deal_Room.pdf"
       />
       <VCFellowshipSection />
       <VCProgrammeFlow />
