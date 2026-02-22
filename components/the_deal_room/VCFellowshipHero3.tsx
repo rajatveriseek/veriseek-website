@@ -91,7 +91,6 @@ const GLOBAL_CSS = `
   .vc-college-badge img {
     height: 52px;
     width: auto;
-    max-width: 64px;
     object-fit: contain;
     display: block;
   }
@@ -193,14 +192,14 @@ interface TheDealRoomHeroProps {
 export default function TheDealRoomHero({
   heroImageSrc,
   applyHref    = "https://rzp.io/rzp/IfWaHBUQ",
-  brochureHref = "/images/The Deal Room .pdf",
+  brochureHref = "/images/The Deal Room.pdf",
   onApply      = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
   onBrochure,
   eyebrow      = "IN ASSOCIATION WITH",
   heading      = "The Deal Room",
   subheading   = "Make your First Deal.",
   description,
-  colleges     = ["/images/mit2.png", "/images/wharton.png", "/images/iit.png", "/images/isb-logo1.webp"],
+  colleges     = ["/images/WhatsApp Image 2026-02-22 at 4.01.41 PM.jpeg", "/images/wharton.png", "/images/iit.png", "/images/isb-logo1.webp"],
 }: TheDealRoomHeroProps) {
   const injected = useRef(false);
 
@@ -218,7 +217,7 @@ export default function TheDealRoomHero({
       The Deal Room is a first-of-its-kind programme in India that builds real thinking and
       investing skills for students, led by{" "}
       <strong style={{ color: "#ffffff", fontWeight: 700 }}>senior industry leaders and Ivy League</strong>
-      {" "}alumni and culminates in a Shark Tank style VC roleplay where the students are the Sharks.
+      {" "}alumni and culminates in a <strong style={{ color: "#ffffff", fontWeight: 700 }}>Shark Tank style VC roleplay</strong> where the students are the Sharks.
     </>
   );
 
@@ -381,7 +380,7 @@ export default function TheDealRoomHero({
               <img src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png" alt="Nandan Capital" style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, cursor: "pointer" }} />
             </a>
             <a href="https://www.linkedin.com/company/himlandcapitaladvisors" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <img src="/images/himlandcapitaladvisors_logo-removebg-preview.png"    alt="Himland Capital" style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, cursor: "pointer" }} />
+              <img src="/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg"    alt="Himland Capital" style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, cursor: "pointer" }} />
             </a>
             <img src="/images/IMG_5883.PNG"                                         alt="" style={{ background: "white", borderRadius: 4, padding: "2px 8px", height: 64 }} />
           </div>
@@ -390,7 +389,7 @@ export default function TheDealRoomHero({
         {/* CTA Buttons */}
         <div className="vc-anim-5 vc-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 28 }}>
           <a href={applyHref} onClick={onApply} className="vc-btn-primary">
-            Apply Now <ArrowIcon />
+            14th - 15th March | Apply Now <ArrowIcon />
           </a>
           <a href={brochureHref} onClick={onBrochure} className="vc-btn-secondary">
             Download Brochure <DownloadIcon />

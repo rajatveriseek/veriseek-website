@@ -248,7 +248,7 @@ const Footer = () => {
               {[
                 { label: "Home", href: "/" },
                 { label: "About Us", href: "/about" },
-                { label: "The Deal Room", href : "/the_deal_room" },
+                { label: "The Deal Room", href : "/thedealroom" },
                 { label: "Sharkathon", href: "/sharkathon" },
                 { label: "Contact", href: "/contact" },
                 { label: "Privacy Policy", href: "/privacy" },

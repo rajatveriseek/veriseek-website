@@ -262,7 +262,7 @@ export default function VCFellowshipSection({
               Duration: <span>2 Days</span>
             </div>
             <div className="vcf-meta-row">
-              Mode: <span>On Campus</span>
+              Mode: <span>Shiv Nadar University, Greater Noida</span>
             </div>
           </div>
 

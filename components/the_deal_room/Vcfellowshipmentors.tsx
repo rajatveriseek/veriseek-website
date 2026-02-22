@@ -25,7 +25,7 @@ const MENTORS = [
     name: "Mr. Siddhant Gupta",
     role: "Founder, Himland Capital",
     labels: ["ISB", "Himland Capital", "Sixth Sense", "Deloitte"],
-    tags: ["/images/isb-logo1_1.jpg", "/images/himlandcapitaladvisors_logo.jpg", "/images/sixth sense.png", "/images/deloitte.png"],
+    tags: ["/images/isb-logo1_1.jpg", "/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg", "/images/sixth sense.png", "/images/deloitte.png"],
     initials: "SG",
     subheading: "Founder Himland Capital,\nEx-VP Sixth Sense Ventures",
     image: "/images/siddhant_gupta-removebg-preview.png",
