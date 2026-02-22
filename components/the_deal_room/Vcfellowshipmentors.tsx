@@ -28,7 +28,7 @@ const MENTORS = [
     tags: ["/images/isb-logo1_1.jpg", "/images/himlandcapitaladvisors_logo.jpg", "/images/sixth sense.png", "/images/deloitte.png"],
     initials: "SG",
     subheading: "Founder Himland Capital,\nEx-VP Sixth Sense Ventures",
-    image: "/images/siddhant_gupta-removebg-preview.png \n",
+    image: "/images/siddhant_gupta-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/siddhant-gupta-/",
   },
 ];
@@ -59,15 +59,15 @@ function LogoBadge({ src, alt, href }: { src: string; alt: string; href?: string
         borderRadius: 8,
         background: "#ffffff",
         boxShadow: "0 1px 4px rgba(1,22,56,0.06)",
-        height: 44,
+        height: 40,
       }}
     >
       <img
         src={src}
         alt={alt}
         style={{
-          height: 36,
-          maxWidth: 60,
+          height: 30,
+          maxWidth: 56,
           width: "auto",
           objectFit: "contain",
           display: "block",
@@ -95,31 +95,27 @@ export default function VCFellowshipMentors() {
 
         .vc-mentors-section {
           background: #f5c842;
-          padding: 40px clamp(20px, 8vw, 120px);
+          padding: clamp(28px, 5vw, 48px) clamp(16px, 6vw, 120px) clamp(32px, 5vw, 48px);
           font-family: 'DM Sans', sans-serif;
-          height: 95vh;
           box-sizing: border-box;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
         }
 
         .vc-mentors-header {
           text-align: center;
-          margin-bottom: 28px;
-          flex-shrink: 0;
+          margin-bottom: clamp(20px, 4vw, 32px);
         }
         .vc-mentors-title {
-          font-size: clamp(24px, 3vw, 38px);
+          font-size: clamp(22px, 3.5vw, 38px);
           font-weight: 700;
           color: #011638;
           letter-spacing: -0.5px;
           line-height: 1.15;
           font-family: 'DM Sans', sans-serif;
-          margin-bottom: 10px;
+          margin: 0 0 10px;
         }
         .vc-mentors-rule {
-          width: 96px; height: 4px;
+          width: 80px;
+          height: 4px;
           background: #011638;
           border-radius: 99px;
           margin: 10px auto 0;
@@ -127,20 +123,18 @@ export default function VCFellowshipMentors() {
         }
         .vc-mentors-subtitle {
           margin-top: 10px;
-          font-size: 14px;
+          font-size: clamp(12px, 1.5vw, 14px);
           color: rgba(1,22,56,0.70);
         }
 
-        /* 3-column grid — fills remaining space */
+        /* Grid — 3 col desktop, 1 col mobile */
         .vc-mentors-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+          gap: clamp(12px, 2vw, 24px);
           margin: 0 auto;
           width: 100%;
           max-width: 1100px;
-          flex: 1;
-          min-height: 0;
         }
 
         /* Card */
@@ -152,21 +146,20 @@ export default function VCFellowshipMentors() {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
-          min-height: 0;
         }
         .vc-mentor-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 20px 56px rgba(1,22,56,0.22);
         }
 
-        /* Photo area — flex-based, fills proportionally */
+        /* Photo — fixed aspect ratio for consistency */
         .vc-mentor-photo-wrap {
           position: relative;
           width: 100%;
-          flex: 1;
-          min-height: 0;
+          aspect-ratio: 3 / 2.5;
           overflow: hidden;
           background: #1a3a5c;
+          flex-shrink: 0;
         }
 
         .vc-mentor-photo-wrap img {
@@ -195,7 +188,7 @@ export default function VCFellowshipMentors() {
           background: #011638;
         }
 
-        /* LinkedIn badge — bottom-right of photo */
+        /* LinkedIn badge */
         .vc-mentor-linkedin {
           position: absolute;
           bottom: 12px;
@@ -218,17 +211,24 @@ export default function VCFellowshipMentors() {
           box-shadow: 0 4px 16px rgba(0,0,0,0.35);
         }
 
-        /* White info block — fixed height, does not grow */
+        /* Info block */
         .vc-mentor-body {
-          padding: 16px 18px 18px;
+          padding: clamp(12px, 2vw, 18px);
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 6px;
           flex-shrink: 0;
+          justify-content: space-between;
+        }
+
+        .vc-mentor-info {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
         }
 
         .vc-mentor-name {
-          font-size: 16px;
+          font-size: clamp(14px, 1.4vw, 17px);
           font-weight: 700;
           color: #011638;
           line-height: 1.3;
@@ -236,7 +236,7 @@ export default function VCFellowshipMentors() {
         }
 
         .vc-mentor-role {
-          font-size: 12px;
+          font-size: clamp(11px, 1vw, 13px);
           font-weight: 400;
           color: rgba(1,22,56,0.60);
           line-height: 1.5;
@@ -251,14 +251,71 @@ export default function VCFellowshipMentors() {
           border-top: 1px solid rgba(1,22,56,0.08);
         }
 
-        @media (max-width: 768px) {
+        /* Tablet: 2 columns */
+        @media (max-width: 860px) {
+          .vc-mentors-grid {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 600px;
+          }
+          .vc-mentor-photo-wrap {
+            aspect-ratio: 3 / 3.4;
+          }
+        }
+
+        /* Mobile: 1 column, horizontal card layout */
+        @media (max-width: 540px) {
           .vc-mentors-section {
-            height: auto;
-            overflow: auto;
+            padding: 28px 16px 36px;
           }
           .vc-mentors-grid {
             grid-template-columns: 1fr;
-            max-width: 360px;
+            max-width: 400px;
+          }
+          /* On mobile switch to horizontal layout for each card */
+          .vc-mentor-card {
+            flex-direction: row;
+            border-radius: 16px;
+          }
+          .vc-mentor-photo-wrap {
+            width: 130px;
+            min-width: 130px;
+            aspect-ratio: unset;
+            height: auto;
+            border-radius: 0;
+            align-self: stretch;
+          }
+          .vc-mentor-linkedin {
+            bottom: 8px;
+            right: 8px;
+            width: 26px;
+            height: 26px;
+          }
+          .vc-mentor-linkedin svg {
+            width: 12px;
+            height: 12px;
+          }
+          .vc-mentor-body {
+            padding: 14px 14px 14px 12px;
+            gap: 4px;
+            justify-content: center;
+          }
+          .vc-mentor-name {
+            font-size: 14px;
+          }
+          .vc-mentor-role {
+            font-size: 11px;
+          }
+          .vc-mentor-logos {
+            gap: 4px;
+            padding-top: 6px;
+          }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+          .vc-mentor-photo-wrap {
+            width: 110px;
+            min-width: 110px;
           }
         }
       `}</style>
@@ -285,7 +342,7 @@ export default function VCFellowshipMentors() {
               {/* Photo */}
               <div className="vc-mentor-photo-wrap">
                 <img
-                  src={mentor.image}
+                  src={mentor.image.trim()}
                   alt={mentor.name}
                   onError={(e) => {
                     const el = e.currentTarget;
@@ -310,8 +367,10 @@ export default function VCFellowshipMentors() {
 
               {/* Info */}
               <div className="vc-mentor-body">
-                <p className="vc-mentor-name">{mentor.name}</p>
-                <p className="vc-mentor-role">{mentor.subheading}</p>
+                <div className="vc-mentor-info">
+                  <p className="vc-mentor-name">{mentor.name}</p>
+                  <p className="vc-mentor-role">{mentor.subheading}</p>
+                </div>
                 <div className="vc-mentor-logos">
                   {mentor.tags.map((src, i) => (
                     <LogoBadge key={src} src={src} alt={mentor.labels[i]} href={getLogoUrl(mentor.labels[i])} />
