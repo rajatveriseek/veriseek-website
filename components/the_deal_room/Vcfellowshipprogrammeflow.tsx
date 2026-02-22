@@ -18,8 +18,7 @@ const DAYS = [
       { title: "Risk Return Trade-Off", sub: "What would you rather invest in — Tata Power vs Eternal (Zomato)?" },
       { title: "Reading the Financial Story of a Business", sub: "What do revenue, profit and cash actually tell us about business health?" },
       { title: "Valuation vs Accounting — a shift in perspective", sub: "Can you really project the future from the past?" },
-      { title: "What does it take to be a Venture Capitalist?", sub: "What it takes to enter, and how to go about entering the Venture Capital industry." },
-      { title: "VC vs Other Careers in Finance", sub: "Typical careers in finance and the differences among them." },
+      { title: "VC vs Other Careers in Finance", sub: "Typical careers in finance and the differences among them and how to enter in it." },
       { title: "The VC Mindset", sub: "What VCs see in a pitch deck?" },
     ],
   },
@@ -38,6 +37,7 @@ const DAYS = [
       { title: "Operating & Financial Leverage at Work", sub: "Why do VC funds back loss-making companies?" },
       { title: "Evaluate the Deal — Discussion", sub: "Case studies of how to assess companies like a real investor." },
       { title: "Real Capstone Project", sub: "Shark Tank-style simulation where students are the Sharks — analyse businesses, question founders, and deliver an investment decision." },
+      { title: "Closing and Felicitation Ceremony", sub: "Merit certificate distribution and LORs for top performers, followed by prize distribution and closing remarks." },
     ],
   },
 ];
