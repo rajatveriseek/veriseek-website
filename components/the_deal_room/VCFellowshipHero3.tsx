@@ -44,9 +44,9 @@ const GLOBAL_CSS = `
     transition: all 0.25s ease; letter-spacing: 0.5px;
     background: #f5c842; color: #011638;
     border: 2px solid #f5c842;
-    font-family: 'DM Sans', sans-serif; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif; white-space: normal;
     box-shadow: 0 8px 24px rgba(245,200,66,0.30);
-    text-transform: uppercase;
+    text-transform: uppercase; text-align: center;
   }
   .vc-btn-primary:hover {
     background: #ffe066 !important;
@@ -61,8 +61,8 @@ const GLOBAL_CSS = `
     transition: all 0.25s ease; letter-spacing: 0.5px;
     background: transparent; color: #f5c842;
     border: 2px solid #f5c842;
-    font-family: 'DM Sans', sans-serif; white-space: nowrap;
-    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif; white-space: normal;
+    text-transform: uppercase; text-align: center;
   }
   .vc-btn-secondary:hover {
     background: rgba(245,200,66,0.12) !important;
@@ -120,15 +120,17 @@ const GLOBAL_CSS = `
     border-left: 4px solid #f5c842;
     background: rgba(255,255,255,0.06);
     border-radius: 0 8px 8px 0;
-    gap: 12px;
+    gap: 10px;
     font-family: 'DM Sans', sans-serif;
+    max-width: 100%;
   }
   .vc-assoc-pill img {
-    height: 60px;
+    height: 52px;
     width: auto;
-    max-width: 150px;
+    max-width: 130px;
     object-fit: contain;
     display: block;
+    flex-shrink: 0;
   }
 
   /* ── Tablet: hide right image, expand content ── */
@@ -139,18 +141,26 @@ const GLOBAL_CSS = `
 
   /* ── Mobile: tighten padding, stack buttons ── */
   @media (max-width: 540px) {
-    .vc-hero-content { padding: 72px 20px 64px !important; }
-    .vc-hero-buttons { flex-direction: column !important; align-items: center !important; }
+    .vc-hero-content { padding: 80px 18px 60px !important; }
+    .vc-hero-buttons { flex-direction: column !important; align-items: stretch !important; }
     .vc-btn-primary,
-    .vc-btn-secondary { justify-content: center; width: 100%; max-width: 300px; padding: 15px 20px !important; }
+    .vc-btn-secondary { justify-content: center; width: 100%; padding: 14px 18px !important; font-size: 12px !important; letter-spacing: 0.3px !important; }
     .vc-assoc-row    { flex-wrap: wrap !important; }
-    .vc-college-badge { height: 60px !important; padding: 4px 10px !important; }
-    .vc-college-badge img { height: 44px !important; }
+    .vc-assoc-pill   { padding: 8px 14px 8px 12px !important; gap: 6px !important; flex-wrap: wrap !important; }
+    /* Label takes full width → logos drop to their own row */
+    .vc-assoc-label  { width: 100% !important; margin-bottom: 2px !important; }
+    .vc-assoc-pill img { height: 36px !important; max-width: 90px !important; }
+    .vc-college-badge { height: 56px !important; padding: 4px 8px !important; }
+    .vc-college-badge img { height: 40px !important; }
   }
 
   @media (max-width: 380px) {
-    .vc-college-badge { height: 52px !important; }
-    .vc-college-badge img { height: 36px !important; }
+    .vc-hero-content { padding: 72px 16px 48px !important; }
+    .vc-assoc-pill img { height: 30px !important; max-width: 76px !important; }
+    .vc-college-badge { height: 48px !important; padding: 3px 7px !important; }
+    .vc-college-badge img { height: 32px !important; }
+    .vc-btn-primary,
+    .vc-btn-secondary { font-size: 11px !important; padding: 13px 14px !important; }
   }
 `;
 
@@ -370,7 +380,7 @@ export default function TheDealRoomHero({
         {/* Association pill */}
         <div className="vc-anim-4 vc-assoc-row" style={{ marginBottom: 28 }}>
           <div className="vc-assoc-pill">
-            <span style={{
+            <span className="vc-assoc-label" style={{
               fontSize: 10, letterSpacing: "2px", textTransform: "uppercase",
               color: "rgba(255,255,255,0.85)", whiteSpace: "nowrap",
             }}>
