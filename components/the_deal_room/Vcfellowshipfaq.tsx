@@ -23,6 +23,8 @@ const FAQS = [
 
 export default function VCFellowshipFAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -38,10 +40,10 @@ export default function VCFellowshipFAQ() {
           if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
           if (el === header) {
-            el.classList.add("is-visible");
+            setHeaderVisible(true);
           } else {
             const idx = items.indexOf(el);
-            setTimeout(() => el.classList.add("is-visible"), idx * 100);
+            setTimeout(() => setVisibleItems((prev) => new Set([...prev, idx])), idx * 100);
           }
           io.unobserve(el);
         });
@@ -245,7 +247,7 @@ export default function VCFellowshipFAQ() {
       <section className="vcfaq-section" ref={sectionRef}>
 
         {/* Header */}
-        <div className="vcfaq-header">
+        <div className={`vcfaq-header${headerVisible ? " is-visible" : ""}`}>
           {/* <div className="vcfaq-eyebrow">
             <span style={{ display: "inline-block", width: 28, height: 2, background: "#f5c842", flexShrink: 0 }} />
             The Deal Room
@@ -268,7 +270,7 @@ export default function VCFellowshipFAQ() {
             return (
               <div
                 key={i}
-                className={`vcfaq-item ${isOpen ? "vcfaq-item-open" : ""}`}
+                className={`vcfaq-item${visibleItems.has(i) ? " is-visible" : ""}${isOpen ? " vcfaq-item-open" : ""}`}
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
