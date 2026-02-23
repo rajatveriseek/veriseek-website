@@ -166,6 +166,14 @@ const CSS = `
     gap: 0;
     align-items: flex-start;
     margin-bottom: 64px;
+    /* animation base */
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .vcf-day-block.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
   .vcf-day-block:last-child { margin-bottom: 0; }
 
@@ -244,11 +252,18 @@ const CSS = `
     display: flex;
     align-items: flex-start;
     gap: 16px;
-    transition: transform 0.2s ease;
+    /* animation base */
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
   }
+  .vcf-session.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .vcf-session.is-visible:hover { transform: translateX(4px); }
   .vcf-session:first-child { padding-top: 0; }
   .vcf-session:last-child { border-bottom: none; padding-bottom: 0; }
-  .vcf-session:hover { transform: translateX(4px); }
 
   /* Number bubble */
   .vcf-session-num {
@@ -283,16 +298,59 @@ const CSS = `
     font-weight: 400;
   }
 
+  @media (max-width: 768px) {
+    .vcf-flow-section {
+      padding: 56px clamp(16px, 5vw, 48px);
+    }
+    .vcf-flow-header {
+      margin-bottom: 44px;
+    }
+    .vcf-flow-subtitle {
+      font-size: 13px;
+    }
+    .vcf-day-block {
+      margin-bottom: 44px;
+    }
+  }
+
   @media (max-width: 600px) {
-    .vcf-flow-line { left: 22px; }
-    .vcf-day-node { width: 44px; height: 44px; }
-    .vcf-day-content { padding-left: 20px; }
-    .vcf-sessions { padding-left: 14px; }
+    .vcf-flow-section {
+      padding: 48px 16px;
+    }
+    .vcf-flow-header {
+      margin-bottom: 36px;
+    }
+    .vcf-flow-eyebrow {
+      font-size: 10px;
+      letter-spacing: 2px;
+      gap: 8px;
+    }
+    .vcf-flow-line { left: 20px; }
+    .vcf-day-node { width: 40px; height: 40px; }
+    .vcf-day-node svg { width: 16px; height: 16px; }
+    .vcf-day-content { padding-left: 18px; }
+    .vcf-day-badge { font-size: 9px; letter-spacing: 2px; padding: 3px 10px; }
+    .vcf-day-block { margin-bottom: 36px; }
+    .vcf-sessions { padding-left: 12px; margin-left: 2px; }
+    .vcf-session { gap: 12px; padding: 14px 0; }
+    .vcf-session-num { width: 22px; height: 22px; font-size: 11px; }
+    .vcf-session-title { font-size: 13px; margin-bottom: 3px; }
+    .vcf-session-sub { font-size: 12px; line-height: 1.6; }
+  }
+
+  @media (max-width: 380px) {
+    .vcf-flow-section { padding: 40px 14px; }
+    .vcf-day-content { padding-left: 14px; }
+    .vcf-sessions { padding-left: 10px; }
+    .vcf-session-title { font-size: 12px; }
+    .vcf-session-sub { font-size: 11px; }
   }
 `;
 
 export default function VCProgrammeFlow() {
   const injected = useRef(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     if (injected.current) return;
     injected.current = true;
@@ -302,8 +360,35 @@ export default function VCProgrammeFlow() {
     document.head.appendChild(tag);
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const blocks = Array.from(section.querySelectorAll<HTMLElement>(".vcf-day-block"));
+    const blockIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const block = entry.target as HTMLElement;
+          const bIdx = blocks.indexOf(block);
+          setTimeout(() => {
+            block.classList.add("is-visible");
+            const sessions = Array.from(block.querySelectorAll<HTMLElement>(".vcf-session"));
+            sessions.forEach((s, si) =>
+              setTimeout(() => s.classList.add("is-visible"), 120 + si * 80)
+            );
+          }, bIdx * 180);
+          blockIO.unobserve(block);
+        });
+      },
+      { threshold: 0.1 }
+    );
+    blocks.forEach((b) => blockIO.observe(b));
+    return () => blockIO.disconnect();
+  }, []);
+
   return (
-    <section className="vcf-flow-section">
+    <section className="vcf-flow-section" ref={sectionRef}>
 
       {/* Header */}
       <div className="vcf-flow-header">

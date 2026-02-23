@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const FAQS = [
   {
@@ -23,6 +23,36 @@ const FAQS = [
 
 export default function VCFellowshipFAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const header = section.querySelector<HTMLElement>(".vcfaq-header");
+    const items = Array.from(section.querySelectorAll<HTMLElement>(".vcfaq-item"));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          if (el === header) {
+            el.classList.add("is-visible");
+          } else {
+            const idx = items.indexOf(el);
+            setTimeout(() => el.classList.add("is-visible"), idx * 100);
+          }
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (header) io.observe(header);
+    items.forEach((item) => io.observe(item));
+    return () => io.disconnect();
+  }, []);
 
   return (
     <>
@@ -56,14 +86,19 @@ export default function VCFellowshipFAQ() {
           background: #ffffff;
           padding: 80px clamp(20px, 8vw, 120px);
           font-family: 'DM Sans', sans-serif;
-          animation: fadeInUp 0.6s ease-out;
         }
 
-        /* Centered header — consistent Sharkathon pattern */
+        /* Centered header — animation base */
         .vcfaq-header {
           text-align: center;
           margin-bottom: 52px;
-          animation: fadeInUp 0.6s ease-out 0.1s both;
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .vcfaq-header.is-visible {
+          opacity: 1;
+          transform: translateY(0);
         }
 
         .vcfaq-eyebrow {
@@ -112,22 +147,21 @@ export default function VCFellowshipFAQ() {
           margin: 0 auto;
         }
 
-        /* Staggered entrance animation for items */
-        .vcfaq-item:nth-child(1) { animation: fadeInUp 0.5s ease-out 0.2s both; }
-        .vcfaq-item:nth-child(2) { animation: fadeInUp 0.5s ease-out 0.3s both; }
-        .vcfaq-item:nth-child(3) { animation: fadeInUp 0.5s ease-out 0.4s both; }
-        .vcfaq-item:nth-child(4) { animation: fadeInUp 0.5s ease-out 0.5s both; }
-
-        /* Each item — navy card, matching Sharkathon's dark card language */
+        /* Staggered entrance animation for items — triggered by IntersectionObserver */
         .vcfaq-item {
           background: #011638;
           border-radius: 12px;
           overflow: hidden;
-          transition: box-shadow 0.3s ease, transform 0.3s ease;
           position: relative;
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
         }
-
-        .vcfaq-item:hover {
+        .vcfaq-item.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .vcfaq-item.is-visible:hover {
           box-shadow: 0 8px 28px rgba(1,22,56,0.20);
           transform: translateY(-2px);
         }
@@ -208,7 +242,7 @@ export default function VCFellowshipFAQ() {
         }
       `}</style>
 
-      <section className="vcfaq-section">
+      <section className="vcfaq-section" ref={sectionRef}>
 
         {/* Header */}
         <div className="vcfaq-header">

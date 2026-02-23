@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef } from "react";
 
 const MENTORS = [
   {
@@ -50,6 +51,7 @@ function LinkedInIcon() {
 function LogoBadge({ src, alt, href }: { src: string; alt: string; href?: string }) {
   const badge = (
     <span
+      className="vc-logo-badge"
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -65,6 +67,7 @@ function LogoBadge({ src, alt, href }: { src: string; alt: string; href?: string
       <img
         src={src}
         alt={alt}
+        className="vc-logo-badge-img"
         style={{
           height: 30,
           maxWidth: 56,
@@ -88,6 +91,29 @@ function LogoBadge({ src, alt, href }: { src: string; alt: string; href?: string
 }
 
 export default function VCFellowshipMentors() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const cards = Array.from(section.querySelectorAll<HTMLElement>(".vc-mentor-card"));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const card = entry.target as HTMLElement;
+            const idx = cards.indexOf(card);
+            setTimeout(() => card.classList.add("is-visible"), idx * 130);
+            io.unobserve(card);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    cards.forEach((c) => io.observe(c));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <>
       <style>{`
@@ -137,17 +163,24 @@ export default function VCFellowshipMentors() {
           max-width: 1100px;
         }
 
-        /* Card */
+        /* Card — starts hidden, revealed by IntersectionObserver */
         .vc-mentor-card {
           background: #ffffff;
           border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 8px 40px rgba(1,22,56,0.14);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
+          /* animation base */
+          opacity: 0;
+          transform: translateY(28px);
+          transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.3s ease;
         }
-        .vc-mentor-card:hover {
+        .vc-mentor-card.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .vc-mentor-card.is-visible:hover {
           transform: translateY(-5px);
           box-shadow: 0 20px 56px rgba(1,22,56,0.22);
         }
@@ -241,6 +274,7 @@ export default function VCFellowshipMentors() {
           color: rgba(1,22,56,0.60);
           line-height: 1.5;
           margin: 0;
+          white-space: pre-line;
         }
 
         .vc-mentor-logos {
@@ -255,7 +289,7 @@ export default function VCFellowshipMentors() {
         @media (max-width: 860px) {
           .vc-mentors-grid {
             grid-template-columns: repeat(2, 1fr);
-            max-width: 600px;
+            max-width: 640px;
           }
           .vc-mentor-photo-wrap {
             aspect-ratio: 3 / 3.4;
@@ -265,11 +299,11 @@ export default function VCFellowshipMentors() {
         /* Mobile: 1 column, horizontal card layout */
         @media (max-width: 540px) {
           .vc-mentors-section {
-            padding: 28px 16px 36px;
+            padding: 28px 14px 36px;
           }
           .vc-mentors-grid {
             grid-template-columns: 1fr;
-            max-width: 400px;
+            max-width: 100%;
           }
           /* On mobile switch to horizontal layout for each card */
           .vc-mentor-card {
@@ -277,8 +311,8 @@ export default function VCFellowshipMentors() {
             border-radius: 16px;
           }
           .vc-mentor-photo-wrap {
-            width: 130px;
-            min-width: 130px;
+            width: 110px;
+            min-width: 110px;
             aspect-ratio: unset;
             height: auto;
             border-radius: 0;
@@ -295,12 +329,14 @@ export default function VCFellowshipMentors() {
             height: 12px;
           }
           .vc-mentor-body {
-            padding: 14px 14px 14px 12px;
+            padding: 12px 12px 12px 10px;
             gap: 4px;
             justify-content: center;
+            flex: 1;
+            min-width: 0;
           }
           .vc-mentor-name {
-            font-size: 14px;
+            font-size: 13px;
           }
           .vc-mentor-role {
             font-size: 11px;
@@ -308,19 +344,36 @@ export default function VCFellowshipMentors() {
           .vc-mentor-logos {
             gap: 4px;
             padding-top: 6px;
+            flex-wrap: wrap;
+          }
+          /* Shrink logo badges so they wrap cleanly to 2-per-row */
+          .vc-logo-badge {
+            height: 30px !important;
+            padding: 3px 5px !important;
+          }
+          .vc-logo-badge-img {
+            height: 20px !important;
+            max-width: 44px !important;
           }
         }
 
         /* Very small screens */
         @media (max-width: 360px) {
           .vc-mentor-photo-wrap {
-            width: 110px;
-            min-width: 110px;
+            width: 90px;
+            min-width: 90px;
           }
+          .vc-mentor-body {
+            padding: 10px 10px 10px 8px;
+          }
+          .vc-mentor-name { font-size: 12px; }
+          .vc-mentor-role { font-size: 10px; }
+          .vc-logo-badge { height: 26px !important; padding: 2px 3px !important; }
+          .vc-logo-badge-img { height: 17px !important; max-width: 36px !important; }
         }
       `}</style>
 
-      <section className="vc-mentors-section">
+      <section className="vc-mentors-section" ref={sectionRef}>
 
         <div className="vc-mentors-header">
           <h2 className="vc-mentors-title">

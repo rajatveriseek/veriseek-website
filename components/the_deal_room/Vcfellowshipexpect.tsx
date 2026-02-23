@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef } from "react";
 
 const EXPECTATIONS = [
   {
@@ -59,6 +60,37 @@ const EXPECTATIONS = [
 ];
 
 export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const header = section.querySelector<HTMLElement>(".vcfe-header");
+    const items = Array.from(section.querySelectorAll<HTMLElement>(".vcfe-item"));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          if (el === header) {
+            el.classList.add("is-visible");
+          } else {
+            const idx = items.indexOf(el);
+            setTimeout(() => el.classList.add("is-visible"), 80 + idx * 90);
+          }
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (header) io.observe(header);
+    items.forEach((item) => io.observe(item));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <>
       <style>{`
@@ -75,11 +107,18 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
           flex-direction: column;
         }
 
-        /* ── Header ── */
+        /* ── Header animation base ── */
         .vcfe-header {
           text-align: left;
           margin-bottom: 20px;
           flex-shrink: 0;
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .vcfe-header.is-visible {
+          opacity: 1;
+          transform: translateY(0);
         }
 
         .vcfe-title {
@@ -130,12 +169,20 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
           background: #011638;
           border-radius: 12px;
           padding: 12px 16px;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
           position: relative;
           overflow: hidden;
+          /* animation base */
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
         }
 
-        .vcfe-item:hover {
+        .vcfe-item.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .vcfe-item.is-visible:hover {
           transform: translateY(-3px);
           box-shadow: 0 12px 36px rgba(1,22,56,0.22);
         }
@@ -235,9 +282,47 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
             order: 1;
           }
         }
+
+        @media (max-width: 540px) {
+          .vcfe-section {
+            padding: 44px 16px;
+            min-height: unset;
+          }
+          .vcfe-title {
+            font-size: 22px;
+          }
+          .vcfe-item {
+            padding: 10px 12px;
+            gap: 10px;
+          }
+          .vcfe-icon {
+            width: 30px;
+            height: 30px;
+          }
+          .vcfe-icon svg {
+            width: 16px;
+            height: 16px;
+          }
+          .vcfe-item-title {
+            font-size: 13px;
+          }
+          .vcfe-item-body {
+            font-size: 12px;
+          }
+          .vcfe-list {
+            gap: 8px;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .vcfe-section { padding: 36px 14px; }
+          .vcfe-item { padding: 9px 10px; gap: 8px; }
+          .vcfe-item-title { font-size: 12px; }
+          .vcfe-item-body { font-size: 11px; }
+        }
       `}</style>
 
-      <section className="vcfe-section">
+      <section className="vcfe-section" ref={sectionRef}>
 
         {/* Two-column grid */}
         <div className="vcfe-grid">
