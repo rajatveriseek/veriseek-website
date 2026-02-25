@@ -42,7 +42,7 @@ const ROUNDS = [
     number: "03",
     label: "Round Three",
     heading: "The Investor Round",
-    timeline: "TBA",
+    timeline: "3rd August, 2026",
     imageSrc: "/images/P1101583.JPG",
     imageAlt: "The Investor Round",
     body: "Step into the role of a Shark. You will break down startup pitches, question founders, and decide whether you would invest or not. Then, you will present your verdict to a jury of real investors and VCs, backed by clear reasoning, business fundamentals, and conviction.",
