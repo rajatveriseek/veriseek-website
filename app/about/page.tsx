@@ -1,286 +1,776 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-// import NewsletterSignup from "@/components/shared/newsletter-signup" //Removed import
-// Import the image utility
-import { getImageUrl } from "@/lib/image-utils"
-import ImageCarousel from "@/components/home/carousel-home"
+"use client";
 
-export const metadata = {
-  title: "About Veriseek Education | Our Mission and Vision",
-  description:
-    "Learn about Veriseek Education's mission to bridge the gap between traditional academic learning and real-world professional skills.",
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import ImageCarousel from "@/components/home/carousel-home";
+import { getImageUrl } from "@/lib/image-utils";
+
+const CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  @keyframes ab-fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ab-fade-left {
+    from { opacity: 0; transform: translateX(-28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes ab-fade-right {
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes ab-pulse {
+    0%, 100% { opacity: 0.10; }
+    50%       { opacity: 0.22; }
+  }
+  @keyframes ab-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* animate-in triggers */
+  .ab-anim-up    { opacity: 0; transform: translateY(28px);  transition: opacity 0.7s ease, transform 0.7s ease; }
+  .ab-anim-left  { opacity: 0; transform: translateX(-28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .ab-anim-right { opacity: 0; transform: translateX(28px);  transition: opacity 0.7s ease, transform 0.7s ease; }
+  .ab-anim-up.is-visible, .ab-anim-left.is-visible, .ab-anim-right.is-visible {
+    opacity: 1; transform: translate(0, 0);
+  }
+  .ab-delay-1 { transition-delay: 0.10s; }
+  .ab-delay-2 { transition-delay: 0.20s; }
+  .ab-delay-3 { transition-delay: 0.30s; }
+  .ab-delay-4 { transition-delay: 0.40s; }
+  .ab-delay-5 { transition-delay: 0.50s; }
+
+  /* ── HERO ── */
+  .ab-hero {
+    background: #011638;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 88px clamp(20px, 8vw, 120px) 80px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .ab-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(30,90,200,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, rgba(245,200,66,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Grid overlay */
+  .ab-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Right-side hero image — masked from right to left, hidden on tablet */
+  .ab-hero-image {
+    position: absolute;
+    right: 0; top: 0;
+    width: 52%; height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    opacity: 0.88;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 70%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 70%, transparent 90%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @media (max-width: 900px) {
+    .ab-hero-image { display: none !important; }
+  }
+
+  .ab-hero-orb-1 {
+    position: absolute; top: 20%; left: -80px;
+    width: 360px; height: 360px;
+    background: rgba(245,200,66,0.06);
+    border-radius: 50%; filter: blur(70px);
+    animation: ab-pulse 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .ab-hero-orb-2 {
+    position: absolute; bottom: 15%; right: -80px;
+    width: 440px; height: 440px;
+    background: rgba(56,189,248,0.05);
+    border-radius: 50%; filter: blur(90px);
+    animation: ab-pulse 4s 1.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .ab-hero-content {
+    position: relative; z-index: 2;
+    max-width: 52%;
+  }
+
+  @media (max-width: 900px) {
+    .ab-hero-content { max-width: 100%; }
+  }
+
+  .ab-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: #f5c842;
+    margin-bottom: 20px;
+  }
+
+  .ab-hero-title {
+    font-size: clamp(40px, 7vw, 88px);
+    font-weight: 700; line-height: 0.9;
+    letter-spacing: -2px; color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 28px;
+    text-shadow: 0 2px 32px rgba(1,22,56,0.45);
+  }
+
+  .ab-hero-sub {
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: rgba(255,255,255,0.65);
+    line-height: 1.85; max-width: 560px;
+    margin-bottom: 40px;
+  }
+
+  .ab-rule {
+    width: 80px; height: 4px;
+    background: linear-gradient(to right, #60a5fa, #2563eb);
+    border-radius: 99px;
+    margin-bottom: 40px;
+  }
+
+  /* Stat row */
+  .ab-stats {
+    display: flex; gap: clamp(24px, 5vw, 56px);
+    flex-wrap: wrap;
+  }
+  .ab-stat-num {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700; color: #f5c842;
+    letter-spacing: -1px; line-height: 1;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .ab-stat-label {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(255,255,255,0.40); margin-top: 4px;
+  }
+
+  /* Scroll caret */
+  .ab-scroll-hint {
+    position: absolute; bottom: 32px; left: 50%;
+    transform: translateX(-50%); z-index: 2;
+    opacity: 0.50;
+    animation: ab-bounce 1.4s ease-in-out infinite;
+  }
+
+  /* ── SHARED SECTION STYLES ── */
+  .ab-section {
+    font-family: 'DM Sans', sans-serif;
+    position: relative; overflow: hidden;
+  }
+
+  .ab-section-eyebrow {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: #f5c842; margin-bottom: 12px; opacity: 0.80;
+  }
+
+  .ab-section-title {
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 700; color: #ffffff;
+    letter-spacing: -0.5px; line-height: 1.15;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 20px;
+  }
+  .ab-section-title.dark { color: #011638; }
+
+  .ab-section-body {
+    font-size: clamp(14px, 1.4vw, 15.5px);
+    line-height: 1.85; color: rgba(255,255,255,0.62);
+    margin-bottom: 16px;
+  }
+  .ab-section-body.dark { color: rgba(1,22,56,0.65); }
+
+  .ab-blue-rule {
+    width: 80px; height: 4px;
+    background: linear-gradient(to right, #60a5fa, #2563eb);
+    border-radius: 99px; margin-bottom: 24px;
+  }
+  .ab-dark-rule {
+    width: 80px; height: 4px;
+    background: #011638; border-radius: 99px;
+    margin-bottom: 24px; opacity: 0.18;
+  }
+
+  /* ── VISION SECTION ── */
+  .ab-vision {
+    background: #011638;
+    padding: 96px clamp(20px, 8vw, 120px);
+  }
+  .ab-vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .ab-vision-img-wrap {
+    position: relative; border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 72px rgba(1,22,56,0.55);
+    border: 1px solid rgba(245,200,66,0.18);
+    aspect-ratio: 4/3;
+  }
+  .ab-vision-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  /* decorative corner accent */
+  .ab-vision-img-wrap::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 40%;
+    background: linear-gradient(to top, rgba(1,22,56,0.45), transparent);
+    pointer-events: none;
+  }
+
+  /* ── FOUNDERS SECTION ── */
+  .ab-founders {
+    background: #f5c842;
+    padding: 96px clamp(20px, 8vw, 120px);
+  }
+  .ab-founders-header {
+    text-align: center; margin-bottom: 56px;
+  }
+  .ab-founders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(20px, 3vw, 36px);
+    max-width: 860px; margin: 0 auto;
+  }
+
+  .ab-founder-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(1,22,56,0.16);
+    display: flex; flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ab-founder-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 64px rgba(1,22,56,0.24);
+  }
+
+  .ab-founder-photo {
+    position: relative;
+    width: 100%; aspect-ratio: 1/1;
+    background: #1a3a5c; overflow: hidden;
+  }
+  .ab-founder-photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top;
+    display: block;
+    filter: grayscale(100%);
+    transition: filter 0.4s ease;
+  }
+  .ab-founder-card:hover .ab-founder-photo img { filter: grayscale(0%); }
+
+  /* LinkedIn badge on photo */
+  .ab-founder-li {
+    position: absolute; bottom: 12px; right: 12px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #0077b5; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.30);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 2;
+  }
+  .ab-founder-li:hover { transform: scale(1.12); box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+
+  .ab-founder-body { padding: 20px 20px 24px; }
+  .ab-founder-name {
+    font-size: clamp(16px, 1.8vw, 20px);
+    font-weight: 700; color: #011638;
+    letter-spacing: -0.3px; margin-bottom: 6px;
+  }
+  .ab-founder-bio {
+    font-size: clamp(12px, 1.1vw, 13.5px);
+    color: rgba(1,22,56,0.58); line-height: 1.7;
+  }
+
+  /* ── APPROACH SECTION ── */
+  .ab-approach {
+    background: #eef0f2;
+    padding: 96px clamp(20px, 8vw, 120px);
+  }
+  .ab-approach-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  /* Approach feature list */
+  .ab-features { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+
+  .ab-feature {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: #ffffff;
+    border-radius: 12px; padding: 16px 18px;
+    border: 1px solid rgba(1,22,56,0.07);
+    position: relative; overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .ab-feature::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: #f5c842; border-radius: 12px 0 0 12px;
+  }
+  .ab-feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(1,22,56,0.12);
+  }
+
+  .ab-feature-icon {
+    flex-shrink: 0; width: 36px; height: 36px;
+    border-radius: 50%; background: #f5c842;
+    display: flex; align-items: center; justify-content: center;
+    color: #011638;
+    box-shadow: 0 3px 10px rgba(245,200,66,0.28);
+    margin-top: 1px;
+  }
+
+  .ab-feature-title {
+    font-size: clamp(13px, 1.2vw, 14.5px);
+    font-weight: 700; color: #011638;
+    margin-bottom: 2px; letter-spacing: -0.1px;
+  }
+  .ab-feature-desc {
+    font-size: clamp(12px, 1.05vw, 13px);
+    color: rgba(1,22,56,0.55); line-height: 1.65;
+  }
+
+  /* Carousel wrap */
+  .ab-carousel-wrap {
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 20px 56px rgba(1,22,56,0.14);
+    border: 2px solid rgba(245,200,66,0.22);
+  }
+
+  /* ── CTA SECTION ── */
+  .ab-cta {
+    background: #011638;
+    padding: 96px clamp(20px, 8vw, 120px);
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .ab-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30,90,200,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ab-cta-content { position: relative; z-index: 1; max-width: 580px; margin: 0 auto; }
+
+  .ab-cta-title {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 700; color: #ffffff;
+    letter-spacing: -0.8px; line-height: 1.1;
+    margin-bottom: 16px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .ab-cta-sub {
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: rgba(255,255,255,0.55); line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .ab-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 15px 36px; border-radius: 100px;
+    background: #f5c842; color: #011638;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    text-decoration: none; border: 2px solid #f5c842;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 24px rgba(245,200,66,0.28);
+  }
+  .ab-btn-primary:hover {
+    background: #ffe066; box-shadow: 0 12px 32px rgba(245,200,66,0.45);
+    transform: scale(1.04);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .ab-vision-grid, .ab-approach-grid {
+      grid-template-columns: 1fr;
+    }
+    .ab-founders-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .ab-vision  { padding: 64px 18px; }
+    .ab-founders { padding: 64px 18px; }
+    .ab-approach { padding: 64px 18px; }
+    .ab-cta     { padding: 64px 18px; }
+    .ab-founders-grid { grid-template-columns: 1fr; max-width: 380px; }
+  }
+  @media (max-width: 380px) {
+    .ab-vision  { padding: 48px 14px; }
+    .ab-founders { padding: 48px 14px; }
+    .ab-approach { padding: 48px 14px; }
+    .ab-cta     { padding: 48px 14px; }
+  }
+`;
+
+function LinkedInIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
 }
 
+const FEATURES = [
+  {
+    title: "Experiential Learning",
+    desc: "Students learn through real-world challenges and projects that mirror professional environments.",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Expert Mentorship",
+    desc: "Industry professionals and Ivy League alumni provide direct guidance and feedback.",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Collaborative Environment",
+    desc: "Students work together to solve problems, debate ideas, and sharpen their thinking.",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Personalised Feedback",
+    desc: "Regular assessment and targeted guidance for continuous, measurable improvement.",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Real-World Application",
+    desc: "Students apply knowledge to solve authentic business problems — not hypothetical ones.",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+      </svg>
+    ),
+  },
+];
+
+const DIRECTORS = [
+  {
+    name: "Rajat Kumar",
+    bio: "Former McKinsey consultant with an MBA from Wharton. Passionate about educational innovation and entrepreneurship.",
+    image: getImageUrl("founder-rajat") || "/placeholder.svg",
+    linkedin: "https://www.linkedin.com/in/rajat-kumar-004533/",
+    initials: "RK",
+  },
+  {
+    name: "Durba Ray",
+    bio: "Former executive at Airtel with a degree from University of Rochester. Expert in educational program development.",
+    image: getImageUrl("founder-durba") || "/placeholder.svg",
+    linkedin: "https://www.linkedin.com/in/durba-ray-ab3a6012/",
+    initials: "DR",
+  },
+];
+
 export default function AboutPage() {
+  const pageRef    = useRef<HTMLDivElement>(null);
+  const cssInjected = useRef(false);
+
+  useEffect(() => {
+    if (cssInjected.current) return;
+    cssInjected.current = true;
+    const tag = document.createElement("style");
+    tag.setAttribute("data-ab", "1");
+    tag.textContent = CSS;
+    document.head.appendChild(tag);
+  }, []);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page) return;
+    const targets = Array.from(
+      page.querySelectorAll<HTMLElement>(".ab-anim-up, .ab-anim-left, .ab-anim-right")
+    );
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <>
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-primary text-white">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">About Veriseek Education</h1>
-            <p className="text-xl text-white/80">Empowering students with real-world skills for future success</p>
+    <div ref={pageRef} style={{ fontFamily: "'DM Sans', sans-serif" }}>
+
+      {/* ── HERO ── */}
+      <section className="ab-hero">
+        <div className="ab-hero-orb-1" aria-hidden="true" />
+        <div className="ab-hero-orb-2" aria-hidden="true" />
+
+        {/* Right-side hero image — masked, hidden on mobile */}
+        <img
+          src={getImageUrl("about-vision") || "/placeholder.svg"}
+          alt=""
+          aria-hidden="true"
+          className="ab-hero-image"
+        />
+
+        <div className="ab-hero-content">
+          <div className="ab-eyebrow ab-anim-up">
+            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
+            Veriseek Education
+            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
           </div>
+
+          <h1 className="ab-hero-title ab-anim-up ab-delay-1">
+            About<br />
+            <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
+              Veriseek
+            </em>
+          </h1>
+
+          <div className="ab-rule ab-anim-up ab-delay-2" />
+
+          <p className="ab-hero-sub ab-anim-up ab-delay-2">
+            Empowering students with real-world skills for future success — bridging the gap between traditional academic learning and the practical expertise that today's professional world demands.
+          </p>
+
+          <div className="ab-stats ab-anim-up ab-delay-3">
+            {[
+              { num: "500+", label: "Students Impacted" },
+              { num: "3+", label: "Programmes" },
+              { num: "20+", label: "Expert Mentors" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div className="ab-stat-num">{s.num}</div>
+                <div className="ab-stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="ab-scroll-hint" aria-hidden="true">
+          <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="#fff" strokeWidth="2">
+            <path d="M1 1l10 10L21 1" />
+          </svg>
         </div>
       </section>
 
-      {/* Our Vision */}
-      <section className="py-16">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              {/* Replace the vision section image */}
-              <Image
-                src={getImageUrl("about-vision") || "/placeholder.svg"}
-                alt="Student engaged in learning"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-primary">Our Vision</h2>
-              <p className="text-gray-700">
-                Veriseek Education was founded with a clear vision to bridge the gap between traditional academic
-                learning and the practical skills needed in today's professional world. We believe that education should
-                prepare students not just for exams, but for life.
-              </p>
-              <p className="text-gray-700">
-                Our innovative programmes are designed to develop critical thinking, problem-solving,
-                decision-making, startup investing skills, and communication, essential
-                competencies for success in any career path. By providing students with real-world
-                challenges and expert mentorship, we empower them to discover their potential and
-                pursue their passions with confidence.
-              </p>
-              <p className="text-gray-700">
-                We envision a future where every student has access to educational experiences that are engaging,
-                relevant, and transformative. Through our work, we aim to inspire a new generation of leaders,
-                innovators, and problem-solvers who are equipped to make a positive impact on the world.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── VISION ── */}
+      <section className="ab-vision ab-section">
+        <div className="ab-vision-grid">
 
-      {/* Our Founders */}
-      <section className="py-16 bg-gray-50">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary">Meet Our Directors</h2>
-            <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-              Visionary leaders with a passion for transforming education
+          {/* Image */}
+          <div className="ab-vision-img-wrap ab-anim-left">
+            <Image
+              src="/finals.jpeg"
+              alt="Students engaged in learning"
+              width={600} height={450}
+              style={{ width:"100%", height:"100%", objectFit:"cover" }}
+            />
+          </div>
+
+          {/* Text */}
+          <div className="ab-anim-right">
+            <p className="ab-section-eyebrow">Our Vision</p>
+            <h2 className="ab-section-title">
+              Education that{" "}
+              <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
+                prepares for life
+              </em>
+            </h2>
+            <div className="ab-blue-rule" />
+            <p className="ab-section-body">
+              Veriseek Education was founded with a clear vision: to bridge the gap between traditional academic learning and the practical skills needed in today's professional world. We believe that education should prepare students not just for exams, but for life.
+            </p>
+            <p className="ab-section-body">
+              Our innovative programmes develop critical thinking, problem-solving, decision-making, startup investing skills, and communication — essential competencies for success in any career path. By providing students with real-world challenges and expert mentorship, we empower them to discover their potential.
+            </p>
+            <p className="ab-section-body" style={{ marginBottom: 0 }}>
+              We envision a future where every student has access to educational experiences that are engaging, relevant, and transformative — inspiring a new generation of leaders, innovators, and problem-solvers.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <div className="flex flex-col items-center text-center">
-                {/* Replace the founder images */}
-                <Image
-                  src={getImageUrl("founder-rajat") || "/placeholder.svg"}
-                  alt="Rajat Kumar"
-                  width={200}
-                  height={200}
-                  className="rounded-full mb-4 object-cover"
-                />
-                <h3 className="text-xl font-bold text-primary">Rajat Kumar</h3>
-                
-                <p className="text-gray-600 mb-4">
-                  Former McKinsey consultant with an MBA from Wharton. Passionate about educational innovation and
-                  entrepreneurship.
-                </p>
-                <div className="flex space-x-3">
-                  <Link 
-                  href="https://www.linkedin.com/in/rajat-kumar-004533/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-primary hover:text-secondary"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
-                  </svg>
-                  <span className="sr-only">LinkedIn</span>
-                </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <div className="flex flex-col items-center text-center">
-                <Image
-                  src={getImageUrl("founder-durba") || "/placeholder.svg"}
-                  alt="Durba Ray"
-                  width={200}
-                  height={200}
-                  className="rounded-full mb-4 object-cover"
-                />
-                <h3 className="text-xl font-bold text-primary">Durba Ray</h3>
-                
-                <p className="text-gray-600 mb-4">
-                  Former executive at Airtel with a degree from University of Rochester. Expert in educational program
-                  development.
-                </p>
-                <div className="flex space-x-3">
-                  <Link 
-                  href="https://www.linkedin.com/in/durba-ray-ab3a6012/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-primary hover:text-secondary"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
-                  </svg>
-                  <span className="sr-only">LinkedIn</span>
-                </Link>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Educational Approach */}
-      <section className="py-16">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 order-2 lg:order-1">
-              <h2 className="text-3xl font-bold text-primary">Our Educational Approach</h2>
-              <p className="text-gray-700">
-                At Veriseek, we believe in learning by doing. Our educational approach combines theoretical knowledge
-                with practical application, allowing students to develop a deeper understanding of concepts while
-                building valuable skills.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <div className="bg-secondary p-1 rounded-full mr-3 mt-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-primary"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">
-                    <strong className="text-primary">Experiential Learning:</strong> Students learn through real-world
-                    challenges and projects.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-secondary p-1 rounded-full mr-3 mt-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-primary"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">
-                    <strong className="text-primary">Expert Mentorship:</strong> Industry professionals provide guidance
-                    and feedback.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-secondary p-1 rounded-full mr-3 mt-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-primary"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">
-                    <strong className="text-primary">Collaborative Environment:</strong> Students work together to solve
-                    problems and share ideas.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-secondary p-1 rounded-full mr-3 mt-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-primary"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">
-                    <strong className="text-primary">Personalised Feedback:</strong> Regular assessment and guidance for
-                    continuous improvement.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-secondary p-1 rounded-full mr-3 mt-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-primary"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700">
-                    <strong className="text-primary">Real-World Application:</strong> Students apply their knowledge to
-                    solve authentic problems.
-                  </span>
-                </li>
-              </ul>
-              {/* <Button asChild className="bg-primary text-white hover:bg-primary/90 mt-4">
-                <Link href="/sharkathon#register">Register Now</Link>
-              </Button> */}
-            </div>
-            <div className="order-1 lg:order-2">
-              {/* Replace the educational approach image */}
-              <ImageCarousel/>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── FOUNDERS ── */}
+      <section className="ab-founders ab-section">
 
-      {/* Call to Action */}
-      <section className="py-16 bg-primary text-white">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl font-bold">Ready to Think Like an Investor?</h2>
-            <p className="text-white/80">
-              Join Sharkathon today and embark on an exciting journey of critical thinking, analysis, and investment
-              evaluation.
-            </p>
-            {/* <Button
-              asChild
-              size="lg"
-              className="bg-secondary text-primary hover:bg-secondary/90 font-bold shadow-lg border-2 border-secondary transition-all hover:scale-105"
+        <div className="ab-founders-header ab-anim-up">
+          <p className="ab-section-eyebrow" style={{ color:"rgba(1,22,56,0.55)" }}>The People Behind It</p>
+          <h2 className="ab-section-title dark">
+            Meet Our{" "}
+            <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
+              Directors
+            </em>
+          </h2>
+          <div className="ab-dark-rule" style={{ margin:"0 auto 0" }} />
+          <p style={{ marginTop:10, fontSize:14, color:"rgba(1,22,56,0.60)", lineHeight:1.7 }}>
+            Visionary leaders with a passion for transforming education
+          </p>
+        </div>
+
+        <div className="ab-founders-grid">
+          {DIRECTORS.map((d, i) => (
+            <div
+              key={d.name}
+              className={`ab-founder-card ab-anim-up ab-delay-${i + 1}`}
             >
-              <Link href="#register">Register Now</Link>
-            </Button> */}
+              <div className="ab-founder-photo">
+                <img
+                  src={d.image}
+                  alt={d.name}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.display = "none";
+                    const fb = (e.currentTarget as HTMLElement).nextElementSibling as HTMLElement;
+                    if (fb) fb.style.display = "flex";
+                  }}
+                />
+                {/* Initials fallback */}
+                <div style={{
+                  display:"none", position:"absolute", inset:0,
+                  alignItems:"center", justifyContent:"center",
+                  background:"#011638", fontSize:52, fontWeight:700,
+                  color:"#f5c842", fontFamily:"'DM Sans', sans-serif"
+                }}>
+                  {d.initials}
+                </div>
+                <a
+                  href={d.linkedin}
+                  target="_blank" rel="noopener noreferrer"
+                  className="ab-founder-li"
+                  aria-label={`${d.name} on LinkedIn`}
+                >
+                  <LinkedInIcon />
+                </a>
+              </div>
+              <div className="ab-founder-body">
+                <h3 className="ab-founder-name">{d.name}</h3>
+                <p className="ab-founder-bio">{d.bio}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </section>
+
+      {/* ── APPROACH ── */}
+      <section className="ab-approach ab-section">
+        <div className="ab-approach-grid">
+
+          {/* Text + features */}
+          <div className="ab-anim-left" style={{ order: 1 }}>
+            <p className="ab-section-eyebrow" style={{ color:"rgba(1,22,56,0.55)" }}>How We Teach</p>
+            <h2 className="ab-section-title dark">
+              Our Educational{" "}
+              <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400, color:"#011638" }}>
+                Approach
+              </em>
+            </h2>
+            <div className="ab-dark-rule" />
+            <p className="ab-section-body dark" style={{ marginBottom:24 }}>
+              At Veriseek, we believe in learning by doing. Our approach combines theoretical knowledge with practical application, allowing students to develop a deeper understanding while building valuable skills.
+            </p>
+
+            <div className="ab-features">
+              {FEATURES.map((f, i) => (
+                <div key={f.title} className={`ab-feature ab-anim-up ab-delay-${i + 1}`}>
+                  <div className="ab-feature-icon">{f.icon}</div>
+                  <div>
+                    <p className="ab-feature-title">{f.title}</p>
+                    <p className="ab-feature-desc">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Carousel */}
+          <div className="ab-carousel-wrap ab-anim-right" style={{ order: 2 }}>
+            <ImageCarousel />
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="ab-cta ab-section">
+        <div className="ab-cta-content">
+          <div className="ab-eyebrow ab-anim-up" style={{ justifyContent:"center", marginBottom:20 }}>
+            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
+            Get Involved
+            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
+          </div>
+          <h2 className="ab-cta-title ab-anim-up ab-delay-1">
+            Ready to Think Like{" "}
+            <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
+              an Investor?
+            </em>
+          </h2>
+          <p className="ab-cta-sub ab-anim-up ab-delay-2">
+            Join Sharkathon today and embark on an exciting journey of critical thinking, analysis, and investment evaluation led by industry leaders.
+          </p>
+          <div className="ab-anim-up ab-delay-3">
+            <Link href="/sharkathon" className="ab-btn-primary">
+              Explore Programmes
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
-    </>
-  )
+
+    </div>
+  );
 }
