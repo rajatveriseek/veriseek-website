@@ -145,7 +145,7 @@ const GLOBAL_CSS = `
   /* ── Decorative rings ── */
   .sh-ring { position: absolute; border-radius: 50%; pointer-events: none; }
 
-  /* ── Hide mobile-only elements on desktop ── */
+  /* ── Hide mobile-only elements on desktop by default ── */
   .sh-mobile-video-wrap { display: none; }
   .sh-info-card-mobile  { display: none; }
 
@@ -205,9 +205,6 @@ const GLOBAL_CSS = `
 
   /* ════════════════════════════════════════
      DESKTOP LAYOUT  (> 900px)
-     Left column: text content
-     Right column: video panel (absolute, full height)
-     Info card: floating over video
   ════════════════════════════════════════ */
   .sh-hero-section {
     position: relative;
@@ -220,7 +217,6 @@ const GLOBAL_CSS = `
     font-family: 'DM Sans', sans-serif;
   }
 
-  /* Video panel — right 30%, full height, desktop only */
   .sh-video-panel {
     position: absolute; right: 0; top: 0;
     width: 30%; height: 100%;
@@ -242,7 +238,6 @@ const GLOBAL_CSS = `
     pointer-events: none;
   }
 
-  /* Floating info card over video — desktop */
   .sh-info-card-desktop {
     position: absolute;
     right: clamp(25%, 3vw, 35%);
@@ -253,7 +248,6 @@ const GLOBAL_CSS = `
     animation: sh-card-in 0.7s 0.95s ease both;
   }
 
-  /* Text content — left side, desktop */
   .sh-hero-content {
     position: relative; z-index: 2;
     width: 100%;
@@ -262,87 +256,136 @@ const GLOBAL_CSS = `
   }
 
   /* ════════════════════════════════════════
-     MOBILE LAYOUT  (≤ 900px)
-     Single column: text → video → info card
-     NO absolute positioning — pure flex flow
+     641px – 900px
+     Text left, tall reel video right — side by side
   ════════════════════════════════════════ */
   @media (max-width: 900px) {
-    .sh-hero-section {
-      flex-direction: column;
-      align-items: stretch;
-      min-height: unset;
-      padding-bottom: 52px;
-      /* Keep orbs/glows contained but don't clip flex children */
-    }
-
-    /* Text block — sits at top */
-    .sh-hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 100%;
-      padding: 72px 22px 28px;
-      order: 1;
-    }
-
-    /* Kill the desktop video panel entirely on mobile */
     .sh-video-panel       { display: none !important; }
-
-    /* Kill desktop floating card entirely on mobile */
     .sh-info-card-desktop { display: none !important; }
-
-    /* Scroll hint gone on mobile */
     .sh-scroll-hint       { display: none !important; }
 
-    /* ── Mobile video block ── */
-    /* Sits in normal flow — no absolute, no overlap */
+    .sh-hero-section {
+      flex-direction: row;
+      align-items: stretch;
+      min-height: 100svh;
+      overflow: hidden;
+    }
+
+    /* Text fills left ~58% */
+    .sh-hero-content {
+      max-width: unset;
+      width: 58%;
+      flex-shrink: 0;
+      padding: 72px 16px 52px 22px;
+      order: 1;
+      align-self: center;
+    }
+
+    /* Mobile video — right 42%, full viewport height sticky reel */
     .sh-mobile-video-wrap {
       order: 2;
-      position: relative;          /* just for the mute button */
-      z-index: 2;
-      display: block !important;   /* override any desktop hide */
-      width: calc(100% - 44px);
-      margin: 0 22px;
-      border-radius: 16px;
-      overflow: hidden;
-      /* Taller video: fixed height so it feels cinematic */
-      height: 320px;
-      background: #0a2347;
-      box-shadow: 0 16px 48px rgba(1,22,56,0.45);
+      position: sticky;
+      top: 0;
+      display: block !important;
+      width: 42%;
+      height: 100svh;
       flex-shrink: 0;
+      overflow: hidden;
+      background: #0a2347;
     }
     .sh-mobile-video-wrap video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    /* ── Info card — below video, in normal flow ── */
+    /* Left-edge fade so video blends into dark background */
+    .sh-mobile-video-wrap::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to right,
+        #011638 0%,
+        rgba(1,22,56,0.25) 22%,
+        transparent 55%
+      );
+      pointer-events: none;
+    }
+    .sh-mute-btn { z-index: 2; }
+
+    /* Info card not needed — video speaks for itself */
+    .sh-info-card-mobile { display: none !important; }
+  }
+
+  /* ════════════════════════════════════════
+     ≤ 640px — stacked column, video centered + tall
+     Fully resets the 641–900px side-by-side rules
+  ════════════════════════════════════════ */
+  @media (max-width: 640px) {
+    .sh-hero-section {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      min-height: unset !important;
+      overflow: visible !important;       /* let stacked content breathe */
+      padding-bottom: 52px;
+    }
+
+    /* Text block — full width again */
+    .sh-hero-content {
+      width: 100% !important;
+      flex-shrink: unset !important;
+      padding: 72px 22px 28px !important;
+      order: 1;
+      align-self: auto !important;
+    }
+
+    /* Centered tall reel — reset sticky/column sizing from 900px rule */
+    .sh-mobile-video-wrap {
+      order: 2;
+      position: relative !important;     /* reset sticky */
+      top: unset !important;
+      flex-shrink: unset !important;
+      width: calc(100% - 40px) !important;
+      max-width: 320px;
+      height: 568px !important;          /* tall 9:16 reel */
+      margin: 0 auto !important;         /* ← centered */
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0a2347;
+      box-shadow: 0 20px 56px rgba(1,22,56,0.50);
+      display: block !important;
+    }
+    .sh-mobile-video-wrap::before { display: none !important; }
+    .sh-mobile-video-wrap video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+
+    /* Info card — centered, matches video width */
     .sh-info-card-mobile {
       order: 3;
-      position: static !important;   /* hard-reset any inherited absolute */
+      position: static !important;
       z-index: 2;
       display: block !important;
-      width: calc(100% - 44px);
-      margin: 16px 22px 0;
+      width: calc(100% - 40px) !important;
+      max-width: 320px;
+      margin: 16px auto 0 !important;
       box-shadow: 0 12px 36px rgba(1,22,56,0.25);
     }
   }
 
   /* ════════════════════════════════════════
-     SMALL MOBILE tweaks  (≤ 540px)
+     ≤ 540px — small phones
   ════════════════════════════════════════ */
   @media (max-width: 540px) {
-    .sh-hero-content { padding: 64px 18px 24px; }
+    .sh-hero-content { padding: 64px 18px 24px !important; }
 
     .sh-mobile-video-wrap {
-      width: calc(100% - 36px);
-      margin: 0 18px;
-      height: 280px;
-      border-radius: 14px;
+      width: calc(100% - 36px) !important;
+      max-width: 300px;
+      height: 520px !important;
+      display: block !important;
     }
     .sh-info-card-mobile {
-      width: calc(100% - 36px);
-      margin: 14px 18px 0;
+      width: calc(100% - 36px) !important;
+      max-width: 300px;
+      display: block !important;
     }
 
     .sh-hero-buttons {
@@ -367,15 +410,16 @@ const GLOBAL_CSS = `
   }
 
   @media (max-width: 380px) {
-    .sh-hero-content { padding: 56px 16px 20px; }
+    .sh-hero-content { padding: 56px 16px 20px !important; }
     .sh-mobile-video-wrap {
-      width: calc(100% - 32px);
-      margin: 0 16px;
-      height: 360px;
+      width: calc(100% - 32px) !important;
+      height: 460px !important;
+      display: block !important;
     }
     .sh-info-card-mobile {
-      width: calc(100% - 32px);
-      margin: 12px 16px 0;
+      width: calc(100% - 32px) !important;
+      margin: 12px auto 0 !important;
+      display: block !important;
     }
     .sh-assoc-pill img { height: 30px !important; max-width: 76px !important; }
     .sh-college-badge { height: 44px !important; }
@@ -479,7 +523,6 @@ export default function SharkathonHero({
     document.head.appendChild(tag);
   }, []);
 
-  // Keep both video elements in sync with muted state
   useEffect(() => {
     if (desktopVid.current) desktopVid.current.muted = muted;
     if (mobileVid.current)  mobileVid.current.muted  = muted;
@@ -528,7 +571,7 @@ export default function SharkathonHero({
         }} />
       ))}
 
-      {/* ── DESKTOP: video panel (absolute right column) ── */}
+      {/* ── DESKTOP: video panel ── */}
       {videoSrc && (
         <div className="sh-video-panel sh-bg-anim">
           <video ref={desktopVid} src={videoSrc} autoPlay loop muted playsInline aria-hidden="true" />
@@ -538,19 +581,16 @@ export default function SharkathonHero({
         </div>
       )}
 
-      {/* ── DESKTOP: floating info card over video ── */}
+      {/* ── DESKTOP: floating info card ── */}
       {videoSrc && (
         <div className="sh-info-card sh-info-card-desktop">
           <InfoCardBody />
         </div>
       )}
 
-      {/* ══════════════════════════════════════════
-          TEXT CONTENT  (order: 1 on mobile)
-      ══════════════════════════════════════════ */}
+      {/* TEXT CONTENT */}
       <div className="sh-hero-content">
 
-        {/* Season badge */}
         <div className="sh-anim-0">
           <span className="sh-season-badge">
             <span className="sh-season-dot">S2</span>
@@ -558,7 +598,6 @@ export default function SharkathonHero({
           </span>
         </div>
 
-        {/* H1 */}
         <h1 className="sh-anim-1" style={{
           fontFamily: "'Playfair Display', serif",
           fontSize: "clamp(40px, 7vw, 92px)",
@@ -574,7 +613,6 @@ export default function SharkathonHero({
           <span style={{ color: "#f5c842" }}>Season 2</span>
         </h1>
 
-        {/* Subheading */}
         <p className="sh-anim-2" style={{
           fontFamily: "'Playfair Display', serif",
           fontStyle: "italic",
@@ -590,7 +628,6 @@ export default function SharkathonHero({
           Become the Next Big Shark
         </p>
 
-        {/* Description */}
         <p className="sh-anim-3" style={{
           fontSize: "clamp(14px, 1.5vw, 16px)",
           lineHeight: 1.85,
@@ -608,7 +645,6 @@ export default function SharkathonHero({
           , where students are the Sharks!
         </p>
 
-        {/* Association pill */}
         <div className="sh-anim-4" style={{ marginBottom: 24 }}>
           <div className="sh-assoc-pill">
             <span className="sh-assoc-label" style={{
@@ -634,7 +670,6 @@ export default function SharkathonHero({
           </div>
         </div>
 
-        {/* CTA Buttons */}
         <div className="sh-anim-5 sh-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 28 }}>
           <a href={applyHref} onClick={onApply} className="sh-btn-primary">
             Register Now <ArrowIcon />
@@ -644,7 +679,6 @@ export default function SharkathonHero({
           </a>
         </div>
 
-        {/* College badges */}
         <div className="sh-anim-6">
           <p style={{
             fontSize: 10, letterSpacing: "2.5px", textTransform: "uppercase",
@@ -663,11 +697,10 @@ export default function SharkathonHero({
         </div>
 
       </div>
-      {/* end .sh-hero-content */}
 
-      {/* ══════════════════════════════════════════
-          MOBILE VIDEO  (order: 2 on mobile, hidden on desktop via CSS)
-      ══════════════════════════════════════════ */}
+      {/* MOBILE VIDEO
+          641–900px → sticky right column, full height
+          ≤ 640px   → centered tall reel below text     */}
       {videoSrc && (
         <div className="sh-mobile-video-wrap">
           <video
@@ -682,9 +715,7 @@ export default function SharkathonHero({
         </div>
       )}
 
-      {/* ══════════════════════════════════════════
-          MOBILE INFO CARD  (order: 3 on mobile, hidden on desktop via CSS)
-      ══════════════════════════════════════════ */}
+      {/* MOBILE INFO CARD — ≤ 640px only */}
       {videoSrc && (
         <div className="sh-info-card sh-info-card-mobile">
           <InfoCardBody />
