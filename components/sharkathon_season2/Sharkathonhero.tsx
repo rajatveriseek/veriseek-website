@@ -208,7 +208,12 @@ const GLOBAL_CSS = `
   ════════════════════════════════════════ */
   .sh-hero-section {
     position: relative;
-    width: 100%;
+    /* Full-bleed: escape any parent container with padding or max-width */
+    width: 100vw;
+    max-width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
     min-height: 100svh;
     display: flex;
     align-items: center;
@@ -285,10 +290,10 @@ const GLOBAL_CSS = `
     .sh-mobile-video-wrap {
       order: 2;
       position: sticky;
-      top: 0;
+      top: 0;     /* lets sticky work in flex; prevents section from over-stretching */
       display: block !important;
       width: 42%;
-      height: 100svh;
+      height: auto;
       flex-shrink: 0;
       overflow: hidden;
       background: #0a2347;
@@ -323,7 +328,8 @@ const GLOBAL_CSS = `
       flex-direction: column !important;
       align-items: stretch !important;
       min-height: unset !important;
-      overflow: visible !important;       /* let stacked content breathe */
+      height: auto !important;
+      overflow: hidden !important;        /* clip orbs/glows but let flex children set height */
       padding-bottom: 52px;
     }
 
@@ -341,6 +347,7 @@ const GLOBAL_CSS = `
       order: 2;
       position: relative !important;     /* reset sticky */
       top: unset !important;
+      align-self: auto !important;       /* reset flex-start from 900px rule */
       flex-shrink: unset !important;
       width: calc(100% - 40px) !important;
       max-width: 320px;
