@@ -31,7 +31,7 @@ const Header = () => {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "The Deal Room", href : "/thedealroom" },
-    { name: "Sharkathon", href: "/sharkathon" },
+    { name: "Sharkathon", href: "/sharkathon_s2" },
     { name: "Contact", href: "/contact" },
   ]
 

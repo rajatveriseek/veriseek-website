@@ -152,7 +152,7 @@ interface SharkathonWhyProps {
   imageSrc?: string;
 }
 
-export default function SharkathonWhyParticipate({ applyHref = "#apply", imageSrc }: SharkathonWhyProps) {
+export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", imageSrc }: SharkathonWhyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showModal, setShowModal] = useState(false);
 

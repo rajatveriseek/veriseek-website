@@ -2,25 +2,24 @@
 
 export default function SchoolMarquee() {
   const schoolLogos = [
-    { src: "/schools/heritage.png",    alt: "The Heritage School" },
-    { src: "/schools/amity.png",       alt: "Amity International School" },
-    { src: "/schools/doon.png",        alt: "The Doon School" },
-    { src: "/schools/greenwood.png",   alt: "Greenwood International" },
+    { src: "/schools/theheritageschool-removebg-preview.png",    alt: "The Heritage School" },
+    { src: "/schools/amityinternational-removebg-preview.png",       alt: "Amity International School" },
+    { src: "/schools/thedoonschool-removebg-preview.png",        alt: "The Doon School" },
+    { src: "/schools/greenwoodhigh-removebg-preview.png",   alt: "Greenwood International" },
     { src: "/schools/oakridge.png",    alt: "Oakridge International School" },
-    { src: "/schools/theresa.png",     alt: "St. Theresa's Convent School, Karnal" },
-    { src: "/schools/kp.png",          alt: "Kunskapsskolan Gurgaon" },
-    { src: "/schools/marymatha.png",   alt: "Mary Matha CMI Public School" },
-    { src: "/schools/manthan.png",     alt: "The Manthan School" },
-    { src: "/schools/dpskolar.png",    alt: "DPS Kolar Road" },
-    { src: "/schools/vidyashilp.png",  alt: "Vidyashilp Academy" },
-    { src: "/schools/eklavya.png",     alt: "Eklavya School" },
-    { src: "/schools/nirma.png",       alt: "Nirma Vidyavihar" },
-    { src: "/schools/kpdlf.png",       alt: "Kunskapsskolan DLF Phase 1" },
-    { src: "/schools/narsee.png",      alt: "Narsee Monjee College of Commerce" },
-    { src: "/schools/abhinav.png",     alt: "Abhinav School" },
-    { src: "/schools/emerald.png",     alt: "Emerald International" },
-    { src: "/schools/cpe.png",         alt: "CPE Academy" },
-    { src: "/schools/cps.png",         alt: "Centre Point School" },
+    { src: "/schools/images-removebg-preview.png",     alt: "St. Theresa's Convent School, Karnal" }, //Not Povided
+    { src: "/schools/kunskapsskolan-removebg-preview.png",          alt: "Kunskapsskolan Gurgaon" },
+    { src: "/schools/images__1_-removebg-preview.png",   alt: "Mary Matha CMI Public School" }, //Not Provided
+    { src: "/schools/THEMANTHANSCHOOL-removebg-preview.png",     alt: "The Manthan School" }, //Not Provided
+    { src: "/schools/dpskolarroad-removebg-preview.png",    alt: "DPS Kolar Road" },
+    { src: "/schools/vidyashilpacadamy-removebg-preview.png",  alt: "Vidyashilp Academy" },
+    { src: "/schools/eklavya.png",     alt: "Eklavya School" }, //Not Provided
+    { src: "/schools/nirma-removebg-preview.png",       alt: "Nirma Vidyavihar" }, //Not Provided
+    { src: "/schools/nmims-removebg-preview.png",      alt: "Narsee Monjee College of Commerce" }, //Not Provided
+    { src: "/schools/abhinavschool-removebg-preview.png",     alt: "Abhinav School" }, //Not Provided
+    { src: "/schools/EMERALD-removebg-preview.png",     alt: "Emerald International" },
+    { src: "/schools/cpe.png",         alt: "CPE Academy" }, //Not Provided
+    { src: "/schools/centrepointschool-removebg-preview.png",         alt: "Centre Point School" }, //Not Provided
   ];
 
   // Triple-duplicate so the loop is seamless at any viewport width
@@ -114,7 +113,7 @@ export default function SchoolMarquee() {
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 72px;
+          height: 96px;
           padding: 0 clamp(24px, 3.5vw, 52px);
           /* subtle vertical separator */
           border-right: 1px solid rgba(1,22,56,0.07);
@@ -125,7 +124,7 @@ export default function SchoolMarquee() {
         .sm-logo:hover { transform: scale(1.10); }
 
         .sm-logo img {
-          height: 44px;
+          height: 84px;
           width: auto;
           max-width: 130px;
           object-fit: contain;

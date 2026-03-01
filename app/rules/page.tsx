@@ -190,7 +190,7 @@ const PART_B = [
   },
 ];
 
-const ALL_SECTIONS = [...PART_A, ...PART_B];
+const ALL_SECTIONS = [...PART_A];
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
@@ -209,7 +209,7 @@ const CSS = `
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 150vh;
+    height: 100vh;
     overflow: hidden;
   }
   .tnc-page::before {
@@ -720,8 +720,8 @@ export default function RulesPage() {
               <span className="tnc-nav-label">{s.title}</span>
             </button>
           ))}
-          <div className="tnc-sidebar-part">Part B — Competition Rules</div>
-          {PART_B.map((s, i) => (
+          {/* <div className="tnc-sidebar-part">Part B — Competition Rules</div> */}
+          {/* {PART_B.map((s, i) => (
             <button
               key={s.id}
               className="tnc-nav-item"
@@ -731,7 +731,7 @@ export default function RulesPage() {
               <span className="tnc-nav-num">{s.num}</span>
               <span className="tnc-nav-label">{s.title}</span>
             </button>
-          ))}
+          ))} */}
         </nav>
 
         {/* Scrollable content */}
@@ -749,15 +749,15 @@ export default function RulesPage() {
             {PART_A.map((s, i) => renderSection(s as Section, i))}
 
             {/* Part B */}
-            <div className="tnc-part-header" ref={partBRef} style={{ marginTop: 16 }}>
+            {/* <div className="tnc-part-header" ref={partBRef} style={{ marginTop: 16 }}>
               <div>
                 <p className="tnc-part-label">Part B</p>
                 <h2 className="tnc-part-title">Inter-School Competition Rules</h2>
                 <p className="tnc-part-sub">Format: Hybrid (Online & Offline) · Students representing registered schools</p>
               </div>
               <div className="tnc-part-line" />
-            </div>
-            {PART_B.map((s, i) => renderSection(s as Section, PART_A.length + i))}
+            </div> */}
+            {/* {PART_B.map((s, i) => renderSection(s as Section, PART_A.length + i))} */}
 
           </div>
         </div>

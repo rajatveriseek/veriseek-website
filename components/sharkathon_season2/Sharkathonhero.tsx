@@ -145,10 +145,6 @@ const GLOBAL_CSS = `
   /* ── Decorative rings ── */
   .sh-ring { position: absolute; border-radius: 50%; pointer-events: none; }
 
-  /* ── Hide mobile-only elements on desktop by default ── */
-  .sh-mobile-video-wrap { display: none; }
-  .sh-info-card-mobile  { display: none; }
-
   /* ── Info card (shared styles) ── */
   .sh-info-card {
     background: #eec643;
@@ -186,29 +182,34 @@ const GLOBAL_CSS = `
     font-size: clamp(12px, 1.1vw, 13.5px); margin-bottom: 1px;
   }
 
-  /* ── Mute button ── */
-  .sh-mute-btn {
-    position: absolute; bottom: 14px; right: 14px;
-    z-index: 10;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(1,22,56,0.75);
-    border: 1.5px solid rgba(245,200,66,0.50);
-    color: #f5c842;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  }
-  .sh-mute-btn:hover {
-    background: rgba(245,200,66,0.18); transform: scale(1.10);
+  /* ── Hero image — Deal Room style: absolute img with mask-image fade ── */
+  .sh-hero-img {
+    position: absolute;
+    right: 0; top: 0;
+    width: 52%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    opacity: 0.9;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 55%, transparent 80%);
+    mask-image:         linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 55%, transparent 80%);
+    pointer-events: none;
   }
 
+  .sh-info-card-desktop {
+    position: absolute;
+    right: clamp(4%, 3vw, 8%);
+    bottom: clamp(12%, 9vh, 24%);
+    z-index: 20;
+    width: clamp(220px, 20vw, 280px);
+    box-shadow: 0 24px 64px rgba(1,22,56,0.45), 0 4px 16px rgba(1,22,56,0.22);
+    animation: sh-card-in 0.7s 0.95s ease both;
+  }
   /* ════════════════════════════════════════
      DESKTOP LAYOUT  (> 900px)
   ════════════════════════════════════════ */
   .sh-hero-section {
     position: relative;
-    /* Full-bleed: escape any parent container with padding or max-width */
     width: 100vw;
     max-width: 100vw;
     left: 50%;
@@ -222,178 +223,49 @@ const GLOBAL_CSS = `
     font-family: 'DM Sans', sans-serif;
   }
 
-  .sh-video-panel {
-    position: absolute; right: 0; top: 0;
-    width: 30%; height: 100%;
-    z-index: 1; overflow: hidden;
-  }
-  .sh-video-panel video {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-  }
-  .sh-video-panel::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      to right,
-      #011638 0%,
-      rgba(1,22,56,0.55) 28%,
-      rgba(1,22,56,0.10) 60%,
-      transparent 100%
-    );
-    pointer-events: none;
-  }
-
-  .sh-info-card-desktop {
-    position: absolute;
-    right: clamp(25%, 3vw, 35%);
-    bottom: clamp(12%, 9vh, 24%);
-    z-index: 20;
-    width: clamp(220px, 20vw, 280px);
-    box-shadow: 0 24px 64px rgba(1,22,56,0.45), 0 4px 16px rgba(1,22,56,0.22);
-    animation: sh-card-in 0.7s 0.95s ease both;
-  }
-
   .sh-hero-content {
     position: relative; z-index: 2;
     width: 100%;
-    max-width: 70%;
+    /* Content stays in left ~55%, image bleeds naturally over the right */
+    max-width: 68%;
     padding: 88px clamp(20px, 6vw, 80px) 100px;
   }
 
   /* ════════════════════════════════════════
-     641px – 900px
-     Text left, tall reel video right — side by side
+     <= 900px — hide hero img, full-width content
   ════════════════════════════════════════ */
   @media (max-width: 900px) {
-    .sh-video-panel       { display: none !important; }
+    .sh-hero-img          { display: none !important; }
     .sh-info-card-desktop { display: none !important; }
     .sh-scroll-hint       { display: none !important; }
 
-    .sh-hero-section {
-      flex-direction: row;
-      align-items: stretch;
-      min-height: 100svh;
-      overflow: hidden;
-    }
-
-    /* Text fills left ~58% */
     .sh-hero-content {
-      max-width: unset;
-      width: 58%;
-      flex-shrink: 0;
-      padding: 72px 16px 52px 22px;
-      order: 1;
-      align-self: center;
+      max-width: 100%;
+      width: 100%;
+      padding: 72px clamp(20px, 5vw, 48px) 52px;
     }
-
-    /* Mobile video — right 42%, full viewport height sticky reel */
-    .sh-mobile-video-wrap {
-      order: 2;
-      position: sticky;
-      top: 0;     /* lets sticky work in flex; prevents section from over-stretching */
-      display: block !important;
-      width: 42%;
-      height: auto;
-      flex-shrink: 0;
-      overflow: hidden;
-      background: #0a2347;
-    }
-    .sh-mobile-video-wrap video {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    /* Left-edge fade so video blends into dark background */
-    .sh-mobile-video-wrap::before {
-      content: '';
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(
-        to right,
-        #011638 0%,
-        rgba(1,22,56,0.25) 22%,
-        transparent 55%
-      );
-      pointer-events: none;
-    }
-    .sh-mute-btn { z-index: 2; }
-
-    /* Info card not needed — video speaks for itself */
-    .sh-info-card-mobile { display: none !important; }
   }
 
+
+
   /* ════════════════════════════════════════
-     ≤ 640px — stacked column, video centered + tall
-     Fully resets the 641–900px side-by-side rules
+     <= 640px — small screens
   ════════════════════════════════════════ */
   @media (max-width: 640px) {
     .sh-hero-section {
-      flex-direction: column !important;
-      align-items: stretch !important;
       min-height: unset !important;
       height: auto !important;
-      overflow: hidden !important;        /* clip orbs/glows but let flex children set height */
-      padding-bottom: 52px;
     }
-
-    /* Text block — full width again */
     .sh-hero-content {
-      width: 100% !important;
-      flex-shrink: unset !important;
-      padding: 72px 22px 28px !important;
-      order: 1;
-      align-self: auto !important;
-    }
-
-    /* Centered tall reel — reset sticky/column sizing from 900px rule */
-    .sh-mobile-video-wrap {
-      order: 2;
-      position: relative !important;     /* reset sticky */
-      top: unset !important;
-      align-self: auto !important;       /* reset flex-start from 900px rule */
-      flex-shrink: unset !important;
-      width: calc(100% - 40px) !important;
-      max-width: 320px;
-      height: 568px !important;          /* tall 9:16 reel */
-      margin: 0 auto !important;         /* ← centered */
-      border-radius: 18px;
-      overflow: hidden;
-      background: #0a2347;
-      box-shadow: 0 20px 56px rgba(1,22,56,0.50);
-      display: block !important;
-    }
-    .sh-mobile-video-wrap::before { display: none !important; }
-    .sh-mobile-video-wrap video {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-
-    /* Info card — centered, matches video width */
-    .sh-info-card-mobile {
-      order: 3;
-      position: static !important;
-      z-index: 2;
-      display: block !important;
-      width: calc(100% - 40px) !important;
-      max-width: 320px;
-      margin: 16px auto 0 !important;
-      box-shadow: 0 12px 36px rgba(1,22,56,0.25);
+      padding: 72px 22px 52px !important;
     }
   }
 
   /* ════════════════════════════════════════
-     ≤ 540px — small phones
+     <= 540px — small phones
   ════════════════════════════════════════ */
   @media (max-width: 540px) {
-    .sh-hero-content { padding: 64px 18px 24px !important; }
-
-    .sh-mobile-video-wrap {
-      width: calc(100% - 36px) !important;
-      max-width: 300px;
-      height: 520px !important;
-      display: block !important;
-    }
-    .sh-info-card-mobile {
-      width: calc(100% - 36px) !important;
-      max-width: 300px;
-      display: block !important;
-    }
+    .sh-hero-content { padding: 64px 18px 40px !important; }
 
     .sh-hero-buttons {
       flex-direction: column !important;
@@ -417,20 +289,167 @@ const GLOBAL_CSS = `
   }
 
   @media (max-width: 380px) {
-    .sh-hero-content { padding: 56px 16px 20px !important; }
-    .sh-mobile-video-wrap {
-      width: calc(100% - 32px) !important;
-      height: 460px !important;
-      display: block !important;
-    }
-    .sh-info-card-mobile {
-      width: calc(100% - 32px) !important;
-      margin: 12px auto 0 !important;
-      display: block !important;
-    }
+    .sh-hero-content { padding: 56px 16px 32px !important; }
     .sh-assoc-pill img { height: 30px !important; max-width: 76px !important; }
     .sh-college-badge { height: 44px !important; }
     .sh-college-badge img { height: 30px !important; }
+  }
+
+  /* ════════════════════════════════════════
+     WHAT IS SHARKATHON SECTION
+  ════════════════════════════════════════ */
+  .sh-what-section {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    /* Seamless continuation of hero navy */
+    background: #011638;
+    padding: 96px clamp(20px, 8vw, 120px) 112px;
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  /* Subtle ambient gradients matching hero orbs */
+  .sh-what-section::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%,   rgba(30,90,200,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 45% 40% at 10% 100%, rgba(245,200,66,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 35% at 90% 80%,  rgba(56,189,248,0.06) 0%, transparent 55%);
+  }
+
+  /* Subtle grid overlay matching hero */
+  .sh-what-section::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    backgroundImage:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
+  }
+
+  /* Column layout — heading centred above video */
+  .sh-what-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 52px);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sh-what-text {
+    text-align: center;
+  }
+
+  .sh-what-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #f5c842;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .sh-what-label::before,
+  .sh-what-label::after {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 2px;
+    background: #f5c842;
+    opacity: 0.70;
+  }
+
+  .sh-what-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4.5vw, 58px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    margin: 0;
+    text-shadow: 0 2px 24px rgba(1,22,56,0.40);
+  }
+  .sh-what-heading em {
+    font-style: italic;
+    color: #f5c842;
+  }
+
+  /* Thin rule below heading — same as hero's sj-rule pattern */
+  .sh-what-rule {
+    width: 80px; height: 3px;
+    background: linear-gradient(to right, #f5c842, rgba(245,200,66,0.40));
+    border-radius: 99px;
+    margin: 16px auto 0;
+  }
+
+  /* YouTube embed wrapper */
+  .sh-yt-wrap {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 40px 96px rgba(1,22,56,0.60),
+      0 8px 24px rgba(1,22,56,0.40),
+      0 0 0 1px rgba(255,255,255,0.06);
+    aspect-ratio: 16 / 9;
+    background: #0a2347;
+  }
+
+  .sh-yt-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Decorative accent border — yellow, matching hero ring style */
+  .sh-yt-accent {
+    position: absolute;
+    bottom: -14px;
+    right: -14px;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 2px solid rgba(245,200,66,0.22);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .sh-yt-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  @media (max-width: 860px) {
+    .sh-what-section {
+      padding: 72px clamp(20px, 6vw, 48px) 88px;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .sh-what-section {
+      padding: 60px 20px 72px;
+    }
+    .sh-what-heading {
+      letter-spacing: -0.5px;
+    }
   }
 `;
 
@@ -446,26 +465,6 @@ function DownloadIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
       <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
-    </svg>
-  );
-}
-
-function VolumeOnIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-    </svg>
-  );
-}
-
-function VolumeOffIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-      <line x1="23" y1="9" x2="17" y2="15" />
-      <line x1="17" y1="9" x2="23" y2="15" />
     </svg>
   );
 }
@@ -495,7 +494,7 @@ function InfoCardBody() {
 }
 
 interface SharkathonHeroProps {
-  videoSrc?: string;
+  imageSrc?: string;
   applyHref?: string;
   brochureHref?: string;
   onApply?: () => void;
@@ -504,8 +503,8 @@ interface SharkathonHeroProps {
 }
 
 export default function SharkathonHero({
-  videoSrc,
-  applyHref    = "#apply",
+  imageSrc,
+  applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   brochureHref = "/brochure/sharkathon-season-2.pdf",
   onApply,
   onBrochure,
@@ -516,10 +515,7 @@ export default function SharkathonHero({
     { src: "/images/isb-logo1.webp", alt: "ISB"      },
   ],
 }: SharkathonHeroProps) {
-  const injected    = useRef(false);
-  const desktopVid  = useRef<HTMLVideoElement>(null);
-  const mobileVid   = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
+  const injected = useRef(false);
 
   useEffect(() => {
     if (injected.current) return;
@@ -530,217 +526,223 @@ export default function SharkathonHero({
     document.head.appendChild(tag);
   }, []);
 
-  useEffect(() => {
-    if (desktopVid.current) desktopVid.current.muted = muted;
-    if (mobileVid.current)  mobileVid.current.muted  = muted;
-  }, [muted]);
-
-  const toggleMute = () => setMuted((m) => !m);
-
   return (
-    <section className="sh-hero-section">
+    <>
+      {/* ══════════════════════════════════════
+          HERO SECTION
+      ══════════════════════════════════════ */}
+      <section className="sh-hero-section">
 
-      {/* Ambient orbs */}
-      <div className="sh-orb-1" />
-      <div className="sh-orb-2" />
+        {/* Ambient orbs */}
+        <div className="sh-orb-1" />
+        <div className="sh-orb-2" />
 
-      {/* Radial glow */}
-      <div aria-hidden="true" style={{
-        position: "absolute", inset: 0, pointerEvents: "none",
-        background: `
-          radial-gradient(ellipse 80% 60% at 72% 38%, rgba(30,90,200,0.22) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 40% at 15% 85%, rgba(245,200,66,0.07) 0%, transparent 60%)
-        `,
-      }} />
-
-      {/* Grid overlay */}
-      <div aria-hidden="true" style={{
-        position: "absolute", inset: 0, pointerEvents: "none",
-        backgroundImage: `
-          linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px)
-        `,
-        backgroundSize: "60px 60px",
-        maskImage: "radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%)",
-        WebkitMaskImage: "radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%)",
-      }} />
-
-      {/* Decorative rings */}
-      {[
-        { size: 440, top: "6%",    right: "3%",  color: "rgba(255,255,255,0.04)" },
-        { size: 270, bottom: "10%",right: "16%", color: "rgba(245,200,66,0.07)" },
-        { size: 165, top: "54%",   right: "7%",  color: "rgba(30,90,200,0.11)"  },
-      ].map((ring, i) => (
-        <div key={i} aria-hidden="true" className="sh-ring" style={{
-          width: ring.size, height: ring.size,
-          border: `1px solid ${ring.color}`,
-          top: (ring as any).top, bottom: (ring as any).bottom, right: ring.right,
+        {/* Radial glow */}
+        <div aria-hidden="true" style={{
+          position: "absolute", inset: 0, pointerEvents: "none",
+          background: `
+            radial-gradient(ellipse 80% 60% at 72% 38%, rgba(30,90,200,0.22) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 40% at 15% 85%, rgba(245,200,66,0.07) 0%, transparent 60%)
+          `,
         }} />
-      ))}
 
-      {/* ── DESKTOP: video panel ── */}
-      {videoSrc && (
-        <div className="sh-video-panel sh-bg-anim">
-          <video ref={desktopVid} src={videoSrc} autoPlay loop muted playsInline aria-hidden="true" />
-          <button className="sh-mute-btn" onClick={toggleMute} aria-label={muted ? "Unmute" : "Mute"}>
-            {muted ? <VolumeOffIcon /> : <VolumeOnIcon />}
-          </button>
-        </div>
-      )}
+        {/* Grid overlay */}
+        <div aria-hidden="true" style={{
+          position: "absolute", inset: 0, pointerEvents: "none",
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+          maskImage: "radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%)",
+          WebkitMaskImage: "radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%)",
+        }} />
 
-      {/* ── DESKTOP: floating info card ── */}
-      {videoSrc && (
-        <div className="sh-info-card sh-info-card-desktop">
-          <InfoCardBody />
-        </div>
-      )}
+        {/* Decorative rings */}
+        {[
+          { size: 440, top: "6%",    right: "3%",  color: "rgba(255,255,255,0.04)" },
+          { size: 270, bottom: "10%",right: "16%", color: "rgba(245,200,66,0.07)" },
+          { size: 165, top: "54%",   right: "7%",  color: "rgba(30,90,200,0.11)"  },
+        ].map((ring, i) => (
+          <div key={i} aria-hidden="true" className="sh-ring" style={{
+            width: ring.size, height: ring.size,
+            border: `1px solid ${ring.color}`,
+            top: (ring as any).top, bottom: (ring as any).bottom, right: ring.right,
+          }} />
+        ))}
 
-      {/* TEXT CONTENT */}
-      <div className="sh-hero-content">
 
-        <div className="sh-anim-0">
-          <span className="sh-season-badge">
-            <span className="sh-season-dot">S2</span>
-            Season 2 — Now Open
-          </span>
-        </div>
-
-        <h1 className="sh-anim-1" style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "clamp(40px, 7vw, 92px)",
-          fontWeight: 700,
-          lineHeight: 1.0,
-          letterSpacing: "-2px",
-          color: "#ffffff",
-          textShadow: "0 2px 32px rgba(1,22,56,0.45)",
-          marginTop: 0,
-          marginBottom: 0,
-        }}>
-          Sharkathon{" "}
-          <span style={{ color: "#f5c842" }}>Season 2</span>
-        </h1>
-
-        <p className="sh-anim-2" style={{
-          fontFamily: "'Playfair Display', serif",
-          fontStyle: "italic",
-          fontSize: "clamp(14px, 2.2vw, 26px)",
-          fontWeight: 400,
-          color: "rgba(255,255,255,0.80)",
-          marginTop: 16,
-          marginBottom: 20,
-          letterSpacing: "3px",
-          textTransform: "uppercase",
-          textShadow: "0 1px 16px rgba(1,22,56,0.40)",
-        }}>
-          Become the Next Big Shark
-        </p>
-
-        <p className="sh-anim-3" style={{
-          fontSize: "clamp(14px, 1.5vw, 16px)",
-          lineHeight: 1.85,
-          color: "rgba(255,255,255,0.72)",
-          marginBottom: 24,
-          maxWidth: 600,
-        }}>
-          Sharkathon is India's{" "}
-          <span className="sh-first-chip">FIRST</span>{" "}
-          programme that brings real thinking skills to school students, and then puts them in
-          the shoes of a{" "}
-          <strong style={{ color: "#ffffff", fontWeight: 700 }}>
-            CEO, consultant and investor (Shark)
-          </strong>
-          , where students are the Sharks!
-        </p>
-
-        <div className="sh-anim-4" style={{ marginBottom: 24 }}>
-          <div className="sh-assoc-pill">
-            <span className="sh-assoc-label" style={{
-              fontSize: 10, letterSpacing: "2px", textTransform: "uppercase",
-              color: "rgba(255,255,255,0.85)", whiteSpace: "nowrap",
-            }}>
-              In Association with
-            </span>
-            <a href="https://nandancapital.com/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <img
-                src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png"
-                alt="Nandan Capital"
-                style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, cursor: "pointer" }}
-              />
-            </a>
-            <a href="https://www.linkedin.com/company/himlandcapitaladvisors" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <img
-                src="/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg"
-                alt="Himland Capital"
-                style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, cursor: "pointer" }}
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className="sh-anim-5 sh-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 28 }}>
-          <a href={applyHref} onClick={onApply} className="sh-btn-primary">
-            Register Now <ArrowIcon />
-          </a>
-          <a href={brochureHref} download target="_blank" rel="noopener noreferrer" onClick={onBrochure} className="sh-btn-secondary">
-            Download Brochure <DownloadIcon />
-          </a>
-        </div>
-
-        <div className="sh-anim-6">
-          <p style={{
-            fontSize: 10, letterSpacing: "2.5px", textTransform: "uppercase",
-            color: "rgba(255,255,255,0.35)", marginBottom: 14,
-            fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
-          }}>
-            Built by alumni from
-          </p>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            {colleges.map((c) => (
-              <span key={c.src} className="sh-college-badge">
-                <img src={c.src} alt={c.alt} />
-              </span>
-            ))}
-          </div>
-        </div>
-
-      </div>
-
-      {/* MOBILE VIDEO
-          641–900px → sticky right column, full height
-          ≤ 640px   → centered tall reel below text     */}
-      {videoSrc && (
-        <div className="sh-mobile-video-wrap">
-          <video
-            ref={mobileVid}
-            src={videoSrc}
-            autoPlay loop muted playsInline
+        {/* Hero image — full right side with mask-image fade, same as Deal Room */}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt="Sharkathon Season 2"
             aria-hidden="true"
+            className="sh-hero-img sh-bg-anim"
           />
-          <button className="sh-mute-btn" onClick={toggleMute} aria-label={muted ? "Unmute" : "Mute"}>
-            {muted ? <VolumeOffIcon /> : <VolumeOnIcon />}
-          </button>
-        </div>
-      )}
+        )}
 
-      {/* MOBILE INFO CARD — ≤ 640px only */}
-      {videoSrc && (
-        <div className="sh-info-card sh-info-card-mobile">
-          <InfoCardBody />
-        </div>
-      )}
+        {/* Floating info card — desktop only */}
+        {imageSrc && (
+          <div className="sh-info-card sh-info-card-desktop">
+            <InfoCardBody />
+          </div>
+        )}
 
-      {/* Scroll hint — desktop only */}
-      <div className="sh-scroll-hint sh-anim-6" style={{
-        position: "absolute", bottom: 32, left: "50%",
-        transform: "translateX(-50%)", zIndex: 2,
-      }} aria-hidden="true">
-        <div style={{ opacity: 0.60, animation: "shBounce 1.2s ease-in-out infinite" }}>
-          <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="#fff" strokeWidth="2">
-            <path d="M1 1l10 10L21 1" />
-          </svg>
-        </div>
-      </div>
+        {/* TEXT CONTENT */}
+        <div className="sh-hero-content">
 
-    </section>
+          <div className="sh-anim-0">
+            <span className="sh-season-badge">
+              <span className="sh-season-dot">S2</span>
+              Season 2 — Now Open
+            </span>
+          </div>
+
+          <h1 className="sh-anim-1" style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(40px, 7vw, 92px)",
+            fontWeight: 700,
+            lineHeight: 1.0,
+            letterSpacing: "-2px",
+            color: "#ffffff",
+            textShadow: "0 2px 32px rgba(1,22,56,0.45)",
+            marginTop: 0,
+            marginBottom: 0,
+          }}>
+            Sharkathon{" "}
+            <span style={{ color: "#f5c842" }}>Season 2</span>
+          </h1>
+
+          <p className="sh-anim-2" style={{
+            fontFamily: "'Playfair Display', serif",
+            fontStyle: "italic",
+            fontSize: "clamp(14px, 2.2vw, 26px)",
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.80)",
+            marginTop: 16,
+            marginBottom: 20,
+            letterSpacing: "3px",
+            textTransform: "uppercase",
+            textShadow: "0 1px 16px rgba(1,22,56,0.40)",
+          }}>
+            Become the Next Big Shark
+          </p>
+
+          <p className="sh-anim-3" style={{
+            fontSize: "clamp(14px, 1.5vw, 16px)",
+            lineHeight: 1.85,
+            color: "rgba(255,255,255,0.72)",
+            marginBottom: 24,
+            maxWidth: 600,
+          }}>
+            Sharkathon is India's{" "}
+            <span className="sh-first-chip">FIRST</span>{" "}
+            programme that brings real thinking skills to school students, and then puts them in
+            the shoes of a{" "}
+            <strong style={{ color: "#ffffff", fontWeight: 700 }}>
+              CEO, consultant and investor (Shark)
+            </strong>
+            , where students are the Sharks!
+          </p>
+
+          <div className="sh-anim-4" style={{ marginBottom: 24 }}>
+            <div className="sh-assoc-pill">
+              <span className="sh-assoc-label" style={{
+                fontSize: 10, letterSpacing: "2px", textTransform: "uppercase",
+                color: "rgba(255,255,255,0.85)", whiteSpace: "nowrap",
+              }}>
+                In Association with
+              </span>
+              <a href="https://nandancapital.com/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
+                <img
+                  src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png"
+                  alt="Nandan Capital"
+                  style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, cursor: "pointer" }}
+                />
+              </a>
+              <a href="https://www.linkedin.com/company/himlandcapitaladvisors" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
+                <img
+                  src="/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg"
+                  alt="Himland Capital"
+                  style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, cursor: "pointer" }}
+                />
+              </a>
+            </div>
+          </div>
+
+          <div className="sh-anim-5 sh-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 28 }}>
+            <a href={applyHref} onClick={onApply} className="sh-btn-primary">
+              Register Now <ArrowIcon />
+            </a>
+            <a href={brochureHref} download target="_blank" rel="noopener noreferrer" onClick={onBrochure} className="sh-btn-secondary">
+              Download Brochure <DownloadIcon />
+            </a>
+          </div>
+
+          <div className="sh-anim-6">
+            <p style={{
+              fontSize: 10, letterSpacing: "2.5px", textTransform: "uppercase",
+              color: "rgba(255,255,255,0.35)", marginBottom: 14,
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
+            }}>
+              Built by alumni from
+            </p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              {colleges.map((c) => (
+                <span key={c.src} className="sh-college-badge">
+                  <img src={c.src} alt={c.alt} />
+                </span>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Scroll hint — desktop only */}
+        <div className="sh-scroll-hint sh-anim-6" style={{
+          position: "absolute", bottom: 32, left: "50%",
+          transform: "translateX(-50%)", zIndex: 2,
+        }} aria-hidden="true">
+          <div style={{ opacity: 0.60, animation: "shBounce 1.2s ease-in-out infinite" }}>
+            <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="#fff" strokeWidth="2">
+              <path d="M1 1l10 10L21 1" />
+            </svg>
+          </div>
+        </div>
+
+      </section>
+
+      {/* ══════════════════════════════════════
+          WHAT IS SHARKATHON SECTION
+      ══════════════════════════════════════ */}
+      <section className="sh-what-section">
+        <div className="sh-what-inner">
+
+          {/* Heading — centred above video */}
+          <div className="sh-what-text">
+            <p className="sh-what-label">About the Programme</p>
+            <h2 className="sh-what-heading">
+              What is <em>Sharkathon?</em>
+            </h2>
+            <div className="sh-what-rule" />
+          </div>
+
+          {/* YouTube embed — full width below heading */}
+          <div className="sh-yt-container">
+            <div className="sh-yt-accent" aria-hidden="true" />
+            <div className="sh-yt-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/LPphfv-fh2o?si=DeYgKisIltsiTk3S"
+                title="What is Sharkathon?"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </>
   );
 }
