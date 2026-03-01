@@ -307,7 +307,7 @@ interface SharkathonPricingProps {
 
 export default function SharkathonPricing({
   fee       = "INR 5,000",
-  applyHref = "#register",
+  applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   onApply,
 }: SharkathonPricingProps) {
   const sectionRef  = useRef<HTMLDivElement>(null);

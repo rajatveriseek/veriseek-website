@@ -19,8 +19,8 @@ export default function SharkathonPage() {
     // doesn't create a horizontal scrollbar on the page
     <div style={{ overflowX: "hidden" }}>
       <SharkathonHero
-        brochureHref="/images/Sharkathon_S2_Brochure.pdf"
-        videoSrc="/veriseek-education.mp4"
+        brochureHref="/Sharkathon Season 2.pdf"
+        imageSrc="/images/P1101636.JPG"
       />
       <SharkathonRounds />
       <SharkathonJourney />

@@ -262,6 +262,11 @@ export default function SharkathonJourney() {
           border-color: rgba(245,200,66,0.50);
         }
 
+        .sj-learning-wrapper,
+        .sj-rounds-wrapper {
+          position: relative;
+        }
+
         /* ═══════════════════════════════════════
            CARD BOX
         ═══════════════════════════════════════ */
@@ -356,20 +361,50 @@ export default function SharkathonJourney() {
         }
 
         /* Continuous background line — desktop only */
-        .sj-river-bg-line {
+        // .sj-river-bg-line {
+        //   position: absolute;
+        //   left: 50%; top: 0; bottom: 0;
+        //   width: 2px; transform: translateX(-50%);
+        //   background: linear-gradient(
+        //     to bottom,
+        //     transparent 0%,
+        //     rgba(245,200,66,0.22) 4%,
+        //     rgba(245,200,66,0.40) 12%,
+        //     rgba(245,200,66,0.40) 88%,
+        //     rgba(245,200,66,0.22) 96%,
+        //     transparent 100%
+        //   );
+        //   pointer-events: none; z-index: 0;
+        // }
+
+        .sj-river-bg-line.learning-only {
           position: absolute;
-          left: 50%; top: 0; bottom: 0;
-          width: 2px; transform: translateX(-50%);
+          left: 50%;
+          top: 0;
+          height: 100%; /* adjust until it stops before rounds */
+          width: 2px;
+          transform: translateX(-50%);
           background: linear-gradient(
             to bottom,
             transparent 0%,
             rgba(245,200,66,0.22) 4%,
             rgba(245,200,66,0.40) 12%,
-            rgba(245,200,66,0.40) 88%,
-            rgba(245,200,66,0.22) 96%,
-            transparent 100%
+            rgba(245,200,66,0.40) 100%
           );
-          pointer-events: none; z-index: 0;
+        }
+
+        .sj-river-bg-line.rounds-only {
+          position: absolute;
+          left: 50%;
+          top: 60%;   /* Start BELOW learning line */
+          bottom: 0;
+          width: 2px;
+          transform: translateX(-50%);
+          background: linear-gradient(
+            to bottom,
+            rgba(245,200,66,0.35),
+            rgba(245,200,66,0.45)
+          );
         }
 
         /* Flowing dot animation on the bg line */
@@ -563,90 +598,96 @@ export default function SharkathonJourney() {
             DESKTOP ZIGZAG RIVER
         ════════════════════════════════ */}
         <div className="sj-river-desktop">
-          <div className="sj-river-bg-line" />
+          <div className="sj-learning-wrapper">
+            <div className="sj-river-bg-line learning-only" />
 
-          {/* ── Learning phase pill ── */}
-          <div className="sj-row sj-anim-item" style={{ marginBottom: 12 }}>
-            <div className="sj-row-empty" />
-            <div className="sj-row-centre">
-              <PhasePill label="Learning Phase" />
+            {/* ── Learning phase pill ── */}
+            <div className="sj-row sj-anim-item" style={{ marginBottom: 12 }}>
+              <div className="sj-row-empty" />
+              <div className="sj-row-centre">
+                <PhasePill label="Learning Phase" />
+              </div>
+              <div className="sj-row-empty" />
             </div>
-            <div className="sj-row-empty" />
+
+            {/* ── Learning nodes ── */}
+            {learningItems.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <div key={item.title}>
+                  {/* Connector */}
+                  {/* <div className="sj-conn-row">
+                    <div />
+                    <div className="sj-conn-row-centre">
+                      <div className="sj-connector-line" style={{ height: 28 }} />
+                    </div>
+                    <div />
+                  </div> */}
+                  {/* Node row */}
+                  <div className="sj-row sj-anim-item">
+                    <div className={isLeft ? "sj-row-left" : "sj-row-empty"}>
+                      {isLeft && <CardContent item={item} />}
+                    </div>
+                    <div className="sj-row-centre">
+                      <div className="sj-dot sj-dot-learning">{item.icon}</div>
+                    </div>
+                    <div className={!isLeft ? "sj-row-right" : "sj-row-empty"}>
+                      {!isLeft && <CardContent item={item} />}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* ── Learning nodes ── */}
-          {learningItems.map((item, i) => {
-            const isLeft = i % 2 === 0;
-            return (
-              <div key={item.title}>
-                {/* Connector */}
-                <div className="sj-conn-row">
-                  <div />
-                  <div className="sj-conn-row-centre">
-                    <div className="sj-connector-line" style={{ height: 28 }} />
-                  </div>
-                  <div />
-                </div>
-                {/* Node row */}
-                <div className="sj-row sj-anim-item">
-                  <div className={isLeft ? "sj-row-left" : "sj-row-empty"}>
-                    {isLeft && <CardContent item={item} />}
-                  </div>
-                  <div className="sj-row-centre">
-                    <div className="sj-dot sj-dot-learning">{item.icon}</div>
-                  </div>
-                  <div className={!isLeft ? "sj-row-right" : "sj-row-empty"}>
-                    {!isLeft && <CardContent item={item} />}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
           {/* ── Connector before rounds phase pill ── */}
-          <div className="sj-conn-row">
+          {/* <div className="sj-conn-row">
             <div />
             <div className="sj-conn-row-centre">
               <div className="sj-connector-line" style={{ height: 36 }} />
             </div>
             <div />
-          </div>
+          </div> */}
 
           {/* ── Competition rounds phase pill ── */}
-          <div className="sj-phase-row sj-anim-item">
-            <div className="sj-phase-row-line" />
-            <div style={{ display:"flex", justifyContent:"center", padding:"0 8px" }}>
+          <div className="sj-phase-row sj-anim-item"  style={{ margin: "20px 0px" }}>
+            <div />
+            <div style={{ display:"flex", justifyContent:"center" }}>
               <PhasePill label="Competition Rounds" isRound />
             </div>
-            <div className="sj-phase-row-line sj-phase-row-line-rev" />
+            <div />
           </div>
+          
+          <div className="sj-learning-wrapper"></div>
+            <div className="sj-river-bg-line rounds-only" />
 
-          {/* ── Round nodes ── */}
-          {roundItems.map((item, i) => {
-            const isLeft = i % 2 === 0;
-            return (
-              <div key={item.title}>
-                <div className="sj-conn-row">
-                  <div />
-                  <div className="sj-conn-row-centre">
-                    <div className="sj-connector-line sj-connector-line-bright" style={{ height: 28 }} />
+            {/* ── Round nodes ── */}
+            {roundItems.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <div key={item.title}>
+                  {/* <div className="sj-conn-row">
+                    <div />
+                    <div className="sj-conn-row-centre">
+                      <div className="sj-connector-line sj-connector-line-bright" style={{ height: 28 }} />
+                    </div>
+                    <div />
+                  </div> */}
+                  <div className="sj-row sj-anim-item">
+                    <div className={isLeft ? "sj-row-left" : "sj-row-empty"}>
+                      {isLeft && <CardContent item={item} />}
+                    </div>
+                    <div className="sj-row-centre">
+                      <div className="sj-dot sj-dot-round">{item.icon}</div>
+                    </div>
+                    <div className={!isLeft ? "sj-row-right" : "sj-row-empty"}>
+                      {!isLeft && <CardContent item={item} />}
+                    </div>
                   </div>
-                  <div />
                 </div>
-                <div className="sj-row sj-anim-item">
-                  <div className={isLeft ? "sj-row-left" : "sj-row-empty"}>
-                    {isLeft && <CardContent item={item} />}
-                  </div>
-                  <div className="sj-row-centre">
-                    <div className="sj-dot sj-dot-round">{item.icon}</div>
-                  </div>
-                  <div className={!isLeft ? "sj-row-right" : "sj-row-empty"}>
-                    {!isLeft && <CardContent item={item} />}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
           {/* ── Terminal dot ── */}
           <div className="sj-conn-row">
@@ -659,7 +700,6 @@ export default function SharkathonJourney() {
           <div className="sj-terminal sj-anim-item">
             <div className="sj-terminal-dot" />
           </div>
-        </div>
 
         {/* ════════════════════════════════
             MOBILE SINGLE-COLUMN RIVER

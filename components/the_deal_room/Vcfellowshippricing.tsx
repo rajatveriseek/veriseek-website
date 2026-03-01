@@ -39,7 +39,7 @@ interface VCPricingProps {
 }
 
 export default function VCFellowshipPricing({
-  fee       = "INR 15,000",
+  fee       = "INR 17,700",
   dates     = "14–15 March 2026",
   venue     = "Shiv Nadar University, Greater Noida",
   applyHref = "https://rzp.io/rzp/IfWaHBUQ",
@@ -376,7 +376,7 @@ export default function VCFellowshipPricing({
             <p className="vcp-fee-label">Programme Fee</p>
             <div className="vcp-fee-row">
               <span className="vcp-fee-amount">{fee}</span>
-              <span className="vcp-fee-gst">+ GST</span>
+              <span className="vcp-fee-gst">(INCLUSIVE OF ALL TAXES)</span>
             </div>
             <div className="vcp-divider" />
             <div className="vcp-meta">

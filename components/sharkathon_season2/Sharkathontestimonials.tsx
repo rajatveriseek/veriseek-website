@@ -22,12 +22,12 @@ interface Testimonial {
   logoAlt?: string;
   imageSrc?: string;
   quote: string;
+  italic?: string; // e.g. "The Participants"
 }
 
 interface TabGroup {
   tab: string;
   label: string; // "Hear from The Participants"
-  italic: string; // italic part e.g. "The Participants"
   items: Testimonial[];
 }
 
@@ -37,24 +37,45 @@ const TABS: TabGroup[] = [
   {
     tab: "participants",
     label: "Hear from",
-    italic: "The Participants",
     items: [
+      {
+        name: "Anushka Mittal",
+        role: "Participant, Sharkathon 2025",
+        school: "The Heritage School",
+        logoSrc: "",   // ← drop school logo path here
+        logoAlt: "The Heritage School",
+        imageSrc: "/mittal.jpeg", // ← portrait photo path
+        quote:
+          "The programme was really insightful and gave me exposure to a different way of thinking and questioning which is never taught in school. For the first time I understood how pausing and questioning everything to clarify problems and statement is super important for better decision making. Would love to be a part of it again.",
+        italic: "The Participants"
+      },
       {
         name: "Saanvi Aggarwal",
         role: "Participant, Sharkathon 2025",
         school: "Kunskapskolan, Gurugram",
         logoSrc: "",   // ← drop school logo path here
         logoAlt: "Kunskapskolan",
-        imageSrc: "", // ← portrait photo path
+        imageSrc: "/agarwal.jpeg", // ← portrait photo path
         quote:
           "Becoming one of the sharks at this platform turned the business world from theory into reality. The unique and intriguing role reversal of judging and investing in an idea instead of pitching one changed how I analyse the opportunities around me.",
+        italic: "The Participants"
+      },
+      {
+        name: "Usha Iyengar",
+        role: "Parent of Rumi Iyengar",
+        school: "Greenwood International School",
+        logoSrc: "",   // ← school logo
+        logoAlt: "Greenwood International",
+        imageSrc: "/Iyengar.jpeg",
+        quote:
+          "Sharkathon 2025 was organised well and supported children on their learning journeys. It was an engaging and unique format different from the typical olympiads, based on real life cases and helps children spot value in business opportunities. I will really recommend everyone doing it.",
+        italic: "The Parents"
       },
     ],
   },
   {
     tab: "parents",
     label: "Hear from",
-    italic: "The Parents",
     items: [
       {
         name: "Usha Iyengar",
@@ -65,13 +86,13 @@ const TABS: TabGroup[] = [
         imageSrc: "",
         quote:
           "Sharkathon 2025 was organised well and supported children on their learning journeys. It was an engaging and unique format different from the typical olympiads, based on real life cases and helps children spot value in business opportunities. I will really recommend everyone doing it.",
+        italic: "The Parents"
       },
     ],
   },
   {
     tab: "counsellors",
     label: "Hear from",
-    italic: "The Counsellors",
     items: [
       // Add counsellor testimonials here — same shape as above
       {
@@ -304,7 +325,7 @@ interface SharkathonTestimonialsProps {
 
 export default function SharkathonTestimonials({
   tabs         = TABS,
-  applyHref    = "#apply",
+  applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
 }: SharkathonTestimonialsProps) {
   const [activeTab, setActiveTab]   = useState(0);
   const [activeIdx, setActiveIdx]   = useState(0);
@@ -770,7 +791,7 @@ export default function SharkathonTestimonials({
         <div className="tm-body-wrap">
 
           {/* ── Tab switcher ── */}
-          <div className="tm-tabs" role="tablist">
+          {/* <div className="tm-tabs" role="tablist">
             {tabs.map((t, i) => (
               <button
                 key={t.tab}
@@ -782,7 +803,7 @@ export default function SharkathonTestimonials({
                 {t.italic}
               </button>
             ))}
-          </div>
+          </div> */}
 
           {/* ── Testimonial card ── */}
           <div
@@ -794,7 +815,7 @@ export default function SharkathonTestimonials({
             <div className="tm-card-header">
               <h3 className="tm-card-heading">
                 {currentTab.label}{" "}
-                <em className="tm-card-heading-italic">{currentTab.italic}</em>
+                <em className="tm-card-heading-italic">{item.italic}</em>
               </h3>
             </div>
 

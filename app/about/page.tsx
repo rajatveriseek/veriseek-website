@@ -31,6 +31,10 @@ const CSS = `
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50%       { transform: translateX(-50%) translateY(8px); }
   }
+  @keyframes ab-marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
 
   /* animate-in triggers */
   .ab-anim-up    { opacity: 0; transform: translateY(28px);  transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -66,7 +70,6 @@ const CSS = `
     pointer-events: none;
   }
 
-  /* Grid overlay */
   .ab-hero::after {
     content: '';
     position: absolute; inset: 0;
@@ -79,7 +82,6 @@ const CSS = `
     pointer-events: none;
   }
 
-  /* Right-side hero image — masked from right to left, hidden on tablet */
   .ab-hero-image {
     position: absolute;
     right: 0; top: 0;
@@ -116,7 +118,7 @@ const CSS = `
 
   .ab-hero-content {
     position: relative; z-index: 2;
-    max-width: 52%;
+    max-width: 62%;
   }
 
   @media (max-width: 900px) {
@@ -131,7 +133,7 @@ const CSS = `
   }
 
   .ab-hero-title {
-    font-size: clamp(40px, 7vw, 88px);
+    font-size: clamp(40px, 7vw, 64px);
     font-weight: 700; line-height: 0.9;
     letter-spacing: -2px; color: #ffffff;
     font-family: 'DM Sans', sans-serif;
@@ -153,7 +155,6 @@ const CSS = `
     margin-bottom: 40px;
   }
 
-  /* Stat row */
   .ab-stats {
     display: flex; gap: clamp(24px, 5vw, 56px);
     flex-wrap: wrap;
@@ -170,7 +171,6 @@ const CSS = `
     color: rgba(255,255,255,0.40); margin-top: 4px;
   }
 
-  /* Scroll caret */
   .ab-scroll-hint {
     position: absolute; bottom: 32px; left: 50%;
     transform: translateX(-50%); z-index: 2;
@@ -239,7 +239,6 @@ const CSS = `
   .ab-vision-img-wrap img {
     width: 100%; height: 100%; object-fit: cover; display: block;
   }
-  /* decorative corner accent */
   .ab-vision-img-wrap::after {
     content: '';
     position: absolute; bottom: 0; left: 0;
@@ -289,7 +288,6 @@ const CSS = `
   }
   .ab-founder-card:hover .ab-founder-photo img { filter: grayscale(0%); }
 
-  /* LinkedIn badge on photo */
   .ab-founder-li {
     position: absolute; bottom: 12px; right: 12px;
     width: 34px; height: 34px; border-radius: 50%;
@@ -313,6 +311,80 @@ const CSS = `
     color: rgba(1,22,56,0.58); line-height: 1.7;
   }
 
+  /* ── MENTOR MARQUEE STRIP ── */
+  .ab-marquee-section {
+    background: #011638;
+    padding: 0;
+    overflow: hidden;
+  }
+  .ab-marquee-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 0 56px;
+    gap: 22px;
+    position: relative;
+  }
+  .ab-marquee-inner::before,
+  .ab-marquee-inner::after {
+    content: '';
+    position: absolute; left: 0; right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+  }
+  .ab-marquee-inner::before { top: 0; }
+  .ab-marquee-inner::after  { bottom: 0; }
+
+  .ab-marquee-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,200,66,0.65);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ab-marquee-label::before,
+  .ab-marquee-label::after {
+    content: '';
+    display: inline-block; width: 28px; height: 1.5px;
+    background: #f5c842; opacity: 0.5;
+  }
+
+  .ab-marquee-track-wrap {
+    width: 100%; overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .ab-marquee-track {
+    display: flex; align-items: center;
+    width: max-content;
+    animation: ab-marquee-scroll 32s linear infinite;
+  }
+  .ab-marquee-track:hover { animation-play-state: paused; }
+  /* Each set is its own flex row with gap applied internally */
+  .ab-marquee-set {
+    display: flex; align-items: center; gap: 12px;
+    padding-right: 12px; /* matches gap so loop is gapless */
+    flex-shrink: 0;
+  }
+
+  .ab-logo-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 8px 20px;
+    background: #ffffff;
+    border: 1.5px solid rgba(245,200,66,0.28);
+    border-radius: 14px;
+    height: 56px; flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(1,22,56,0.18);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .ab-logo-badge:hover {
+    border-color: #f5c842; transform: scale(1.05);
+  }
+  .ab-logo-badge img {
+    height: 28px; max-width: 110px;
+    width: auto; object-fit: contain; display: block;
+  }
+
   /* ── APPROACH SECTION ── */
   .ab-approach {
     background: #eef0f2;
@@ -325,7 +397,6 @@ const CSS = `
     align-items: center;
   }
 
-  /* Approach feature list */
   .ab-features { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
 
   .ab-feature {
@@ -365,45 +436,20 @@ const CSS = `
     color: rgba(1,22,56,0.55); line-height: 1.65;
   }
 
-  /* Carousel wrap */
+  /* Carousel column */
+  .ab-carousel-col {
+    display: flex; flex-direction: column; gap: 20px;
+  }
   .ab-carousel-wrap {
     border-radius: 20px; overflow: hidden;
     box-shadow: 0 20px 56px rgba(1,22,56,0.14);
     border: 2px solid rgba(245,200,66,0.22);
   }
 
-  /* ── CTA SECTION ── */
-  .ab-cta {
-    background: #011638;
-    padding: 96px clamp(20px, 8vw, 120px);
-    position: relative; overflow: hidden;
-    text-align: center;
-  }
-  .ab-cta::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30,90,200,0.25) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .ab-cta-content { position: relative; z-index: 1; max-width: 580px; margin: 0 auto; }
-
-  .ab-cta-title {
-    font-size: clamp(28px, 4vw, 46px);
-    font-weight: 700; color: #ffffff;
-    letter-spacing: -0.8px; line-height: 1.1;
-    margin-bottom: 16px;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .ab-cta-sub {
-    font-size: clamp(14px, 1.4vw, 16px);
-    color: rgba(255,255,255,0.55); line-height: 1.8;
-    margin-bottom: 36px;
-  }
-
-  .ab-btn-primary {
+  /* Explore button */
+  .ab-explore-btn {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 15px 36px; border-radius: 100px;
+    padding: 14px 32px; border-radius: 100px;
     background: #f5c842; color: #011638;
     font-size: 13px; font-weight: 700;
     letter-spacing: 1px; text-transform: uppercase;
@@ -411,9 +457,11 @@ const CSS = `
     font-family: 'DM Sans', sans-serif;
     transition: all 0.25s ease;
     box-shadow: 0 8px 24px rgba(245,200,66,0.28);
+    align-self: center;
   }
-  .ab-btn-primary:hover {
-    background: #ffe066; box-shadow: 0 12px 32px rgba(245,200,66,0.45);
+  .ab-explore-btn:hover {
+    background: #ffe066;
+    box-shadow: 0 12px 32px rgba(245,200,66,0.45);
     transform: scale(1.04);
   }
 
@@ -425,19 +473,32 @@ const CSS = `
     .ab-founders-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 600px) {
-    .ab-vision  { padding: 64px 18px; }
-    .ab-founders { padding: 64px 18px; }
-    .ab-approach { padding: 64px 18px; }
-    .ab-cta     { padding: 64px 18px; }
+    .ab-vision    { padding: 64px 18px; }
+    .ab-founders  { padding: 64px 18px; }
+    .ab-approach  { padding: 64px 18px; }
     .ab-founders-grid { grid-template-columns: 1fr; max-width: 380px; }
   }
   @media (max-width: 380px) {
-    .ab-vision  { padding: 48px 14px; }
-    .ab-founders { padding: 48px 14px; }
-    .ab-approach { padding: 48px 14px; }
-    .ab-cta     { padding: 48px 14px; }
+    .ab-vision    { padding: 48px 14px; }
+    .ab-founders  { padding: 48px 14px; }
+    .ab-approach  { padding: 48px 14px; }
   }
 `;
+
+// ─── Marquee logo data ──────────────────────────────────────────────────────────
+const MARQUEE_LOGOS = [
+  { src: "/images/apple.png",                                            alt: "Apple"          },
+  { src: "/schools/amazon.webp",                                         alt: "Amazon"         },
+  { src: "/images/McKinseyCompany_logo-dark.png",                        alt: "McKinsey"       },
+  { src: "/images/ey.png",                                               alt: "EY"             },
+  { src: "/images/sixth sense.png",                                      alt: "Sixth Sense"    },
+  { src: "/images/leenaai.png",                                          alt: "Leena AI"       },
+  { src: "/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png", alt: "Nandan Capital" },
+  { src: "/schools/jio-removebg-preview.png",                           alt: "Jio"            },
+  { src: "/schools/cardekho-removebg-preview.png",                      alt: "CarDekho"       },
+  { src: "/schools/revxcapital.png",                                     alt: "RevX Capital"   },
+  { src: "/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg",                                 alt: "Himland Capital" },
+];
 
 function LinkedInIcon() {
   return (
@@ -515,7 +576,7 @@ const DIRECTORS = [
 ];
 
 export default function AboutPage() {
-  const pageRef    = useRef<HTMLDivElement>(null);
+  const pageRef     = useRef<HTMLDivElement>(null);
   const cssInjected = useRef(false);
 
   useEffect(() => {
@@ -538,7 +599,8 @@ export default function AboutPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             (entry.target as HTMLElement).classList.add("is-visible");
-            io.unobserve(entry.target);
+          } else {
+            (entry.target as HTMLElement).classList.remove("is-visible");
           }
         });
       },
@@ -556,7 +618,6 @@ export default function AboutPage() {
         <div className="ab-hero-orb-1" aria-hidden="true" />
         <div className="ab-hero-orb-2" aria-hidden="true" />
 
-        {/* Right-side hero image — masked, hidden on mobile */}
         <img
           src={getImageUrl("about-vision") || "/placeholder.svg"}
           alt=""
@@ -572,23 +633,23 @@ export default function AboutPage() {
           </div>
 
           <h1 className="ab-hero-title ab-anim-up ab-delay-1">
-            About<br />
+            Designed to Build Skills<br />
             <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
-              Veriseek
+              We Wish School Had Taught
             </em>
           </h1>
 
           <div className="ab-rule ab-anim-up ab-delay-2" />
 
           <p className="ab-hero-sub ab-anim-up ab-delay-2">
-            Empowering students with real-world skills for future success — bridging the gap between traditional academic learning and the practical expertise that today's professional world demands.
+            At Veriseek Education, we design and deliver practitioner-led programmes and competitions for schools and colleges. Students build thinking, communication, and decision-making skills through real cases, simulations, and structured feedback from industry professionals, because students deserve to learn these skills before the real world demands them.
           </p>
 
           <div className="ab-stats ab-anim-up ab-delay-3">
             {[
               { num: "500+", label: "Students Impacted" },
-              { num: "3+", label: "Programmes" },
-              { num: "20+", label: "Expert Mentors" },
+              { num: "3+",   label: "Programmes"        },
+              { num: "20+",  label: "Expert Mentors"    },
             ].map((s) => (
               <div key={s.label}>
                 <div className="ab-stat-num">{s.num}</div>
@@ -608,8 +669,6 @@ export default function AboutPage() {
       {/* ── VISION ── */}
       <section className="ab-vision ab-section">
         <div className="ab-vision-grid">
-
-          {/* Image */}
           <div className="ab-vision-img-wrap ab-anim-left">
             <Image
               src="/finals.jpeg"
@@ -619,33 +678,33 @@ export default function AboutPage() {
             />
           </div>
 
-          {/* Text */}
           <div className="ab-anim-right">
-            <p className="ab-section-eyebrow">Our Vision</p>
-            <h2 className="ab-section-title">
-              Education that{" "}
-              <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
-                prepares for life
-              </em>
-            </h2>
-            <div className="ab-blue-rule" />
-            <p className="ab-section-body">
-              Veriseek Education was founded with a clear vision: to bridge the gap between traditional academic learning and the practical skills needed in today's professional world. We believe that education should prepare students not just for exams, but for life.
-            </p>
-            <p className="ab-section-body">
-              Our innovative programmes develop critical thinking, problem-solving, decision-making, startup investing skills, and communication — essential competencies for success in any career path. By providing students with real-world challenges and expert mentorship, we empower them to discover their potential.
-            </p>
-            <p className="ab-section-body" style={{ marginBottom: 0 }}>
-              We envision a future where every student has access to educational experiences that are engaging, relevant, and transformative — inspiring a new generation of leaders, innovators, and problem-solvers.
-            </p>
+            <div>
+              <h2 className="ab-section-title">
+                Our{" "}
+                <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400, color:"#f5c842" }}>
+                  Vision
+                </em>
+              </h2>
+              <div className="ab-blue-rule" />
+              <p className="ab-section-body">To make real-world skills a normal part of education, so every student learns to think clearly, communicate confidently, and make sound decisions before life forces them to.</p>
+            </div>
+            <div>
+              <h2 className="ab-section-title">
+                Our{" "}
+                <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400, color:"#f5c842" }}>
+                  Mission
+                </em>
+              </h2>
+              <div className="ab-blue-rule" />
+              <p className="ab-section-body">To design and deliver practitioner-led programmes and competitions for schools and colleges that build thinking, communication, and decision-making skills through real cases, simulations, and structured feedback from industry professionals.</p>
+            </div>
           </div>
-
         </div>
       </section>
 
       {/* ── FOUNDERS ── */}
       <section className="ab-founders ab-section">
-
         <div className="ab-founders-header ab-anim-up">
           <p className="ab-section-eyebrow" style={{ color:"rgba(1,22,56,0.55)" }}>The People Behind It</p>
           <h2 className="ab-section-title dark">
@@ -662,10 +721,7 @@ export default function AboutPage() {
 
         <div className="ab-founders-grid">
           {DIRECTORS.map((d, i) => (
-            <div
-              key={d.name}
-              className={`ab-founder-card ab-anim-up ab-delay-${i + 1}`}
-            >
+            <div key={d.name} className={`ab-founder-card ab-anim-up ab-delay-${i + 1}`}>
               <div className="ab-founder-photo">
                 <img
                   src={d.image}
@@ -676,7 +732,6 @@ export default function AboutPage() {
                     if (fb) fb.style.display = "flex";
                   }}
                 />
-                {/* Initials fallback */}
                 <div style={{
                   display:"none", position:"absolute", inset:0,
                   alignItems:"center", justifyContent:"center",
@@ -701,7 +756,33 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
+      </section>
 
+      {/* ── MENTOR LOGOS — INFINITE MARQUEE STRIP ── */}
+      <section className="ab-marquee-section ab-section">
+        <div className="ab-marquee-inner">
+          <p className="ab-marquee-label">Mentors Associated From</p>
+          <div className="ab-marquee-track-wrap" aria-hidden="true">
+            <div className="ab-marquee-track">
+              {/* Set A */}
+              <div className="ab-marquee-set">
+                {MARQUEE_LOGOS.map((logo) => (
+                  <span key={`a-${logo.alt}`} className="ab-logo-badge">
+                    <img src={logo.src} alt={logo.alt} loading="lazy" />
+                  </span>
+                ))}
+              </div>
+              {/* Set B — identical clone for seamless loop */}
+              <div className="ab-marquee-set" aria-hidden="true">
+                {MARQUEE_LOGOS.map((logo) => (
+                  <span key={`b-${logo.alt}`} className="ab-logo-badge">
+                    <img src={logo.src} alt={logo.alt} loading="lazy" />
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── APPROACH ── */}
@@ -735,39 +816,19 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Carousel */}
-          <div className="ab-carousel-wrap ab-anim-right" style={{ order: 2 }}>
-            <ImageCarousel />
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="ab-cta ab-section">
-        <div className="ab-cta-content">
-          <div className="ab-eyebrow ab-anim-up" style={{ justifyContent:"center", marginBottom:20 }}>
-            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
-            Get Involved
-            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
-          </div>
-          <h2 className="ab-cta-title ab-anim-up ab-delay-1">
-            Ready to Think Like{" "}
-            <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
-              an Investor?
-            </em>
-          </h2>
-          <p className="ab-cta-sub ab-anim-up ab-delay-2">
-            Join Sharkathon today and embark on an exciting journey of critical thinking, analysis, and investment evaluation led by industry leaders.
-          </p>
-          <div className="ab-anim-up ab-delay-3">
-            <Link href="/sharkathon" className="ab-btn-primary">
+          {/* Carousel + Explore button */}
+          <div className="ab-carousel-col ab-anim-right" style={{ order: 2 }}>
+            <div className="ab-carousel-wrap">
+              <ImageCarousel />
+            </div>
+            <Link href="/#programmes" className="ab-explore-btn">
               Explore Programmes
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M7 17L17 7M17 7H7M17 7v10" />
               </svg>
             </Link>
           </div>
+
         </div>
       </section>
 
