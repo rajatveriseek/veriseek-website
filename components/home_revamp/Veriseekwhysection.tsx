@@ -28,8 +28,19 @@ const COMPANY_LOGOS = [
 ];
 
 const PARTNER_SCHOOLS = [
-  { src: "/schools/dpskolarroad-removebg-preview.png",  alt: "DPS RK Puram" }, { src:"/schools/kunskapsskolan-removebg-preview.png", alt: "Kunskapskolan" }, { src:"/schools/greenwoodhigh-removebg-preview.png", alt: "Greenwood Int'l" },
-  { src:"/schools/thedoonschool-removebg-preview.png", alt: "The Doon School" }, { src:"/schools/pathway.png", alt: "Pathways" }, { src:"/schools/amityinternational-removebg-preview.png", alt: "Amity Int'l" },
+  { src: "/schools/dpskolarroad-removebg-preview.png",       alt: "DPS RK Puram"          },
+  { src: "/schools/kunskapsskolan-removebg-preview.png",    alt: "Kunskapskolan"         },
+  { src: "/schools/greenwoodhigh-removebg-preview.png",     alt: "Greenwood Int'l"       },
+  { src: "/schools/thedoonschool-removebg-preview.png",     alt: "The Doon School"       },
+  { src: "/schools/amityinternational-removebg-preview.png",alt: "Amity Int'l"           },
+  { src: "/schools/jbcnlogo-removebg-preview.png",          alt: "JBCN"                 },
+  { src: "/schools/theheritageschool-removebg-preview.png", alt: "The Heritage School"   },
+  { src: "/schools/centrepointschool-removebg-preview.png", alt: "Centrepoint School"    },
+  { src: "/schools/THEMANTHANSCHOOL-removebg-preview.png",  alt: "The Manthan School"   },
+  { src: "/schools/vidyashilpacadamy-removebg-preview.png", alt: "Vidyashilp Academy"    },
+  { src: "/schools/oakridge.png",                           alt: "Oakridge"             },
+  { src: "/schools/emeraldinternational-removebg-preview.png", alt: "Emerald Int'l"     },
+  { src: "/schools/abhinavschool-removebg-preview.png",     alt: "Abhinav School"       },
 ];
 
 // ─── Sub-components ────────────────────────────────────────────────────────────
@@ -395,9 +406,50 @@ export default function VeriseekWhySection() {
           animation: vw-scroll 30s linear infinite;
         }
         .vw-marquee-track:hover { animation-play-state: paused; }
-        .vw-marquee-track .vw-badge      { height: clamp(36px, 3.6vh, 46px); }
-        .vw-marquee-track .vw-badge-img  { height: clamp(20px, 2.2vh, 28px); max-width: 76px; }
+        /* Equal-size company logo badges in marquee */
+        .vw-marquee-track .vw-badge {
+          width: 110px; height: 42px;
+          flex-shrink: 0; padding: 6px 10px;
+        }
+        .vw-marquee-track .vw-badge-img {
+          width: 100%; height: 100%;
+          object-fit: contain; max-width: none;
+        }
         .vw-marquee-track .vw-badge-label { font-size: 11px; }
+
+        /* ── School strip ── */
+        @keyframes vw-school-scroll {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        .vw-school-strip-wrap {
+          overflow: hidden; flex: 1;
+          mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+          display: flex; align-items: center;
+        }
+        .vw-school-strip-track {
+          display: flex; gap: 10px; width: max-content;
+          animation: vw-school-scroll 22s linear infinite;
+        }
+        .vw-school-strip-track:hover { animation-play-state: paused; }
+        .vw-school-strip-badge {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 120px; height: 68px; flex-shrink: 0;
+          background: #ffffff;
+          border: 1.5px solid rgba(245,200,66,0.30);
+          border-radius: 12px;
+          padding: 8px 12px;
+          box-shadow: 0 2px 8px rgba(1,22,56,0.10);
+          transition: border-color 0.2s, transform 0.2s;
+        }
+        .vw-school-strip-badge:hover {
+          border-color: #f5c842; transform: scale(1.05);
+        }
+        .vw-school-strip-img {
+          width: 100%; height: 100%;
+          object-fit: contain; display: block;
+        }
 
         /* ══════════════════════════════════════════
            RESPONSIVE
@@ -548,9 +600,9 @@ background: rgba(255,255,255);
               </div>
               <div className="vw-stat-block">
                 <p className="vw-card-eyebrow">Network</p>
-                <div className="vw-stat-num">30<span>+</span></div>
-                <p className="vw-stat-name">Partner Institutions</p>
-                <p className="vw-stat-desc">Schools, colleges, and university cohorts</p>
+                <div className="vw-stat-num">25<span>+</span></div>
+                <p className="vw-stat-name">Schools &amp; Universities</p>
+                <p className="vw-stat-desc">Students from 25+ schools and universities have participated</p>
                 {/* <div className="vw-school-pills">
                   {PARTNER_SCHOOLS.map((s) => (
                     <span key={s.alt} className="vw-school-pill"><img src={s.src} alt={s.alt} /></span>
@@ -572,14 +624,18 @@ background: rgba(255,255,255);
             </div>
           </div>
 
-          {/* ── Partner schools card ── */}
+          {/* ── Partner schools card — strip format ── */}
           <div className="vw-card vw-card-schools vw-anim-item">
             <p className="vw-card-eyebrow">Partner Schools</p>
-            <p className="vw-card-title" style={{ marginBottom: 12 }}>Where we've trained students</p>
-            <div className="vw-schools-grid" style={{ flex: 1 }}>
-              {PARTNER_SCHOOLS.map((s) => (
-                <div key={s.alt} className="vw-school-tile"><img src={s.src} alt={s.alt} /></div>
-              ))}
+            <p className="vw-card-title" style={{ marginBottom: 16 }}>Where we've trained students</p>
+            <div className="vw-school-strip-wrap">
+              <div className="vw-school-strip-track">
+                {[...PARTNER_SCHOOLS, ...PARTNER_SCHOOLS].map((s, i) => (
+                  <span key={`${s.alt}-${i}`} className="vw-school-strip-badge">
+                    <img src={s.src} alt={s.alt} className="vw-school-strip-img" />
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 

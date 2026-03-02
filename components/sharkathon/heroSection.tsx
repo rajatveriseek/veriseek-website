@@ -85,7 +85,7 @@ const EligibilityBadge = () => (
       {/* Eligibility Block */}
       <div className="flex flex-col">
         <p className="text-blue-900 font-bold text-xs sm:text-sm md:text-base leading-tight">ELIGIBILITY</p>
-        <p className="text-black font-medium text-xs md:text-sm">Classes 9th to 12th</p>
+        <p className="text-black font-medium text-xs md:text-sm">Grades 9th to 12th (and recent passouts)</p>
       </div>
 
       {/* Mode Block */}
