@@ -319,6 +319,7 @@ export default function VeriseekProgrammes() {
           font-family: 'DM Sans', sans-serif;
           text-decoration: none; letter-spacing: 0.2px;
           transition: color 0.2s; white-space: nowrap;
+          background: none; border: none; cursor: pointer; padding: 0;
         }
         .ep-btn-link:hover { color: rgba(255,255,255,0.70); }
 
@@ -363,7 +364,7 @@ export default function VeriseekProgrammes() {
             <div className="ep-media">
               {/* Replace src with Card 2 image path */}
               <img
-                src="/images/P1101586.JPG"
+                src="/images/P1101630.JPG"
                 alt="VC Fellowship"
                 className="ep-media-img"
               />
@@ -416,12 +417,13 @@ export default function VeriseekProgrammes() {
                 <a href="/thedealroom" className="ep-btn-primary">
                   Explore Programme <ArrowIcon />
                 </a>
-                <a 
-                    href="mailto:team@veriseekeducation.com?subject=Request%20School%20Partnership" 
-                    className="ep-btn-link"
+                <button
+                  type="button"
+                  className="ep-btn-link"
+                  onClick={() => window.dispatchEvent(new CustomEvent('openPartnershipForm'))}
                 >
-                    Request School Partnership <ArrowIcon />
-                </a>
+                  Request Institutional Partnership <ArrowIcon />
+                </button>
               </div>
             </div>
           </article>
@@ -434,7 +436,7 @@ export default function VeriseekProgrammes() {
             <div className="ep-media">
               {/* Auto-playing muted video — replace src with actual video path */}
               <img
-                src="/images/P1101584.JPG"
+                src="/images/P1101636.JPG"
                 alt="VC Fellowship"
                 className="ep-media-img"
               />
@@ -471,7 +473,7 @@ export default function VeriseekProgrammes() {
                   <span className="ep-meta-icon"><EligibilityIcon /></span>
                   <div className="ep-meta-texts">
                     <span className="ep-meta-label">Eligibility</span>
-                    <span className="ep-meta-value">Grades 9 to 12</span>
+                    <span className="ep-meta-value">Grades 9th - 12th (and recent passouts)</span>
                   </div>
                 </div>
                 <div className="ep-meta-item">
@@ -487,12 +489,13 @@ export default function VeriseekProgrammes() {
                 <a href="/sharkathon_s2" className="ep-btn-primary">
                   Explore Programme <ArrowIcon />
                 </a>
-                <a 
-                    href="mailto:team@veriseekeducation.com?subject=Request%20School%20Partnership" 
-                    className="ep-btn-link"
+                <button
+                  type="button"
+                  className="ep-btn-link"
+                  onClick={() => window.dispatchEvent(new CustomEvent('openPartnershipForm'))}
                 >
-                    Request School Partnership <ArrowIcon />
-                </a>
+                  Request Institutional Partnership <ArrowIcon />
+                </button>
               </div>
             </div>
           </article>

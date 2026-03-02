@@ -306,7 +306,7 @@ interface SharkathonPricingProps {
 }
 
 export default function SharkathonPricing({
-  fee       = "INR 5,000",
+  fee       = "INR 5000",
   applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   onApply,
 }: SharkathonPricingProps) {
@@ -614,7 +614,7 @@ export default function SharkathonPricing({
 
             <div className="vcp-fee-row">
               <span className="vcp-fee-amount">{fee}</span>
-              <span className="vcp-fee-suffix">+ COST &amp; LOGISTICS</span>
+              <span className="vcp-fee-suffix">(INCLUSIVE OF GST) + COST &amp; LOGISTICS</span>
             </div>
 
             <div className="vcp-divider" />

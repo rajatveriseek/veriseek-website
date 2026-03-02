@@ -102,6 +102,17 @@ const GLOBAL_CSS = `
   }
   .sh-college-badge img { height: 52px; width: auto; object-fit: contain; display: block; }
 
+  /* ── Hero title — single-line image + text layout ── */
+  .sh-hero-title {
+    display: flex; align-items: center; gap: 0.18em;
+    flex-wrap: nowrap; white-space: nowrap;
+  }
+  .sh-hero-logo {
+    height: 1em; width: auto;
+    display: block; flex-shrink: 0;
+    object-fit: contain;
+  }
+
   /* ── Ambient orbs ── */
   .sh-orb-1 {
     position: absolute; top: 25%; left: -80px;
@@ -198,12 +209,35 @@ const GLOBAL_CSS = `
 
   .sh-info-card-desktop {
     position: absolute;
-    right: clamp(4%, 3vw, 8%);
-    bottom: clamp(12%, 9vh, 24%);
+    bottom: clamp(136px, 4.5vh, 144px);
+    right: clamp(20px, 6vw, 80px);
     z-index: 20;
-    width: clamp(220px, 20vw, 280px);
+    width: clamp(480px, 46vw, 680px);
     box-shadow: 0 24px 64px rgba(1,22,56,0.45), 0 4px 16px rgba(1,22,56,0.22);
     animation: sh-card-in 0.7s 0.95s ease both;
+  }
+  /* horizontal 3-col stat layout inside the card */
+  .sh-info-card { padding: 18px 24px; }
+  .sh-stat-row {
+    display: flex; align-items: stretch;
+  }
+  .sh-stat-col {
+    flex: 1; padding: 4px 20px; text-align: center;
+  }
+  .sh-stat-col:first-child { padding-left: 4px; text-align: left; }
+  .sh-stat-col:last-child  { padding-right: 4px; text-align: right; }
+  .sh-stat-divider {
+    width: 1px; background: rgba(1,22,56,0.18); flex-shrink: 0; align-self: stretch; margin: 2px 0;
+  }
+  .sh-stat-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(1,22,56,0.45);
+    font-family: 'DM Sans', sans-serif; margin: 0 0 5px;
+  }
+  .sh-stat-value {
+    font-size: 12.5px; font-weight: 700; color: #011638;
+    font-family: 'DM Sans', sans-serif; margin: 0;
+    line-height: 1.3;
   }
   /* ════════════════════════════════════════
      DESKTOP LAYOUT  (> 900px)
@@ -286,6 +320,8 @@ const GLOBAL_CSS = `
     .sh-college-badge { height: 52px !important; padding: 4px 8px !important; }
     .sh-college-badge img { height: 38px !important; }
     .sh-season-badge { font-size: 10px !important; letter-spacing: 2px !important; margin-top: 24px !important; margin-bottom:4px; }
+    .sh-hero-title { flex-wrap: wrap !important; white-space: normal !important; }
+    .sh-hero-logo  { height: 0.9em !important; }
   }
 
   @media (max-width: 380px) {
@@ -483,13 +519,22 @@ function InfoBullet({ label, value }: { label: string; value: string }) {
 
 function InfoCardBody() {
   return (
-    <>
-      <p className="sh-info-card-label">Programme Details</p>
-      <div className="sh-info-card-rule" />
-      <InfoBullet label="Eligible"    value="Class 9th to 12th students" />
-      <InfoBullet label="Mode"        value="Online / Offline" />
-      <InfoBullet label="Starts from" value="19th July, 2026" />
-    </>
+    <div className="sh-stat-row">
+      <div className="sh-stat-col">
+        <p className="sh-stat-label">Eligible</p>
+        <p className="sh-stat-value">Class 9th to 12th students</p>
+      </div>
+      <div className="sh-stat-divider" />
+      <div className="sh-stat-col">
+        <p className="sh-stat-label">Mode</p>
+        <p className="sh-stat-value">Online / Offline</p>
+      </div>
+      <div className="sh-stat-divider" />
+      <div className="sh-stat-col">
+        <p className="sh-stat-label">Starts from</p>
+        <p className="sh-stat-value">19th July, 2026</p>
+      </div>
+    </div>
   );
 }
 
@@ -509,7 +554,7 @@ export default function SharkathonHero({
   onApply,
   onBrochure,
   colleges = [
-    { src: "/images/mit2.png",       alt: "MIT"      },
+    { src: "/mit.png",       alt: "MIT"      },
     { src: "/images/wharton.png",    alt: "Wharton"  },
     { src: "/images/iit.png",        alt: "IIT Delhi"},
     { src: "/images/isb-logo1.webp", alt: "ISB"      },
@@ -599,7 +644,7 @@ export default function SharkathonHero({
             </span>
           </div>
 
-          <h1 className="sh-anim-1" style={{
+          <h1 className="sh-anim-1 sh-hero-title" style={{
             fontFamily: "'Playfair Display', serif",
             fontSize: "clamp(40px, 7vw, 92px)",
             fontWeight: 700,
@@ -610,7 +655,7 @@ export default function SharkathonHero({
             marginTop: 0,
             marginBottom: 0,
           }}>
-            Sharkathon{" "}
+            <img src="/images/11.png" alt="" className="sh-hero-logo" />
             <span style={{ color: "#f5c842" }}>Season 2</span>
           </h1>
 
@@ -732,12 +777,7 @@ export default function SharkathonHero({
           <div className="sh-yt-container">
             <div className="sh-yt-accent" aria-hidden="true" />
             <div className="sh-yt-wrap">
-              <iframe
-                src="https://www.youtube.com/embed/LPphfv-fh2o?si=DeYgKisIltsiTk3S"
-                title="What is Sharkathon?"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/lrMrYxct3Tk?si=euP34w3aDIkD48SL" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
             </div>
           </div>
 

@@ -260,7 +260,7 @@ export default function VCFellowshipFAQ() {
             </em>
           </h2>
           <div className="vcfaq-rule" />
-          <p className="vcfaq-subtitle">Find answers to common questions about The Deal Room</p>
+          <p className="vcfaq-subtitle">Answers about Sharkathon</p>
         </div>
 
         {/* FAQ Items */}

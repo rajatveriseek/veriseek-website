@@ -129,11 +129,9 @@ export default function SchoolMarquee() {
           max-width: 130px;
           object-fit: contain;
           display: block;
-          filter: grayscale(100%) opacity(0.60);
           transition: filter 0.30s ease;
         }
         .sm-logo:hover img {
-          filter: grayscale(0%) opacity(1);
         }
 
         /* ── Footer note ── */
@@ -155,7 +153,7 @@ export default function SchoolMarquee() {
         {/* Heading */}
         <div className="sm-heading">
           <h2 className="sm-title">
-            Trusted by <em>Top Schools</em>
+            Trusted by <em>students of top schools</em>
           </h2>
           <div className="sm-rule" />
         </div>
@@ -169,11 +167,6 @@ export default function SchoolMarquee() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Footer note */}
-        <div className="sm-footer">
-          <p>And many more schools joining every season</p>
         </div>
 
       </section>

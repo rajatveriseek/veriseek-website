@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // ─── Global CSS ────────────────────────────────────────────────────────────────
 
@@ -169,6 +169,102 @@ const GLOBAL_CSS = `
     .vs-btn-primary,
     .vs-btn-secondary { font-size: 11px !important; padding: 13px 14px !important; }
   }
+
+  /* ── Partnership Form Modal ── */
+  .vs-modal-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(1,10,30,0.82);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    animation: vs-fadeIn 0.22s ease both;
+  }
+  .vs-modal {
+    background: #0d1f3c;
+    border: 1px solid rgba(245,200,66,0.20);
+    border-radius: 20px;
+    padding: clamp(28px, 4vw, 44px);
+    width: 100%; max-width: 520px;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(1,10,30,0.70);
+    animation: vs-fadeUp 0.28s ease both;
+  }
+  .vs-modal-close {
+    position: absolute; top: 16px; right: 18px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.55);
+    font-size: 18px; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .vs-modal-close:hover { background: rgba(245,200,66,0.15); color: #f5c842; }
+  .vs-modal-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px; font-weight: 700;
+    color: #ffffff; letter-spacing: -0.4px;
+    margin: 0 0 6px;
+  }
+  .vs-modal-sub {
+    font-size: 13px; color: rgba(255,255,255,0.42);
+    font-family: 'DM Sans', sans-serif;
+    margin: 0 0 24px;
+  }
+  .vs-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .vs-form-full { margin-bottom: 14px; }
+  .vs-form-group { display: flex; flex-direction: column; gap: 6px; }
+  .vs-form-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .vs-form-input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px; font-weight: 400;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .vs-form-input::placeholder { color: rgba(255,255,255,0.22); }
+  .vs-form-input:focus {
+    border-color: rgba(245,200,66,0.50);
+    background: rgba(245,200,66,0.04);
+  }
+  .vs-form-submit {
+    width: 100%; margin-top: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 24px; border-radius: 100px;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.7px; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    background: #f5c842; color: #011638;
+    border: 2px solid #f5c842;
+    box-shadow: 0 8px 24px rgba(245,200,66,0.28);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .vs-form-submit:hover {
+    background: #ffe066;
+    box-shadow: 0 12px 32px rgba(245,200,66,0.45);
+    transform: scale(1.03);
+  }
+  .vs-form-success {
+    text-align: center; padding: 32px 0 8px;
+    color: rgba(255,255,255,0.80);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; line-height: 1.7;
+  }
+  .vs-form-success strong { color: #f5c842; display: block; font-size: 20px; margin-bottom: 6px; }
+  @media (max-width: 480px) {
+    .vs-form-row { grid-template-columns: 1fr; }
+  }
 `;
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
@@ -215,6 +311,9 @@ export default function VeriseekHero({
   ],
 }: VeriseekHeroProps) {
   const injected = useRef(false);
+  const [showForm, setShowForm] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", institution: "", email: "", phone: "", designation: "" });
 
   useEffect(() => {
     if (injected.current) return;
@@ -224,6 +323,28 @@ export default function VeriseekHero({
     tag.textContent = GLOBAL_CSS;
     document.head.appendChild(tag);
   }, []);
+
+  // Listen for cross-component "open form" event (triggered by programmes section)
+  useEffect(() => {
+    const handler = () => { setShowForm(true); setSubmitted(false); };
+    window.addEventListener("openPartnershipForm", handler);
+    return () => window.removeEventListener("openPartnershipForm", handler);
+  }, []);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // Build mailto link as fallback — replace with API call if available
+    const subject = encodeURIComponent("Request for Institutional Partnership");
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nInstitution: ${formData.institution}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nDesignation: ${formData.designation}`
+    );
+    window.location.href = `mailto:team@veriseekeducation.com?subject=${subject}&body=${body}`;
+    setSubmitted(true);
+  }
 
   return (
     <section style={{
@@ -358,21 +479,7 @@ export default function VeriseekHero({
         </p>
 
         {/* Description */}
-        <p className="vs-anim-3" style={{
-          fontSize: "clamp(14px, 1.5vw, 16px)",
-          lineHeight: 1.85,
-          color: "rgba(255,255,255,0.72)",
-          marginBottom: 32,
-          maxWidth: 600,
-        }}>
-          Veriseek is India's{" "}
-          <span className="vs-first-chip">FIRST</span>{" "}
-          practitioner-led programme that puts students in the shoes of a{" "}
-          <strong style={{ color: "#ffffff", fontWeight: 700 }}>
-            CEO, consultant, and investor
-          </strong>
-          , led by senior industry leaders and Ivy League alumni.
-        </p>
+        {/* removed per request */}
 
         {/* Built by logos */}
         <div className="vs-anim-4" style={{ marginBottom: 32 }}>
@@ -394,9 +501,13 @@ export default function VeriseekHero({
 
         {/* CTA Buttons */}
         <div className="vs-anim-5 vs-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-          <a href={primaryHref} onClick={onPrimary} className="vs-btn-primary">
-            Request an Institutional Call <ArrowIcon />
-          </a>
+          <button
+            onClick={() => { setShowForm(true); setSubmitted(false); onPrimary?.(); }}
+            className="vs-btn-primary"
+            style={{ cursor: "pointer" }}
+          >
+            Request an Institutional Partnership <ArrowIcon />
+          </button>
           <a href={secondaryHref} onClick={onSecondary} className="vs-btn-secondary">
             Explore Programme <ExploreIcon />
           </a>
@@ -415,6 +526,67 @@ export default function VeriseekHero({
           </svg>
         </div>
       </div>
+
+      {/* ── Partnership Form Modal ── */}
+      {showForm && (
+        <div className="vs-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setShowForm(false); }}>
+          <div className="vs-modal" role="dialog" aria-modal="true" aria-labelledby="vs-modal-title">
+            <button className="vs-modal-close" onClick={() => setShowForm(false)} aria-label="Close">✕</button>
+
+            {submitted ? (
+              <div className="vs-form-success">
+                <strong>Thank you!</strong>
+                We've received your request and will be in touch shortly.
+              </div>
+            ) : (
+              <>
+                <h2 className="vs-modal-title" id="vs-modal-title">Request an Institutional Partnership</h2>
+                <p className="vs-modal-sub">Fill in your details and our team will reach out to you.</p>
+
+                <form onSubmit={handleSubmit} noValidate>
+                  <div className="vs-form-row">
+                    <div className="vs-form-group">
+                      <label className="vs-form-label" htmlFor="vs-name">Name</label>
+                      <input id="vs-name" name="name" type="text" placeholder="Your full name"
+                        className="vs-form-input" value={formData.name} onChange={handleChange} required />
+                    </div>
+                    <div className="vs-form-group">
+                      <label className="vs-form-label" htmlFor="vs-institution">Institution Name</label>
+                      <input id="vs-institution" name="institution" type="text" placeholder="School / University"
+                        className="vs-form-input" value={formData.institution} onChange={handleChange} required />
+                    </div>
+                  </div>
+
+                  <div className="vs-form-row">
+                    <div className="vs-form-group">
+                      <label className="vs-form-label" htmlFor="vs-email">Email</label>
+                      <input id="vs-email" name="email" type="email" placeholder="you@institution.com"
+                        className="vs-form-input" value={formData.email} onChange={handleChange} required />
+                    </div>
+                    <div className="vs-form-group">
+                      <label className="vs-form-label" htmlFor="vs-phone">Phone No.</label>
+                      <input id="vs-phone" name="phone" type="tel" placeholder="+91 XXXXX XXXXX"
+                        className="vs-form-input" value={formData.phone} onChange={handleChange} />
+                    </div>
+                  </div>
+
+                  <div className="vs-form-full">
+                    <div className="vs-form-group">
+                      <label className="vs-form-label" htmlFor="vs-designation">Designation</label>
+                      <input id="vs-designation" name="designation" type="text" placeholder="e.g. Principal, Head of Academics"
+                        className="vs-form-input" value={formData.designation} onChange={handleChange} />
+                    </div>
+                  </div>
+
+                  <button type="submit" className="vs-form-submit">
+                    Submit Request <ArrowIcon />
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
     </section>
   );

@@ -510,10 +510,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
               
 
               {/* Desktop-only overlays — CSS hides on mobile */}
-              <div className="wyp-stat-card">
-                <div className="wyp-stat-num">500+</div>
-                <div className="wyp-stat-label">Students participated</div>
-              </div>
+              
               <div className="wyp-pill-card">
                 <div className="wyp-pill-dot" />
                 <span className="wyp-pill-text">Applications Open</span>
@@ -523,10 +520,6 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
             {/* Mobile-only stat strip — CSS hides on desktop */}
             <div className="wyp-stat-strip">
               <div className="wyp-stat-strip-inner">
-                <div className="wyp-strip-item">
-                  <div className="wyp-strip-num">500+</div>
-                  <div className="wyp-strip-label">Students</div>
-                </div>
                 <div className="wyp-strip-item">
                   <div className="wyp-strip-num">3</div>
                   <div className="wyp-strip-label">Rounds</div>

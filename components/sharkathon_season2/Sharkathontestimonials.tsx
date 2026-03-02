@@ -42,7 +42,7 @@ const TABS: TabGroup[] = [
         name: "Anushka Mittal",
         role: "Participant, Sharkathon 2025",
         school: "The Heritage School",
-        logoSrc: "",   // ← drop school logo path here
+        logoSrc: "/schools/theheritageschool-removebg-preview.png",   // ← drop school logo path here
         logoAlt: "The Heritage School",
         imageSrc: "/mittal.jpeg", // ← portrait photo path
         quote:
@@ -53,7 +53,7 @@ const TABS: TabGroup[] = [
         name: "Saanvi Aggarwal",
         role: "Participant, Sharkathon 2025",
         school: "Kunskapskolan, Gurugram",
-        logoSrc: "",   // ← drop school logo path here
+        logoSrc: "/schools/kunskapsskolan-removebg-preview.png",   // ← drop school logo path here
         logoAlt: "Kunskapskolan",
         imageSrc: "/agarwal.jpeg", // ← portrait photo path
         quote:
@@ -64,7 +64,7 @@ const TABS: TabGroup[] = [
         name: "Usha Iyengar",
         role: "Parent of Rumi Iyengar",
         school: "Greenwood International School",
-        logoSrc: "",   // ← school logo
+        logoSrc: "/schools/greenwoodhigh-removebg-preview.png",   // ← school logo
         logoAlt: "Greenwood International",
         imageSrc: "/Iyengar.jpeg",
         quote:
@@ -780,9 +780,9 @@ export default function SharkathonTestimonials({
             <span style={{ display:"inline-block", width:24, height:2, background:"#011638", opacity:0.30 }} />
           </p>
           <h2 className="tm-title">
-            What{" "}
+            Reviews of {" "}
             <em style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:"italic", fontWeight:400 }}>
-              They Say
+              Sharkathon Season 1
             </em>
           </h2>
           <div className="tm-rule" />

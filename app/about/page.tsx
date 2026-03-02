@@ -54,7 +54,7 @@ const CSS = `
     background: #011638;
     min-height: 100svh;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     position: relative;
     overflow: hidden;
     padding: 88px clamp(20px, 8vw, 120px) 80px;
@@ -65,9 +65,10 @@ const CSS = `
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(30,90,200,0.22) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 10% 80%, rgba(245,200,66,0.07) 0%, transparent 60%);
+      linear-gradient(to right, rgba(1,22,56,0.92) 0%, rgba(1,22,56,0.68) 42%, rgba(1,22,56,0.12) 100%),
+      radial-gradient(ellipse 70% 50% at 75% 40%, rgba(30,90,200,0.15) 0%, transparent 30%);
     pointer-events: none;
+    z-index: 1;
   }
 
   .ab-hero::after {
@@ -77,22 +78,20 @@ const CSS = `
       linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
     background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at 65% 40%, black 20%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 65% 40%, black 20%, transparent 30%);
+    -webkit-mask-image: radial-gradient(ellipse at 65% 40%, black 20%, transparent 30%);
     pointer-events: none;
   }
 
   .ab-hero-image {
     position: absolute;
     right: 0; top: 0;
-    width: 52%; height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     object-position: center 25%;
-    opacity: 0.88;
-    mask-image: linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 70%, transparent 90%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 70%, transparent 90%);
+    opacity: 1;
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
   }
 
   @media (max-width: 900px) {
@@ -117,8 +116,11 @@ const CSS = `
   }
 
   .ab-hero-content {
-    position: relative; z-index: 2;
-    max-width: 62%;
+    position: relative;
+    display: flex; flex-direction: row; gap: 24px;
+    z-index: 2;
+
+    max-width: 100%;
   }
 
   @media (max-width: 900px) {
@@ -144,7 +146,7 @@ const CSS = `
   .ab-hero-sub {
     font-size: clamp(15px, 1.6vw, 18px);
     color: rgba(255,255,255,0.65);
-    line-height: 1.85; max-width: 560px;
+    line-height: 1.5; max-width: 560px;
     margin-bottom: 40px;
   }
 
@@ -217,35 +219,168 @@ const CSS = `
     margin-bottom: 24px; opacity: 0.18;
   }
 
-  /* ── VISION SECTION ── */
-  .ab-vision {
-    background: #011638;
-    padding: 96px clamp(20px, 8vw, 120px);
+  /* ── QUOTE SECTION ── */
+  .ab-quote-section {
+    position: relative; overflow: hidden;
+    height: 100vh; min-height: 620px;
+    display: flex; align-items: stretch;
+    font-family: 'DM Sans', sans-serif;
   }
-  .ab-vision-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .ab-quote-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    z-index: 0;
+  }
+  .ab-quote-blue-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: rgba(1,22,56,0.74);
+  }
+  .ab-quote-inner {
+    position: relative; z-index: 2;
+    display: flex; width: 100%;
+    padding: 72px clamp(24px, 8vw, 120px);
+    align-items: flex-end;
     gap: clamp(32px, 5vw, 72px);
-    align-items: center;
+  }
+  .ab-quote-photo-col {
+    flex-shrink: 0;
+    width: clamp(200px, 24vw, 320px);
+    position: relative; align-self: flex-end;
+  }
+  .ab-quote-photo {
+    width: 100%;
+    object-fit: cover; object-position: top center;
+    display: block;
+    border-radius: 0 0 14px 14px;
+    filter: drop-shadow(0 8px 32px rgba(1,22,56,0.55));
+    mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 100%);
+  }
+  .ab-quote-col {
+    flex: 1; display: flex; flex-direction: column; gap: 16px;
+    padding-bottom: 16px;
+  }
+  .ab-quote-mark {
+    font-size: 100px; line-height: 0.5;
+    color: #f5c842; font-family: Georgia, serif;
+    opacity: 0.55; margin-bottom: -8px;
+  }
+  .ab-quote-text {
+    font-size: clamp(17px, 2vw, 24px);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; font-weight: 400;
+    color: #ffffff; line-height: 1.60;
+  }
+  .ab-quote-divider {
+    width: 52px; height: 2px; background: #f5c842;
+    border-radius: 99px;
+  }
+  .ab-quote-name {
+    font-size: 16px; font-weight: 700;
+    color: #f5c842; font-family: 'DM Sans', sans-serif;
+    letter-spacing: -0.2px;
+  }
+  .ab-quote-role {
+    font-size: 11px; font-weight: 600;
+    color: rgba(255,255,255,0.42);
+    letter-spacing: 2px; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif; margin-top: 2px;
+  }
+  @media (max-width: 700px) {
+    .ab-quote-inner { flex-direction: column; align-items: center; padding: 56px 20px 48px; }
+    .ab-quote-photo-col { width: clamp(160px, 55vw, 240px); align-self: center; }
+    .ab-quote-mark { font-size: 72px; }
   }
 
-  .ab-vision-img-wrap {
-    position: relative; border-radius: 20px;
+  /* ── VISION / MISSION — MERGED STICKY SCROLL ── */
+  .ab-vm-section {
+    height: 200vh;
+    position: relative;
+  }
+  .ab-vm-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     overflow: hidden;
-    box-shadow: 0 24px 72px rgba(1,22,56,0.55);
-    border: 1px solid rgba(245,200,66,0.18);
-    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
   }
-  .ab-vision-img-wrap img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
+  .ab-vm-layer {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.80s ease;
   }
-  .ab-vision-img-wrap::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0;
-    width: 100%; height: 40%;
-    background: linear-gradient(to top, rgba(1,22,56,0.45), transparent);
-    pointer-events: none;
+  .ab-vm-vision-layer { opacity: 1; z-index: 2; pointer-events: auto; }
+  .ab-vm-mission-layer { opacity: 0; z-index: 1; pointer-events: none; }
+  .ab-vm-section.is-mission .ab-vm-vision-layer { opacity: 0; pointer-events: none; }
+  .ab-vm-section.is-mission .ab-vm-mission-layer { opacity: 1; z-index: 2; pointer-events: auto; }
+  .ab-vm-panel-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    z-index: 0;
+    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+  .ab-vm-layer:hover .ab-vm-panel-bg { transform: scale(1.05); }
+  .ab-vm-panel-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: rgba(1,22,56,0.62);
+    transition: background 0.45s ease;
+  }
+  .ab-vm-layer:hover .ab-vm-panel-overlay { background: rgba(1,22,56,0.46); }
+  .ab-vm-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: clamp(24px, 6vw, 60px) clamp(24px, 8vw, 120px);
+    font-family: 'DM Sans', sans-serif;
+    max-width: 860px;
+  }
+  .ab-vm-eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.32);
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: 12px;
+  }
+  .ab-vm-heading {
+    font-size: clamp(44px, 6.5vw, 80px);
+    font-weight: 700; letter-spacing: -2.5px; line-height: 1;
+    color: #ffffff; font-family: 'DM Sans', sans-serif;
+    margin: 0 0 22px;
+    transition: letter-spacing 0.4s ease, text-shadow 0.4s ease;
+  }
+  .ab-vm-layer:hover .ab-vm-heading {
+    letter-spacing: -1.5px;
+    text-shadow: 0 0 80px rgba(245,200,66,0.22), 0 2px 24px rgba(1,22,56,0.30);
+  }
+  .ab-vm-rule {
+    width: 0; height: 3px;
+    background: linear-gradient(to right, #f5c842, rgba(245,200,66,0.20));
+    border-radius: 99px;
+    margin: 0 auto 22px;
+    transition: width 0.85s cubic-bezier(0.22,1,0.36,1) 0.15s;
+  }
+  .ab-vm-rule.is-visible { width: 64px; }
+  .ab-vm-layer:hover .ab-vm-rule { width: 120px; transition: width 0.55s ease; }
+  .ab-vm-body {
+    font-size: clamp(14px, 1.5vw, 17px);
+    line-height: 1.78; max-width: 620px;
+    color: rgba(255,255,255,0.62);
+    font-family: 'DM Sans', sans-serif;
+    margin: 0 auto;
+  }
+  /* scroll indicator pill inside vm section */
+  .ab-vm-progress {
+    position: absolute; bottom: 32px; left: 50%;
+    transform: translateX(-50%); z-index: 10;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .ab-vm-pip {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.30);
+    transition: background 0.4s ease, transform 0.4s ease;
+  }
+  .ab-vm-pip.active { background: #f5c842; transform: scale(1.35); }
 
   /* ── FOUNDERS SECTION ── */
   .ab-founders {
@@ -385,6 +520,44 @@ const CSS = `
     width: auto; object-fit: contain; display: block;
   }
 
+  /* ── MENTORS BOX (inside founders) ── */
+  .ab-mentors-box {
+    max-width: 860px;
+    margin: 44px auto 0;
+    border: 1.5px solid rgba(1,22,56,0.18);
+    border-radius: 20px;
+    background: rgba(1,22,56,0.05);
+    overflow: hidden;
+    padding: 28px 0 24px;
+  }
+  .ab-mentors-box-label {
+    text-align: center;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(1,22,56,0.40);
+    margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .ab-mentors-box-label::before,
+  .ab-mentors-box-label::after {
+    content: ''; display: inline-block;
+    width: 24px; height: 1.5px;
+    background: rgba(1,22,56,0.28);
+  }
+  .ab-mentors-box .ab-marquee-track-wrap {
+    mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  }
+  .ab-mentors-box .ab-logo-badge {
+    background: #ffffff;
+    border: 1.5px solid rgba(1,22,56,0.12);
+    box-shadow: 0 2px 8px rgba(1,22,56,0.10);
+  }
+  .ab-mentors-box .ab-logo-badge:hover {
+    border-color: rgba(1,22,56,0.35);
+  }
+
   /* ── APPROACH SECTION ── */
   .ab-approach {
     background: #eef0f2;
@@ -467,10 +640,10 @@ const CSS = `
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .ab-vision-grid, .ab-approach-grid {
-      grid-template-columns: 1fr;
-    }
+    .ab-approach-grid { grid-template-columns: 1fr; }
     .ab-founders-grid { grid-template-columns: 1fr 1fr; }
+    .ab-vm-sticky { height: 80vh; min-height: 420px; }
+    .ab-quote-section { height: auto; min-height: 100svh; }
   }
   @media (max-width: 600px) {
     .ab-vision    { padding: 64px 18px; }
@@ -577,6 +750,7 @@ const DIRECTORS = [
 
 export default function AboutPage() {
   const pageRef     = useRef<HTMLDivElement>(null);
+  const vmRef       = useRef<HTMLDivElement>(null);
   const cssInjected = useRef(false);
 
   useEffect(() => {
@@ -588,11 +762,37 @@ export default function AboutPage() {
     document.head.appendChild(tag);
   }, []);
 
+  // Vision ↔ Mission sticky scroll toggle
+  useEffect(() => {
+    const section = vmRef.current;
+    if (!section) return;
+    const pip0 = document.getElementById("vm-pip-0");
+    const pip1 = document.getElementById("vm-pip-1");
+    const onScroll = () => {
+      const scrolledIn = -section.getBoundingClientRect().top;
+      const isMission = scrolledIn >= window.innerHeight * 0.75;
+      if (isMission) {
+        section.classList.add("is-mission");
+        pip0?.classList.remove("active"); pip1?.classList.add("active");
+      } else {
+        section.classList.remove("is-mission");
+        pip0?.classList.add("active"); pip1?.classList.remove("active");
+      }
+      // keep rules visible once sticky panel is in view
+      if (scrolledIn > -window.innerHeight * 0.5) {
+        section.querySelectorAll<HTMLElement>(".ab-vm-rule").forEach((r) => r.classList.add("is-visible"));
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   useEffect(() => {
     const page = pageRef.current;
     if (!page) return;
     const targets = Array.from(
-      page.querySelectorAll<HTMLElement>(".ab-anim-up, .ab-anim-left, .ab-anim-right")
+      page.querySelectorAll<HTMLElement>(".ab-anim-up, .ab-anim-left, .ab-anim-right, .ab-vm-rule")
     );
     const io = new IntersectionObserver(
       (entries) => {
@@ -626,26 +826,30 @@ export default function AboutPage() {
         />
 
         <div className="ab-hero-content">
-          <div className="ab-eyebrow ab-anim-up">
-            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
-            Veriseek Education
-            <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
+          <div>
+            <div className="ab-eyebrow ab-anim-up">
+              <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
+              Veriseek Education
+              <span style={{ display:"inline-block", width:28, height:2, background:"#f5c842", flexShrink:0 }} />
+            </div>
+
+            <h1 className="ab-hero-title ab-anim-up ab-delay-1">
+              Designed to Build Skills<br />
+              <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
+                We Wish School Had Taught
+              </em>
+            </h1>
           </div>
 
-          <h1 className="ab-hero-title ab-anim-up ab-delay-1">
-            Designed to Build Skills<br />
-            <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400 }}>
-              We Wish School Had Taught
-            </em>
-          </h1>
+          <div>
+            <div className="ab-rule ab-anim-up ab-delay-2" />
 
-          <div className="ab-rule ab-anim-up ab-delay-2" />
+            <p className="ab-hero-sub ab-anim-up ab-delay-2">
+              At Veriseek Education, we design and deliver practitioner-led programmes and competitions for schools and colleges. Students build thinking, communication, and decision-making skills through real cases, simulations, and structured feedback from industry professionals, because students deserve to learn these skills before the real world demands them.
+            </p>  
+          </div>
 
-          <p className="ab-hero-sub ab-anim-up ab-delay-2">
-            At Veriseek Education, we design and deliver practitioner-led programmes and competitions for schools and colleges. Students build thinking, communication, and decision-making skills through real cases, simulations, and structured feedback from industry professionals, because students deserve to learn these skills before the real world demands them.
-          </p>
-
-          <div className="ab-stats ab-anim-up ab-delay-3">
+          {/* <div className="ab-stats ab-anim-up ab-delay-3">
             {[
               { num: "500+", label: "Students Impacted" },
               { num: "3+",   label: "Programmes"        },
@@ -656,7 +860,7 @@ export default function AboutPage() {
                 <div className="ab-stat-label">{s.label}</div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div className="ab-scroll-hint" aria-hidden="true">
@@ -666,42 +870,81 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── VISION ── */}
-      <section className="ab-vision ab-section">
-        <div className="ab-vision-grid">
-          <div className="ab-vision-img-wrap ab-anim-left">
-            <Image
-              src="/finals.jpeg"
-              alt="Students engaged in learning"
-              width={600} height={450}
-              style={{ width:"100%", height:"100%", objectFit:"cover" }}
+      {/* ── RAJAT KUMAR QUOTE ── */}
+      <section className="ab-quote-section ab-section">
+        <img src="/images/IMG_8176.jpg" alt="" className="ab-quote-bg" aria-hidden="true" />
+        <div className="ab-quote-blue-overlay" />
+        <div className="ab-quote-inner">
+
+          {/* Person photo — left */}
+          <div className="ab-quote-photo-col ab-anim-left">
+            <img
+              src="/images/vem1-removebg-preview.png"
+              alt="Mr. Rajat Kumar, Director"
+              className="ab-quote-photo"
             />
           </div>
 
-          <div className="ab-anim-right">
-            <div>
-              <h2 className="ab-section-title">
-                Our{" "}
-                <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400, color:"#f5c842" }}>
-                  Vision
-                </em>
-              </h2>
-              <div className="ab-blue-rule" />
-              <p className="ab-section-body">To make real-world skills a normal part of education, so every student learns to think clearly, communicate confidently, and make sound decisions before life forces them to.</p>
-            </div>
-            <div>
-              <h2 className="ab-section-title">
-                Our{" "}
-                <em style={{ fontFamily:"'Playfair Display', Georgia, serif", fontStyle:"italic", fontWeight:400, color:"#f5c842" }}>
-                  Mission
-                </em>
-              </h2>
-              <div className="ab-blue-rule" />
-              <p className="ab-section-body">To design and deliver practitioner-led programmes and competitions for schools and colleges that build thinking, communication, and decision-making skills through real cases, simulations, and structured feedback from industry professionals.</p>
-            </div>
+          {/* Quote — right */}
+          <div className="ab-quote-col ab-anim-right">
+            <div className="ab-quote-mark">&ldquo;</div>
+            <p className="ab-quote-text">
+              At Veriseek, we want every student to walk into the real world with the
+              skills that most people spend years figuring out on the job.
+              That&rsquo;s the programme we wish had existed when we were students.
+            </p>
+            <div className="ab-quote-divider" />
+            <p className="ab-quote-name">Mr. Rajat Kumar</p>
+            <p className="ab-quote-role">Director, Veriseek Education</p>
           </div>
+
         </div>
       </section>
+
+      {/* ── VISION + MISSION — MERGED STICKY SCROLL ── */}
+      <div className="ab-vm-section" ref={vmRef} aria-label="Vision and Mission">
+        <div className="ab-vm-sticky">
+
+          {/* —— VISION LAYER (shown first) —— */}
+          <div className="ab-vm-layer ab-vm-vision-layer">
+            <img src="/images/students-session.JPG" alt="" className="ab-vm-panel-bg" aria-hidden="true" />
+            <div className="ab-vm-panel-overlay" />
+            <div className="ab-vm-content">
+              <p className="ab-vm-eyebrow">About Veriseek</p>
+              <h2 className="ab-vm-heading">Our Vision</h2>
+              <hr className="ab-vm-rule" />
+              <p className="ab-vm-body">
+                To make real-world skills a normal part of education, so every student learns to
+                think clearly, communicate confidently, and make sound decisions
+                before life forces them to.
+              </p>
+            </div>
+          </div>
+
+          {/* —— MISSION LAYER (fades in on scroll) —— */}
+          <div className="ab-vm-layer ab-vm-mission-layer">
+            <img src="/images/P1101630.JPG" alt="" className="ab-vm-panel-bg" aria-hidden="true" />
+            <div className="ab-vm-panel-overlay" />
+            <div className="ab-vm-content">
+              <p className="ab-vm-eyebrow">Our Mission</p>
+              <h2 className="ab-vm-heading">Our Mission</h2>
+              <hr className="ab-vm-rule" />
+              <p className="ab-vm-body">
+                To design and deliver practitioner-led programmes and competitions for schools
+                and colleges that build thinking, communication, and decision-making skills
+                through real cases, simulations, and structured feedback from industry professionals.
+              </p>
+            </div>
+          </div>
+
+          {/* progress pips */}
+          <div className="ab-vm-progress" aria-hidden="true">
+            <span className="ab-vm-pip active" id="vm-pip-0" />
+            <span className="ab-vm-pip" id="vm-pip-1" />
+          </div>
+
+        </div>
+      </div>
 
       {/* ── FOUNDERS ── */}
       <section className="ab-founders ab-section">
@@ -756,12 +999,10 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-      </section>
 
-      {/* ── MENTOR LOGOS — INFINITE MARQUEE STRIP ── */}
-      <section className="ab-marquee-section ab-section">
-        <div className="ab-marquee-inner">
-          <p className="ab-marquee-label">Mentors Associated From</p>
+        {/* ── MENTORS ASSOCIATED BOX ── */}
+        <div className="ab-mentors-box ab-anim-up ab-delay-3">
+          <p className="ab-mentors-box-label">Mentors Associated From</p>
           <div className="ab-marquee-track-wrap" aria-hidden="true">
             <div className="ab-marquee-track">
               {/* Set A */}
@@ -783,9 +1024,11 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+
       </section>
 
-      {/* ── APPROACH ── */}
+      {/* ── APPROACH ── (commented out) */}
+      {false && (
       <section className="ab-approach ab-section">
         <div className="ab-approach-grid">
 
@@ -831,6 +1074,7 @@ export default function AboutPage() {
 
         </div>
       </section>
+      )}
 
     </div>
   );

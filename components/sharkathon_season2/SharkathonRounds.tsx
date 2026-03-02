@@ -9,6 +9,7 @@ const ROUNDS = [
     number: "01",
     label: "Round One",
     heading: "The CEO Round",
+    mode: "Online",
     timeline: "19th July, 2026",
     imageSrc: "/images/P1101586.JPG",
     imageAlt: "The CEO Round",
@@ -24,6 +25,7 @@ const ROUNDS = [
     number: "02",
     label: "Round Two",
     heading: "The Consultant Round",
+    mode: "Online",
     timeline: "26th July, 2026",
     imageSrc: "/images/P1101581.JPG",
     imageAlt: "The Consultant Round",
@@ -42,7 +44,8 @@ const ROUNDS = [
     number: "03",
     label: "Round Three",
     heading: "The Investor Round",
-    timeline: "3rd August, 2026",
+    mode: "Online / Offline (Optional)",
+    timeline: "2nd August, 2026",
     imageSrc: "/images/P1101583.JPG",
     imageAlt: "The Investor Round",
     body: "Step into the role of a Shark. You will break down startup pitches, question founders, and decide whether you would invest or not. Then, you will present your verdict to a jury of real investors and VCs, backed by clear reasoning, business fundamentals, and conviction.",
@@ -110,6 +113,7 @@ interface RoundCardProps {
   number: string;
   label: string;
   heading: string;
+  mode: string;
   timeline: string;
   imageSrc: string;
   imageAlt: string;
@@ -118,7 +122,7 @@ interface RoundCardProps {
   index: number;
 }
 
-function RoundCard({ number, label, heading, timeline, imageSrc, imageAlt, body, icon }: RoundCardProps) {
+function RoundCard({ number, label, heading, mode, timeline, imageSrc, imageAlt, body, icon }: RoundCardProps) {
   return (
     <article className="sr-card">
 
@@ -145,6 +149,10 @@ function RoundCard({ number, label, heading, timeline, imageSrc, imageAlt, body,
         <div className="sr-card-heading-row">
           <span className="sr-card-icon">{icon}</span>
           <h3 className="sr-card-heading">{heading}</h3>
+        </div>
+        <div className="sr-mode-pill">
+          <span className="sr-mode-dot" />
+          <span className="sr-mode-text">{mode}</span>
         </div>
         <div className="sr-card-rule" />
         <p className="sr-card-copy">{body}</p>
@@ -372,6 +380,26 @@ export default function SharkathonRounds({
           letter-spacing: 0.3px; font-family: 'DM Sans', sans-serif;
         }
 
+        /* Mode pill */
+        .sr-mode-pill {
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 4px 12px;
+          background: rgba(245,200,66,0.10);
+          border: 1px solid #f5c842;
+          border-radius: 100px;
+          margin-bottom: 14px;
+          width: fit-content;
+        }
+        .sr-mode-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #f5c842; flex-shrink: 0;
+        }
+        .sr-mode-text {
+          font-size: 11px; font-weight: 700;
+          color: #f5c842; letter-spacing: 0.4px;
+          font-family: 'DM Sans', sans-serif;
+        }
+
         /* ══════════════════════════════════════════
            JUDGING BANNER — full-width yellow strip
         ══════════════════════════════════════════ */
@@ -525,7 +553,7 @@ export default function SharkathonRounds({
             </em>
           </h2>
           <div className="sr-rule" />
-          <p className="sr-subtitle">Three rounds. Three roles. One real-world challenge.</p>
+          <p className="sr-subtitle">Three rounds. Three roles.</p>
         </div>
 
         {/* ── 3 dark cards ── */}
@@ -546,12 +574,11 @@ export default function SharkathonRounds({
               <h3 className="sr-judging-heading">Expert Judging Panel</h3>
               <div className="sr-judging-date-pill">
                 <span className="sr-judging-date-icon"><CalendarIcon /></span>
-                <span>3rd August, 2026</span>
+                <span>2nd August, 2026</span>
               </div>
             </div>
             <p className="sr-judging-copy">
-              Evaluation by eminent venture capital, debt firms, and leading CXOs from startups, probably even{" "}
-              <strong>Sharks</strong>, ensuring high-level scrutiny and real-world relevance.
+              Evaluation by eminent venture capital, debt firms, and leading CXOs from startups and MNCs, ensuring high-level scrutiny and real-world relevance.
             </p>
           </div>
         </div>
@@ -571,7 +598,6 @@ export default function SharkathonRounds({
             </a>
           </div>
         </div>
-
       </section>
     </>
   );
