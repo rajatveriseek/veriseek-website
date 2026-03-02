@@ -9,7 +9,7 @@ const MENTORS = [
     tags: ["/images/wharton.png", "/images/McKinseyCompany_logo-dark.png", "/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png", "/images/ey.png"],
     initials: "RK",
     subheading: "Managing Partner Nandan Capital,\nEx-McKinsey and Wharton Alum",
-    image: "/images/WhatsApp_Image_2026-02-21_at_8.27.19_PM-removebg-preview.png",
+    image: "/images/vem1-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/rajat-kumar-004533/",
   },
   {
@@ -19,7 +19,7 @@ const MENTORS = [
     tags: ["/images/mit2.png", "/images/iit.png", "/images/leenaai.png", "/images/apple.png"],
     initials: "MK",
     subheading: "VP Leena AI,\nAlum IIT Delhi & MIT",
-    image: "/images/mayank_kapoor-removebg-preview.png",
+    image: "/images/vem2-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/mayankkapoor/",
   },
   {
@@ -29,7 +29,7 @@ const MENTORS = [
     tags: ["/images/isb-logo1_1.jpg", "/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg", "/images/sixth sense.png", "/images/deloitte.png"],
     initials: "SG",
     subheading: "Founder Himland Capital,\nEx-VP Sixth Sense Ventures",
-    image: "/images/siddhant_gupta-removebg-preview.png",
+    image: "/images/vem3-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/siddhant-gupta-/",
   },
 ];
