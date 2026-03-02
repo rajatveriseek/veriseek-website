@@ -249,7 +249,7 @@ const Footer = () => {
                 { label: "Home", href: "/" },
                 { label: "About Us", href: "/about" },
                 { label: "The Deal Room", href : "/thedealroom" },
-                { label: "Sharkathon", href: "/sharkathon_s2" },
+                { label: "Sharkathon", href: "/sharkathon" },
                 { label: "Contact", href: "/contact" },
                 { label: "Privacy Policy", href: "/privacy" },
                 { label: "Terms & Conditions", href: "/rules" },

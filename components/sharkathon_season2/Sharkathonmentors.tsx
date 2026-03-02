@@ -14,7 +14,7 @@ const MENTORS = [
     ],
     logoHrefs: [undefined, undefined, "https://nandancapital.com/", undefined],
     initials: "RK",
-    image: "/images/WhatsApp_Image_2026-02-21_at_8.27.19_PM-removebg-preview.png",
+    image: "/images/vem1-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/rajat-kumar-004533/",
   },
   {
@@ -29,7 +29,7 @@ const MENTORS = [
     ],
     logoHrefs: [undefined, undefined, undefined, undefined],
     initials: "MK",
-    image: "/images/mayank_kapoor-removebg-preview.png",
+    image: "/images/vem2-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/mayankkapoor/",
   },
   {
@@ -44,7 +44,7 @@ const MENTORS = [
     ],
     logoHrefs: ["https://www.linkedin.com/company/himlandcapitaladvisors", undefined, undefined, undefined],
     initials: "SG",
-    image: "/images/siddhant_gupta-removebg-preview.png",
+    image: "/images/vem3-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/siddhant-gupta-/",
   },
 ];
@@ -218,11 +218,9 @@ export default function SharkathonMentors() {
           object-fit: cover;
           object-position: top center;
           display: block;
-          filter: grayscale(100%);
           transition: filter 0.4s ease, transform 0.4s ease;
         }
         .vm-card:hover .vm-photo-wrap img {
-          filter: grayscale(0%);
           transform: scale(1.04);
         }
 
