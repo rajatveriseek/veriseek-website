@@ -17,10 +17,12 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { submitRegistration } from "@/app/actions/registration";
+import RazorpayCheckout from "@/components/razorpay-checkout";
 
 const RegistrationForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
   const [formData, setFormData] = useState({
@@ -59,7 +61,7 @@ const RegistrationForm = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent, shouldRedirectToPayment: boolean = false) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (
@@ -89,12 +91,7 @@ const RegistrationForm = () => {
       const result = await submitRegistration(formDataToSubmit);
 
       if (result.success) {
-        if (shouldRedirectToPayment) {
-          // Redirect to payment page
-          window.location.href = "https://rzp.io/rzp/asKBH0Ak";
-        } else {
-          setFormSubmitted(true);
-        }
+        setFormSubmitted(true);
       } else {
         setFormError(result.message);
       }
@@ -106,12 +103,9 @@ const RegistrationForm = () => {
     }
   };
 
-  const handlePayNowDirect = () => {
-    window.location.href = "https://rzp.io/rzp/asKBH0Ak";
-  };
-
   const resetForm = () => {
     setFormSubmitted(false);
+    setPaymentSuccess(false);
     setShowForm(false);
     setFormData({
       firstName: "",
@@ -139,16 +133,45 @@ const RegistrationForm = () => {
               >
                 Inquire Now
               </Button>
-              <Button
-                onClick={handlePayNowDirect}
+              <RazorpayCheckout
+                amount={2999}
+                program="sharkathon"
+                studentName=""
+                buttonText="Pay Now"
                 className="bg-blue-900 text-yellow-400 hover:bg-blue-800 px-32 py-8 font-bold text-lg"
-              >
-                Pay Now
-              </Button>
+                onSuccess={() => setPaymentSuccess(true)}
+                onFailure={(err) => setFormError(err)}
+              />
             </div>
           </CardContent>
         </Card>
       </div>
+    );
+  }
+
+  if (paymentSuccess) {
+    return (
+      <Card className="border-none shadow-lg">
+        <CardContent className="p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-green-100 p-3 rounded-full">
+              <CheckCircle2 className="h-12 w-12 text-green-600" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-bold text-primary mb-2">
+            Payment Successful!
+          </h3>
+          <p className="text-gray-600 mb-6">
+            Thank you for registering for Sharkathon! A confirmation email has been sent.
+          </p>
+          <Button
+            onClick={resetForm}
+            className="bg-primary text-white hover:bg-primary/90"
+          >
+            Done
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -162,10 +185,10 @@ const RegistrationForm = () => {
             </div>
           </div>
           <h3 className="text-2xl font-bold text-primary mb-2">
-            Registration Successful!
+            Enquiry Submitted!
           </h3>
           <p className="text-gray-600 mb-6">
-            Thank you for registering for Sharkathon!
+            Thank you for your interest in Sharkathon! We&apos;ll get back to you within 48 hours.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -174,12 +197,17 @@ const RegistrationForm = () => {
             >
               Register Another Student
             </Button>
-            <Button
-              onClick={handlePayNowDirect}
+            <RazorpayCheckout
+              amount={2999}
+              program="sharkathon"
+              studentName={formData.firstName}
+              email={formData.email}
+              phone={formData.phone}
+              buttonText="Pay Now"
               className="bg-green-600 text-white hover:bg-green-700"
-            >
-              Pay Now
-            </Button>
+              onSuccess={() => setPaymentSuccess(true)}
+              onFailure={(err) => setFormError(err)}
+            />
           </div>
         </CardContent>
       </Card>
@@ -199,7 +227,7 @@ const RegistrationForm = () => {
           </Button>
         </div>
 
-        <form onSubmit={(e) => handleSubmit(e, false)}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           {formError && (
             <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-md">
               {formError}

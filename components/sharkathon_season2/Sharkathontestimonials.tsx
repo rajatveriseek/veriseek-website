@@ -38,38 +38,98 @@ const TABS: TabGroup[] = [
     tab: "participants",
     label: "Hear from",
     items: [
+      
+      // ── Participants ──
       {
         name: "Anushka Mittal",
         role: "Participant, Sharkathon 2025",
         school: "The Heritage School",
-        logoSrc: "/schools/theheritageschool-removebg-preview.png",   // ← drop school logo path here
+        logoSrc: "/schools/theheritageschool-removebg-preview.png",
         logoAlt: "The Heritage School",
-        imageSrc: "/mittal.jpeg", // ← portrait photo path
+        imageSrc: "/mittal.jpeg",
         quote:
           "The programme was really insightful and gave me exposure to a different way of thinking and questioning which is never taught in school. For the first time I understood how pausing and questioning everything to clarify problems and statement is super important for better decision making. Would love to be a part of it again.",
-        italic: "The Participants"
+        italic: "The Participants",
       },
       {
         name: "Saanvi Aggarwal",
-        role: "Participant, Sharkathon 2025",
+        role: "Student, Sharkathon 2025 Participant",
         school: "Kunskapskolan, Gurugram",
-        logoSrc: "/schools/kunskapsskolan-removebg-preview.png",   // ← drop school logo path here
+        logoSrc: "/schools/kunskapsskolan-removebg-preview.png",
         logoAlt: "Kunskapskolan",
-        imageSrc: "/agarwal.jpeg", // ← portrait photo path
+        imageSrc: "/agarwal.jpeg",
         quote:
           "Becoming one of the sharks at this platform turned the business world from theory into reality. The unique and intriguing role reversal of judging and investing in an idea instead of pitching one changed how I analyse the opportunities around me.",
-        italic: "The Participants"
+        italic: "The Participants",
+      },
+      {
+        name: "Advik",
+        role: "Student, Sharkathon 2025 Participant",
+        school: "Kunskapskolan, Gurugram",
+        logoSrc: "/schools/kunskapsskolan-removebg-preview.png",
+        logoAlt: "Kunskapskolan",
+        imageSrc: "",
+        quote:
+          "Sharkathon was fun, interesting, and full of learning. I blanked out once, but I pushed through by going back to the data, spotting a pattern, and applying that approach in later rounds. Biggest takeaway: don\u2019t just look for patterns, look for what breaks the pattern, because that\u2019s what you need to fix.",
+        italic: "The Participants",
+      },
+      {
+        name: "Rumi Iyengar",
+        role: "Student, Sharkathon 2025 Participant",
+        school: "Greenwood International School, Bengaluru",
+        logoSrc: "/schools/greenwoodhigh-removebg-preview.png",
+        logoAlt: "Greenwood International",
+        imageSrc: "/Iyengar.jpeg",
+        quote:
+          "I flew from Bengaluru because Sharkathon\u2019s format is genuinely unique, you\u2019re not pitching, you\u2019re evaluating. It starts out intimidating, but once you get into the groove, it becomes a really memorable experience. My biggest learning was a new kind of data analysis: not just having data, but knowing what actually matters, and being able to set the right questions.",
+        italic: "The Participants",
+      },
+      
+      // ── Parents ──
+      {
+        name: "Avik Banerjee",
+        role: "Parent, Sharkathon 2025 Participant",
+        school: "Kunskapskolan, Gurugram",
+        logoSrc: "/schools/kunskapsskolan-removebg-preview.png",
+        logoAlt: "Kunskapskolan",
+        imageSrc: "",
+        quote:
+          "Sharkathon gave my son real-world exposure that traditional education rarely offers. I was especially proud to see him confidently wrap up and package his thoughts, something I had not seen before. As a parent, the experience was simply fantastic.",
+        italic: "The Parents",
       },
       {
         name: "Usha Iyengar",
-        role: "Parent of Rumi Iyengar",
+        role: "Parent, Sharkathon 2025 Participant",
         school: "Greenwood International School",
-        logoSrc: "/schools/greenwoodhigh-removebg-preview.png",   // ← school logo
+        logoSrc: "/schools/greenwoodhigh-removebg-preview.png",
         logoAlt: "Greenwood International",
         imageSrc: "/Iyengar.jpeg",
         quote:
           "Sharkathon 2025 was organised well and supported children on their learning journeys. It was an engaging and unique format different from the typical olympiads, based on real life cases and helps children spot value in business opportunities. I will really recommend everyone doing it.",
-        italic: "The Parents"
+        italic: "The Parents",
+      },
+      // ── Counsellors ──
+      {
+        name: "Ekta Batra",
+        role: "Educator, Amity International School, Pushp Vihar",
+        school: "Amity International School, Pushp Vihar",
+        logoSrc: "/schools/amityinternational-removebg-preview.png",
+        logoAlt: "Amity International School",
+        imageSrc: "",
+        quote:
+          "Students were genuinely excited to pitch, and you could see future business leaders taking shape. Even middle-school and PCM/Humanities confidently understood business terminology and could easily answer the counter question of judges. The way they handled questioning and decision-making was truly impressive.",
+        italic: "The Counsellors",
+      },
+      {
+        name: "Jagriti",
+        role: "PGT Economics, Amity International School, Gurugram",
+        school: "Amity International School, Gurugram",
+        logoSrc: "/schools/amityinternational-removebg-preview.png",
+        logoAlt: "Amity International School",
+        imageSrc: "",
+        quote:
+          "Before Sharkathon, students were largely limited to bookish learning. Through the programme, they built sharp analytical thinking and real business frameworks. Their confidence in questioning and decision-making was genuinely surprising, an overall, comprehensive exposure.",
+        italic: "The Counsellors",
       },
     ],
   },
@@ -78,15 +138,26 @@ const TABS: TabGroup[] = [
     label: "Hear from",
     items: [
       {
-        name: "Usha Iyengar",
-        role: "Parent of Rumi Iyengar",
-        school: "Greenwood International School",
-        logoSrc: "",   // ← school logo
-        logoAlt: "Greenwood International",
+        name: "Avik Banerjee",
+        role: "Parent, Sharkathon 2025 Participant",
+        school: "Kunskapskolan, Gurugram",
+        logoSrc: "/schools/kunskapsskolan-removebg-preview.png",
+        logoAlt: "Kunskapskolan",
         imageSrc: "",
         quote:
+          "Sharkathon gave my son real-world exposure that traditional education rarely offers. I was especially proud to see him confidently wrap up and package his thoughts, something I had not seen before. As a parent, the experience was simply fantastic.",
+        italic: "The Parents",
+      },
+      {
+        name: "Usha Iyengar",
+        role: "Parent, Sharkathon 2025 Participant",
+        school: "Greenwood International School",
+        logoSrc: "/schools/greenwoodhigh-removebg-preview.png",
+        logoAlt: "Greenwood International",
+        imageSrc: "/Iyengar.jpeg",
+        quote:
           "Sharkathon 2025 was organised well and supported children on their learning journeys. It was an engaging and unique format different from the typical olympiads, based on real life cases and helps children spot value in business opportunities. I will really recommend everyone doing it.",
-        italic: "The Parents"
+        italic: "The Parents",
       },
     ],
   },
@@ -94,15 +165,27 @@ const TABS: TabGroup[] = [
     tab: "counsellors",
     label: "Hear from",
     items: [
-      // Add counsellor testimonials here — same shape as above
       {
-        name: "Coming Soon",
-        role: "School Counsellor",
-        school: "",
+        name: "Ekta Batra",
+        role: "Educator, Amity International School, Pushp Vihar",
+        school: "Amity International School, Pushp Vihar",
         logoSrc: "",
-        logoAlt: "",
+        logoAlt: "Amity International School",
         imageSrc: "",
-        quote: "We'll be adding counsellor testimonials shortly. Check back soon.",
+        quote:
+          "Students were genuinely excited to pitch, and you could see future business leaders taking shape. Even middle-school and PCM/Humanities confidently understood business terminology and could easily answer the counter question of judges. The way they handled questioning and decision-making was truly impressive.",
+        italic: "The Counsellors",
+      },
+      {
+        name: "Jagriti",
+        role: "PGT Economics, Amity International School, Gurugram",
+        school: "Amity International School, Gurugram",
+        logoSrc: "",
+        logoAlt: "Amity International School",
+        imageSrc: "",
+        quote:
+          "Before Sharkathon, students were largely limited to bookish learning. Through the programme, they built sharp analytical thinking and real business frameworks. Their confidence in questioning and decision-making was genuinely surprising, an overall, comprehensive exposure.",
+        italic: "The Counsellors",
       },
     ],
   },

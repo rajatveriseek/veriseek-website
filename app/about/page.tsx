@@ -241,7 +241,7 @@ const CSS = `
     display: flex; width: 100%;
     padding: 72px clamp(24px, 8vw, 120px);
     align-items: flex-end;
-    gap: clamp(32px, 5vw, 72px);
+    gap: clamp(12px, 5vw, 42px);
   }
   .ab-quote-photo-col {
     flex-shrink: 0;
@@ -872,14 +872,14 @@ export default function AboutPage() {
 
       {/* ── RAJAT KUMAR QUOTE ── */}
       <section className="ab-quote-section ab-section">
-        <img src="/images/IMG_8176.jpg" alt="" className="ab-quote-bg" aria-hidden="true" />
+        <img src="/images/P1101633.JPG" alt="" className="ab-quote-bg" aria-hidden="true" />
         <div className="ab-quote-blue-overlay" />
         <div className="ab-quote-inner">
 
           {/* Person photo — left */}
           <div className="ab-quote-photo-col ab-anim-left">
             <img
-              src="/images/vem1-removebg-preview.png"
+              src="/images/RajatSir.jpeg"
               alt="Mr. Rajat Kumar, Director"
               className="ab-quote-photo"
             />

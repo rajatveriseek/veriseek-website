@@ -614,7 +614,7 @@ export default function SharkathonPricing({
 
             <div className="vcp-fee-row">
               <span className="vcp-fee-amount">{fee}</span>
-              <span className="vcp-fee-suffix">(INCLUSIVE OF GST) + COST &amp; LOGISTICS</span>
+              <span className="vcp-fee-suffix">(INCLUSIVE OF GST)</span>
             </div>
 
             <div className="vcp-divider" />

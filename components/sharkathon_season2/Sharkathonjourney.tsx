@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 const JOURNEY = [
   {
     type: "learning",
-    date: "14 June 2026",
+    date: "14th June 2026",
     title: "Critical Thinking",
     body: "How do CEOs separate signal from noise and facts from opinions?",
     icon: (
@@ -18,7 +18,7 @@ const JOURNEY = [
   },
   {
     type: "learning",
-    date: "21 June 2026",
+    date: "21st June 2026",
     title: "Data Sufficiency",
     body: "How do leaders know when they have enough data to decide?",
     icon: (
@@ -29,7 +29,7 @@ const JOURNEY = [
   },
   {
     type: "learning",
-    date: "28 June 2026",
+    date: "28th June 2026",
     title: "Business Maths",
     body: "Can you do CEO-style maths in minutes?",
     icon: (
@@ -40,7 +40,7 @@ const JOURNEY = [
   },
   {
     type: "learning",
-    date: "05 July 2026",
+    date: "05th July 2026",
     title: "Structured Thinking",
     body: "How do consultants turn a messy problem into a clean structure?",
     icon: (
@@ -52,7 +52,7 @@ const JOURNEY = [
   },
   {
     type: "learning",
-    date: "14 July 2026",
+    date: "14th July 2026",
     title: "Financial Terms & Business Metrics",
     body: "How do Sharks decode a business using its numbers and metrics?",
     icon: (
@@ -63,7 +63,7 @@ const JOURNEY = [
   },
   {
     type: "round",
-    date: "21 July 2026",
+    date: "19th July 2026",
     title: "The CEO Round",
     body: "Apply your decision-making under real CEO-style pressure.",
     roundNum: "01",
@@ -76,7 +76,7 @@ const JOURNEY = [
   },
   {
     type: "round",
-    date: "28 July 2026",
+    date: "26th July 2026",
     title: "The Consultant Round",
     body: "Present your structured recommendation like a top-tier consultant.",
     roundNum: "02",
@@ -91,7 +91,7 @@ const JOURNEY = [
   },
   {
     type: "round",
-    date: "5 August 2026",
+    date: "2nd August 2026",
     title: "The Investor Round",
     body: "Become the Shark. Pitch, question, decide, and defend your investment call.",
     roundNum: "03",
