@@ -12,6 +12,7 @@ import SharkathonTestimonials from "@/components/sharkathon_season2/Sharkathonte
 import SchoolMarquee from "@/components/sharkathon_season2/Schoolmarquee";
 import SharkathonWhyParticipate from "@/components/sharkathon_season2/Sharkathonwhyparticipate";
 import SharkathonMentors from "@/components/sharkathon_season2/Sharkathonmentors";
+import SharkathonJourneycopy from "@/components/sharkathon_season2/Sharkathonjourney_copy";
 
 export default function SharkathonPage() {
   return (
@@ -22,12 +23,15 @@ export default function SharkathonPage() {
         brochureHref="/Sharkathon Season 2.pdf"
         imageSrc="/images/P1101636.JPG"
       />
-      <SharkathonRounds />
-      <SharkathonJourney />
       <SchoolMarquee />
-      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" />
-      <SharkathonMentors />
+      <SharkathonRounds />
       <SharkathonTestimonials />
+      <SharkathonMentors />
+      <SharkathonJourneycopy />
+      
+      
+      
+      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" />
       <SharkathonPricing />
       <Sharkathoncontact imageSrc="/images/P1101587.JPG" />
       <SharkathonFAQ />

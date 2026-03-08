@@ -2,8 +2,14 @@
 
 import { revalidatePath } from "next/cache"
 import { supabase } from "@/lib/supabase"
+import { sendEmail } from "@/lib/email"
+import {
+  sharkathonEnquiryEmail,
+  sharkathonRegistrationEmail,
+  dealRoomRegistrationEmail,
+} from "@/lib/email-templates"
 
-// Submit Sharkathon registration
+// Submit Sharkathon registration / enquiry
 export async function submitRegistration(formData: FormData) {
   try {
     // Convert FormData to an object
@@ -35,6 +41,31 @@ export async function submitRegistration(formData: FormData) {
 
     // Log success
     console.log("Registration saved to Supabase:", registrationData)
+
+    // Send enquiry confirmation email (non-blocking)
+    if (registrationData.email) {
+      const studentName = registrationData.first_name || "Student"
+      const program = registrationData.program
+
+      try {
+        let emailData
+        if (program === "thedealroom") {
+          emailData = dealRoomRegistrationEmail(studentName)
+        } else {
+          emailData = sharkathonEnquiryEmail(studentName)
+        }
+
+        await sendEmail({
+          to: registrationData.email,
+          subject: emailData.subject,
+          html: emailData.html,
+        })
+        console.log("Confirmation email sent to:", registrationData.email)
+      } catch (emailError) {
+        // Log but don't fail the registration
+        console.error("Failed to send confirmation email:", emailError)
+      }
+    }
 
     // Revalidate the admin page
     revalidatePath("/admin")

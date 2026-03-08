@@ -627,7 +627,7 @@ background: rgba(255,255,255);
           {/* ── Partner schools card — strip format ── */}
           <div className="vw-card vw-card-schools vw-anim-item">
             <p className="vw-card-eyebrow">Partner Schools</p>
-            <p className="vw-card-title" style={{ marginBottom: 16 }}>Where we've trained students</p>
+            <p className="vw-card-title" style={{ marginBottom: 16 }}>Trusted by students of top Institutions</p>
             <div className="vw-school-strip-wrap">
               <div className="vw-school-strip-track">
                 {[...PARTNER_SCHOOLS, ...PARTNER_SCHOOLS].map((s, i) => (
