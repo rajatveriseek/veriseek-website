@@ -177,6 +177,68 @@ export function sharkathonEnquiryEmail(name: string): { subject: string; html: s
   };
 }
 
+// ─── Institutional Partnership Email ─────────────────────────────────────────
+
+export function institutionalPartnershipEmail(name: string, institution: string): { subject: string; html: string } {
+  const body = `
+    <h2 style="margin:0 0 20px;font-size:22px;color:#011C41;">Thank You for Your Partnership Request</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">Dear ${name},</p>
+    <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">
+      Thank you for expressing your interest in partnering with Veriseek Education${institution ? ` on behalf of <strong>${institution}</strong>` : ""}.
+      We have received your request and our team will get back to you within 48 hours.
+    </p>
+    <p style="margin:0 0 12px;font-size:15px;color:#333;line-height:1.7;">Our institutional partnerships typically cover:</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 8px;">
+      <tr>
+        <td style="padding:8px 0;font-size:15px;color:#333;vertical-align:top;">
+          <span style="color:#FAD133;font-size:16px;margin-right:10px;">&#9654;</span>
+          Customised Sharkathon programmes for your students
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:8px 0;font-size:15px;color:#333;vertical-align:top;">
+          <span style="color:#FAD133;font-size:16px;margin-right:10px;">&#128218;</span>
+          On-campus workshops and interactive learning sessions
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:8px 0;font-size:15px;color:#333;vertical-align:top;">
+          <span style="color:#FAD133;font-size:16px;margin-right:10px;">&#128221;</span>
+          Co-branded events and long-term collaborations
+        </td>
+      </tr>
+    </table>
+
+    <!-- Contact Info -->
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:24px 0;">
+      <tr>
+        <td style="background-color:#eff6ff;border-left:4px solid #011C41;border-radius:0 8px 8px 0;padding:16px 20px;">
+          <p style="margin:0 0 4px;font-size:15px;color:#333;line-height:1.7;">
+            If you have any immediate questions, please reply to this email.<br/>
+            For urgent support, you can also call or message us on <strong>9953371191</strong>.
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Website Link -->
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px auto;text-align:center;">
+      <tr>
+        <td>
+          <a href="https://www.veriseekeducation.com" 
+             style="display:inline-block;background-color:#011C41;color:#FAD133;font-size:15px;font-weight:600;text-decoration:none;padding:14px 32px;border-radius:8px;">
+            Visit Our Website &rarr;
+          </a>
+        </td>
+      </tr>
+    </table>`;
+
+  return {
+    subject: "Thank you for your interest in partnering with Veriseek Education",
+    html: emailLayout(body),
+  };
+}
+
 // ─── The Deal Room Registration Email ────────────────────────────────────────
 
 export function dealRoomRegistrationEmail(studentName: string): { subject: string; html: string } {
