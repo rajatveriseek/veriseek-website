@@ -54,27 +54,57 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ status: "ok" });
       }
 
-      // Determine which email to send based on program/description
-      let emailData;
-      if (
-        program.includes("deal room") ||
-        program.includes("dealroom") ||
-        program.includes("thedealroom")
-      ) {
-        emailData = dealRoomRegistrationEmail(name);
-      } else {
-        emailData = sharkathonRegistrationEmail(name);
-      }
+      // Check if this is the testing payment page — send both emails
+      const paymentLinkId =
+        event.payload?.payment_link?.entity?.id || "";
+      const description =
+        payment.description || payment.notes?.description || "";
+      const isTesting =
+        description.toLowerCase().includes("thedealroomtesting") ||
+        program.includes("thedealroomtesting") ||
+        paymentLinkId.includes("thedealroomtesting");
 
-      try {
-        await sendEmail({
-          to: email,
-          subject: emailData.subject,
-          html: emailData.html,
-        });
-        console.log(`Webhook: confirmation email sent to ${email}`);
-      } catch (emailError) {
-        console.error("Webhook: failed to send email:", emailError);
+      if (isTesting) {
+        // Testing mode — send both emails to verify templates
+        const emails = [
+          sharkathonRegistrationEmail(name),
+          dealRoomRegistrationEmail(name),
+        ];
+        for (const emailData of emails) {
+          try {
+            await sendEmail({
+              to: email,
+              subject: emailData.subject,
+              html: emailData.html,
+            });
+            console.log(`Webhook (test): sent "${emailData.subject}" to ${email}`);
+          } catch (emailError) {
+            console.error("Webhook (test): failed to send email:", emailError);
+          }
+        }
+      } else {
+        // Normal flow — send one email based on program
+        let emailData;
+        if (
+          program.includes("deal room") ||
+          program.includes("dealroom") ||
+          program.includes("thedealroom")
+        ) {
+          emailData = dealRoomRegistrationEmail(name);
+        } else {
+          emailData = sharkathonRegistrationEmail(name);
+        }
+
+        try {
+          await sendEmail({
+            to: email,
+            subject: emailData.subject,
+            html: emailData.html,
+          });
+          console.log(`Webhook: confirmation email sent to ${email}`);
+        } catch (emailError) {
+          console.error("Webhook: failed to send email:", emailError);
+        }
       }
     }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { submitInstitutionalPartnership } from "@/app/actions/registration";
 
 // ─── Global CSS ────────────────────────────────────────────────────────────────
 
@@ -313,6 +314,7 @@ export default function VeriseekHero({
   const injected = useRef(false);
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", institution: "", email: "", phone: "", designation: "" });
 
   useEffect(() => {
@@ -335,15 +337,19 @@ export default function VeriseekHero({
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Build mailto link as fallback — replace with API call if available
-    const subject = encodeURIComponent("Request for Institutional Partnership");
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nInstitution: ${formData.institution}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nDesignation: ${formData.designation}`
-    );
-    window.location.href = `mailto:team@veriseekeducation.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      const result = await submitInstitutionalPartnership(formData);
+      if (result.success) {
+        setSubmitted(true);
+      }
+    } catch {
+      // Silently handle — form will not show success
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -578,8 +584,8 @@ export default function VeriseekHero({
                     </div>
                   </div>
 
-                  <button type="submit" className="vs-form-submit">
-                    Submit Request <ArrowIcon />
+                  <button type="submit" className="vs-form-submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting…" : <>Submit Request <ArrowIcon /></>}
                   </button>
                 </form>
               </>

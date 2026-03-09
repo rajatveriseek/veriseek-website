@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { submitSharkathonEnquiry } from "@/app/actions/registration";
 
 function ArrowIcon() {
   return (
@@ -58,8 +59,6 @@ const BENEFITS = [
   },
 ];
 
-const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
-
 function EnquiryModal({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -85,8 +84,8 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
     e.preventDefault();
     setStatus("submitting");
     try {
-      await fetch(SHEET_WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, timestamp: new Date().toISOString() }) });
-      setStatus("success");
+      const result = await submitSharkathonEnquiry(form);
+      setStatus(result.success ? "success" : "error");
     } catch { setStatus("error"); }
   };
 

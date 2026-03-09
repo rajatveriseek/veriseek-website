@@ -110,6 +110,98 @@ export async function submitContactForm(formData: FormData) {
   }
 }
 
+// Submit Sharkathon enquiry (from modal forms on sharkathon page)
+export async function submitSharkathonEnquiry(data: {
+  name: string;
+  phone: string;
+  school: string;
+  email: string;
+}) {
+  try {
+    // 1. Post to Google Sheets
+    const sheetUrl = process.env.SHARKATHON_ENQUIRY_SHEET_URL;
+    if (sheetUrl && sheetUrl !== "YOUR_DEPLOYMENT_URL_HERE") {
+      try {
+        await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, timestamp: new Date().toISOString(), source: "sharkathon_enquiry" }),
+        });
+        console.log("Sharkathon enquiry saved to Google Sheets");
+      } catch (sheetError) {
+        console.error("Failed to save to Google Sheets:", sheetError);
+      }
+    }
+
+    // 2. Send enquiry confirmation email
+    if (data.email) {
+      try {
+        const emailData = sharkathonEnquiryEmail(data.name || "Student");
+        await sendEmail({
+          to: data.email,
+          subject: emailData.subject,
+          html: emailData.html,
+        });
+        console.log("Sharkathon enquiry email sent to:", data.email);
+      } catch (emailError) {
+        console.error("Failed to send enquiry email:", emailError);
+      }
+    }
+
+    return { success: true, message: "Enquiry submitted successfully!" };
+  } catch (error) {
+    console.error("Sharkathon enquiry error:", error);
+    return { success: false, message: "Failed to submit enquiry. Please try again." };
+  }
+}
+
+// Submit Institutional Partnership request
+export async function submitInstitutionalPartnership(data: {
+  name: string;
+  institution: string;
+  email: string;
+  phone: string;
+  designation: string;
+}) {
+  try {
+    // 1. Post to Google Sheets
+    const sheetUrl = process.env.INSTITUTIONAL_PARTNERSHIP_SHEET_URL;
+    if (sheetUrl && sheetUrl !== "YOUR_DEPLOYMENT_URL_HERE") {
+      try {
+        await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, timestamp: new Date().toISOString(), source: "institutional_partnership" }),
+        });
+        console.log("Institutional partnership saved to Google Sheets");
+      } catch (sheetError) {
+        console.error("Failed to save to Google Sheets:", sheetError);
+      }
+    }
+
+    // 2. Send confirmation email
+    if (data.email) {
+      try {
+        const { institutionalPartnershipEmail } = await import("@/lib/email-templates");
+        const emailData = institutionalPartnershipEmail(data.name || "Partner", data.institution || "");
+        await sendEmail({
+          to: data.email,
+          subject: emailData.subject,
+          html: emailData.html,
+        });
+        console.log("Partnership email sent to:", data.email);
+      } catch (emailError) {
+        console.error("Failed to send partnership email:", emailError);
+      }
+    }
+
+    return { success: true, message: "Partnership request submitted successfully!" };
+  } catch (error) {
+    console.error("Institutional partnership error:", error);
+    return { success: false, message: "Failed to submit request. Please try again." };
+  }
+}
+
 // Subscribe to newsletter
 export async function subscribeToNewsletter(formData: FormData) {
   try {

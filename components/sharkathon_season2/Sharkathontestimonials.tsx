@@ -1,16 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { submitSharkathonEnquiry } from "@/app/actions/registration";
 
-// ══════════════════════════════════════════════════════════════════
-// GOOGLE SHEETS — replace YOUR_DEPLOYMENT_ID with your Apps Script
-// Web App URL. Script: function doPost(e) { const s =
-// SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-// const d = JSON.parse(e.postData.contents);
-// s.appendRow([new Date(),d.name,d.phone,d.school,d.email]);
-// return ContentService.createTextOutput("ok"); }
-// ══════════════════════════════════════════════════════════════════
-const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -260,12 +252,8 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
     e.preventDefault();
     setStatus("submitting");
     try {
-      await fetch(SHEET_WEBHOOK_URL, {
-        method: "POST", mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, timestamp: new Date().toISOString() }),
-      });
-      setStatus("success");
+      const result = await submitSharkathonEnquiry(form);
+      setStatus(result.success ? "success" : "error");
     } catch { setStatus("error"); }
   };
 

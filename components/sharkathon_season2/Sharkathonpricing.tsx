@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { submitSharkathonEnquiry } from "@/app/actions/registration";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -29,18 +30,6 @@ function CheckIcon() {
   );
 }
 
-// ─── Google Sheets config ───────────────────────────────────────────────────────
-// Replace SHEET_WEBHOOK_URL with your Google Apps Script Web App deployment URL.
-// Apps Script code (deploy as Web App, execute as Me, access Anyone):
-//
-//   function doPost(e) {
-//     const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-//     const data  = JSON.parse(e.postData.contents);
-//     sheet.appendRow([new Date(), data.name, data.phone, data.school, data.email]);
-//     return ContentService.createTextOutput("ok");
-//   }
-
-const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
 
 // ─── Enquiry Modal ─────────────────────────────────────────────────────────────
 
@@ -75,14 +64,8 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
     e.preventDefault();
     setStatus("submitting");
     try {
-      // Google Sheets: no-cors fetch so we don't get blocked by CORS preflight
-      await fetch(SHEET_WEBHOOK_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, timestamp: new Date().toISOString() }),
-      });
-      setStatus("success");
+      const result = await submitSharkathonEnquiry(form);
+      setStatus(result.success ? "success" : "error");
     } catch {
       setStatus("error");
     }
