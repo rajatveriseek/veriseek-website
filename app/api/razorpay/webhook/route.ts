@@ -55,14 +55,15 @@ export async function POST(req: NextRequest) {
       }
 
       // Check if this is the testing payment page — send both emails
-      const paymentLinkId =
-        event.payload?.payment_link?.entity?.id || "";
+      const paymentLinkEntity = event.payload?.payment_link?.entity || {};
+      const paymentLinkId = paymentLinkEntity.id || "";
+      const shortUrl = paymentLinkEntity.short_url || "";
       const description =
-        payment.description || payment.notes?.description || "";
-      const isTesting =
-        description.toLowerCase().includes("thedealroomtesting") ||
-        program.includes("thedealroomtesting") ||
-        paymentLinkId.includes("thedealroomtesting");
+        payment.description || payment.notes?.description || paymentLinkEntity.description || "";
+      const allFields = `${description} ${program} ${paymentLinkId} ${shortUrl} ${JSON.stringify(payment.notes || {})}`.toLowerCase();
+      const isTesting = allFields.includes("thedealroomtesting") || allFields.includes("the deal room testing");
+
+      console.log("Webhook debug:", { description, program, shortUrl, paymentLinkId, isTesting });
 
       if (isTesting) {
         // Testing mode — send both emails to verify templates
