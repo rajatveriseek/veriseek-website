@@ -28,6 +28,11 @@ export async function POST(req: NextRequest) {
 
     const event = JSON.parse(rawBody);
 
+    // ── FULL PAYLOAD LOG — remove once debugging is done ──────────────────
+    console.log("=== RAZORPAY WEBHOOK FULL PAYLOAD ===");
+    console.log(JSON.stringify(event, null, 2));
+    console.log("=====================================");
+
     // Handle payment captured / payment link paid events
     if (
       event.event === "payment.captured" ||
