@@ -10,13 +10,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+interface EmailAttachment {
+  filename: string;
+  path: string;
+}
+
 interface SendEmailOptions {
   to: string;
   subject: string;
   html: string;
+  attachments?: EmailAttachment[];
 }
 
-export async function sendEmail({ to, subject, html }: SendEmailOptions) {
+export async function sendEmail({ to, subject, html, attachments }: SendEmailOptions) {
   const fromEmail = process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER;
   const fromName = process.env.SMTP_FROM_NAME || "Veriseek Education";
 
@@ -25,6 +31,7 @@ export async function sendEmail({ to, subject, html }: SendEmailOptions) {
     to,
     subject,
     html,
+    ...(attachments && { attachments }),
   });
 
   console.log("Email sent:", info.messageId);

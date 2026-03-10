@@ -640,21 +640,92 @@ const CSS = `
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
+    .ab-hero { min-height: auto; padding: 100px 24px 56px; align-items: flex-end; }
+    .ab-hero-content { flex-direction: column; gap: 16px; }
+    .ab-hero-title { font-size: clamp(32px, 8vw, 48px); letter-spacing: -1px; margin-bottom: 16px; }
+    .ab-hero-sub { font-size: 15px; max-width: 100%; margin-bottom: 28px; }
+    .ab-rule { margin-bottom: 24px; }
+    .ab-stats { gap: 28px; }
+    .ab-stat-num { font-size: 28px; }
+
     .ab-approach-grid { grid-template-columns: 1fr; }
     .ab-founders-grid { grid-template-columns: 1fr 1fr; }
+
+    .ab-vm-section { height: 180vh; }
     .ab-vm-sticky { height: 80vh; min-height: 420px; }
-    .ab-quote-section { height: auto; min-height: 100svh; }
+    .ab-vm-heading { font-size: clamp(36px, 8vw, 56px); }
+    .ab-vm-body { font-size: 15px; }
+
+    .ab-quote-section { height: auto; min-height: auto; }
+    .ab-quote-inner { flex-direction: column; align-items: center; padding: 56px 24px 48px; }
+    .ab-quote-photo-col { width: clamp(160px, 45vw, 240px); align-self: center; }
+    .ab-quote-text { font-size: clamp(16px, 3vw, 20px); }
+    .ab-quote-mark { font-size: 72px; }
+
+    .ab-founders { padding: 72px 24px; }
+    .ab-mentors-box { margin-top: 32px; }
   }
+
   @media (max-width: 600px) {
-    .ab-vision    { padding: 64px 18px; }
-    .ab-founders  { padding: 64px 18px; }
-    .ab-approach  { padding: 64px 18px; }
-    .ab-founders-grid { grid-template-columns: 1fr; max-width: 380px; }
+    .ab-hero { padding: 88px 18px 44px; }
+    .ab-hero-title { font-size: clamp(28px, 8vw, 36px); margin-bottom: 12px; }
+    .ab-hero-sub { font-size: 14px; line-height: 1.65; margin-bottom: 20px; }
+    .ab-eyebrow { font-size: 10px; letter-spacing: 2px; margin-bottom: 14px; }
+    .ab-rule { width: 56px; height: 3px; margin-bottom: 20px; }
+    .ab-stats { gap: 20px; }
+    .ab-stat-num { font-size: 24px; }
+    .ab-stat-label { font-size: 10px; }
+    .ab-scroll-hint { bottom: 18px; }
+
+    .ab-founders { padding: 56px 18px; }
+    .ab-founders-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+    .ab-founders-header { margin-bottom: 36px; }
+    .ab-founder-body { padding: 16px 16px 20px; }
+    .ab-founder-name { font-size: 16px; }
+    .ab-founder-bio { font-size: 12.5px; }
+
+    .ab-mentors-box { padding: 20px 0 18px; margin-top: 28px; }
+    .ab-logo-badge { height: 44px; padding: 6px 14px; }
+    .ab-logo-badge img { height: 22px; max-width: 80px; }
+
+    .ab-vm-section { height: 160vh; }
+    .ab-vm-sticky { height: 70vh; min-height: 380px; }
+    .ab-vm-heading { font-size: clamp(30px, 9vw, 44px); letter-spacing: -1.5px; }
+    .ab-vm-body { font-size: 14px; line-height: 1.7; }
+    .ab-vm-content { padding: 24px 20px; }
+    .ab-vm-eyebrow { font-size: 10px; letter-spacing: 2px; }
+
+    .ab-quote-inner { padding: 44px 18px 36px; }
+    .ab-quote-photo-col { width: clamp(140px, 50vw, 200px); }
+    .ab-quote-text { font-size: 15px; }
+    .ab-quote-name { font-size: 14px; }
+    .ab-quote-role { font-size: 10px; }
+    .ab-quote-mark { font-size: 56px; }
+
+    .ab-section-title { font-size: clamp(22px, 5.5vw, 30px); }
+    .ab-section-title.dark { font-size: clamp(22px, 5.5vw, 30px); }
+
+    .ab-approach { padding: 56px 18px; }
+    .ab-vision { padding: 56px 18px; }
   }
+
   @media (max-width: 380px) {
-    .ab-vision    { padding: 48px 14px; }
-    .ab-founders  { padding: 48px 14px; }
-    .ab-approach  { padding: 48px 14px; }
+    .ab-hero { padding: 80px 14px 36px; }
+    .ab-hero-title { font-size: 26px; letter-spacing: -0.5px; }
+    .ab-hero-sub { font-size: 13px; }
+    .ab-eyebrow { font-size: 9px; gap: 8px; }
+
+    .ab-founders { padding: 44px 14px; }
+    .ab-founders-grid { max-width: 100%; }
+    .ab-approach { padding: 44px 14px; }
+    .ab-vision { padding: 44px 14px; }
+
+    .ab-vm-section { height: 150vh; }
+    .ab-vm-heading { font-size: 26px; }
+    .ab-vm-body { font-size: 13px; }
+
+    .ab-quote-inner { padding: 36px 14px 28px; }
+    .ab-quote-text { font-size: 14px; }
   }
 `;
 
@@ -735,14 +806,14 @@ const DIRECTORS = [
   {
     name: "Rajat Kumar",
     bio: "Former McKinsey consultant with an MBA from Wharton. Passionate about educational innovation and entrepreneurship.",
-    image: getImageUrl("founder-rajat") || "/placeholder.svg",
+    image: "/images/vem1-removebg-preview.png",
     linkedin: "https://www.linkedin.com/in/rajat-kumar-004533/",
     initials: "RK",
   },
   {
     name: "Durba Ray",
     bio: "Former executive at Airtel with a degree from University of Rochester. Expert in educational program development.",
-    image: getImageUrl("founder-durba") || "/placeholder.svg",
+    image: "/images/Durba.jpeg",
     linkedin: "https://www.linkedin.com/in/durba-ray-ab3a6012/",
     initials: "DR",
   },
@@ -879,7 +950,7 @@ export default function AboutPage() {
           {/* Person photo — left */}
           <div className="ab-quote-photo-col ab-anim-left">
             <img
-              src="/images/RajatSir.jpeg"
+              src="/images/vem1-removebg-preview.png"
               alt="Mr. Rajat Kumar, Director"
               className="ab-quote-photo"
             />

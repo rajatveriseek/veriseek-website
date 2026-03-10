@@ -28,11 +28,6 @@ export async function POST(req: NextRequest) {
 
     const event = JSON.parse(rawBody);
 
-    // ── FULL PAYLOAD LOG — remove once debugging is done ──────────────────
-    console.log("=== RAZORPAY WEBHOOK FULL PAYLOAD ===");
-    console.log(JSON.stringify(event, null, 2));
-    console.log("=====================================");
-
     // Handle payment captured / payment link paid events
     if (
       event.event === "payment.captured" ||
@@ -45,72 +40,39 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ status: "no payment entity" });
       }
 
-      const email = payment.email || payment.notes?.email;
-      const name =
-        payment.notes?.studentName ||
-        payment.notes?.name ||
-        payment.customer_name ||
-        "Student";
-      const program =
-        payment.notes?.program || payment.description?.toLowerCase() || "";
+      const notes = payment.notes || {};
+      const email = payment.email || notes.email;
+      const name = notes.full_name || notes.studentName || notes.name || payment.customer_name || "Student";
 
       if (!email) {
         console.log("Webhook: no email found, skipping email send");
         return NextResponse.json({ status: "ok" });
       }
 
-      // Check if this is the testing payment page — send both emails
-      const paymentLinkEntity = event.payload?.payment_link?.entity || {};
-      const paymentLinkId = paymentLinkEntity.id || "";
-      const shortUrl = paymentLinkEntity.short_url || "";
-      const description =
-        payment.description || payment.notes?.description || paymentLinkEntity.description || "";
-      const allFields = `${description} ${program} ${paymentLinkId} ${shortUrl} ${JSON.stringify(payment.notes || {})}`.toLowerCase();
-      const isTesting = allFields.includes("thedealroomtesting") || allFields.includes("the deal room testing");
+      // Determine program from notes:
+      // - Sharkathon payments have "grade" field in notes
+      // - Deal Room payments do NOT have "grade" field
+      const isSharkathon = !!notes.grade;
 
-      console.log("Webhook debug:", { description, program, shortUrl, paymentLinkId, isTesting });
-
-      if (isTesting) {
-        // Testing mode — send both emails to verify templates
-        const emails = [
-          sharkathonRegistrationEmail(name),
-          dealRoomRegistrationEmail(name),
-        ];
-        for (const emailData of emails) {
-          try {
-            await sendEmail({
-              to: email,
-              subject: emailData.subject,
-              html: emailData.html,
-            });
-            console.log(`Webhook (test): sent "${emailData.subject}" to ${email}`);
-          } catch (emailError) {
-            console.error("Webhook (test): failed to send email:", emailError);
-          }
-        }
+      let emailData;
+      if (isSharkathon) {
+        emailData = sharkathonRegistrationEmail(name);
       } else {
-        // Normal flow — send one email based on program
-        let emailData;
-        if (
-          program.includes("deal room") ||
-          program.includes("dealroom") ||
-          program.includes("thedealroom")
-        ) {
-          emailData = dealRoomRegistrationEmail(name);
-        } else {
-          emailData = sharkathonRegistrationEmail(name);
-        }
+        emailData = dealRoomRegistrationEmail(name);
+      }
 
-        try {
-          await sendEmail({
-            to: email,
-            subject: emailData.subject,
-            html: emailData.html,
-          });
-          console.log(`Webhook: confirmation email sent to ${email}`);
-        } catch (emailError) {
-          console.error("Webhook: failed to send email:", emailError);
-        }
+      console.log(`Webhook: program=${isSharkathon ? "sharkathon" : "dealroom"}, name=${name}, email=${email}`);
+
+      try {
+        await sendEmail({
+          to: email,
+          subject: emailData.subject,
+          html: emailData.html,
+          attachments: "attachments" in emailData ? emailData.attachments as Array<{filename: string; path: string}> : undefined,
+        });
+        console.log(`Webhook: confirmation email sent to ${email}`);
+      } catch (emailError) {
+        console.error("Webhook: failed to send email:", emailError);
       }
     }
 

@@ -178,7 +178,7 @@ interface SharkathonRoundsProps {
 export default function SharkathonRounds({
   rounds = ROUNDS,
   applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
-  brochureHref = "/Sharkathon Season 2.pdf",
+  brochureHref = "/Sharkathon Season2.pdf",
 }: SharkathonRoundsProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
