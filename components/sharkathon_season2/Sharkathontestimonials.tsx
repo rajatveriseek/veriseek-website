@@ -118,7 +118,7 @@ const TABS: TabGroup[] = [
         school: "Amity International School, Gurugram",
         logoSrc: "/schools/amityinternational-removebg-preview.png",
         logoAlt: "Amity International School",
-        imageSrc: "/images/jagriti.jpeg",
+        imageSrc: "/images/Jagriti.jpeg",
         quote:
           "Before Sharkathon, students were largely limited to bookish learning. Through the programme, they built sharp analytical thinking and real business frameworks. Their confidence in questioning and decision-making was genuinely surprising, an overall, comprehensive exposure.",
         italic: "The Counsellors",
