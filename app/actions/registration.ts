@@ -59,6 +59,7 @@ export async function submitRegistration(formData: FormData) {
           to: registrationData.email,
           subject: emailData.subject,
           html: emailData.html,
+          attachments: "attachments" in emailData ? emailData.attachments as Array<{filename: string; path: string}> : undefined,
         })
         console.log("Confirmation email sent to:", registrationData.email)
       } catch (emailError) {
@@ -141,6 +142,7 @@ export async function submitSharkathonEnquiry(data: {
           to: data.email,
           subject: emailData.subject,
           html: emailData.html,
+          attachments: emailData.attachments,
         });
         console.log("Sharkathon enquiry email sent to:", data.email);
       } catch (emailError) {
