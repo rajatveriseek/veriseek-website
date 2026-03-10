@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Trophy, Zap } from 'lucide-react';
 import VideoPlayer from "@/components/sharkathon/videoPlayer"; // Import the new video player
@@ -17,10 +18,12 @@ const ApplicationStatusBanner = () => (
 
 const HeroHeadline = () => (
   <div className="flex flex-col space-y-3 md:space-y-6 mt-4 md:mt-6">
-    <img
-      src="/logo.png" // Make sure this path is correct
+    <Image
+      src="/logo.png"
       alt="SHARKATHON"
       className="max-w-xs w-full h-auto"
+      width={320}
+      height={80}
     />
     <div>
       <span className="text-white text-xl md:text-2xl lg:text-3xl">BECOME THE NEXT</span>{' '}
@@ -38,16 +41,16 @@ const HeroDescription = () => (
 const AlumniLogos = () => (
   <div className="flex flex-wrap justify-left sm:justify-left gap-2 sm:gap-4">
     <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/iima.png" alt="IIMA logo" className="h-10 sm:h-16" />
+      <Image src="/iima.png" alt="IIMA logo" className="h-10 sm:h-16" width={64} height={64} />
     </div>
     <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/iit.png" alt="IIT logo" className="h-10 sm:h-16" />
+      <Image src="/iit.png" alt="IIT logo" className="h-10 sm:h-16" width={64} height={64} />
     </div>
     <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/wharton.png" alt="Wharton logo" className="h-10 sm:h-16" />
+      <Image src="/wharton.png" alt="Wharton logo" className="h-10 sm:h-16" width={64} height={64} />
     </div>
     <div className="p-2 sm:p-3 bg-white border-2 border-yellow-400/50 rounded-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <img src="/mit.png" alt="MIT logo" className="h-10 sm:h-16" />
+      <Image src="/mit.png" alt="MIT logo" className="h-10 sm:h-16" width={64} height={64} />
     </div>
   </div>
 );

@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef } from "react";
 
-// ─── Data ──────────────────────────────────────────────────────────────────────
+// --- Data ----------------------------------------------------------------------
 
 const PHASES = [
   {
@@ -46,7 +46,7 @@ const PHASES = [
   },
 ];
 
-// ─── Arrow SVG ────────────────────────────────────────────────────────────────
+// --- Arrow SVG ----------------------------------------------------------------
 
 function Arrow({ dir, color = "#011638" }: { dir: "up" | "down"; color?: string }) {
   const points = dir === "up" ? "12,2 22,22 2,22" : "12,22 22,2 2,2";
@@ -57,7 +57,7 @@ function Arrow({ dir, color = "#011638" }: { dir: "up" | "down"; color?: string 
   );
 }
 
-// ─── Phase Card ───────────────────────────────────────────────────────────────
+// --- Phase Card ---------------------------------------------------------------
 
 function PhaseCard({ phase, position }: { phase: typeof PHASES[number]; position: "top" | "bottom" }) {
   return (
@@ -88,7 +88,7 @@ function PhaseCard({ phase, position }: { phase: typeof PHASES[number]; position
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// --- Main component -----------------------------------------------------------
 
 export default function SharkathonJourneyCopy() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -116,9 +116,7 @@ export default function SharkathonJourneyCopy() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ── Section ── */
+/* -- Section -- */
         .sj2-section {
           background: #eef0f2;
           padding: 80px clamp(20px, 8vw, 120px) 100px;
@@ -135,7 +133,7 @@ export default function SharkathonJourneyCopy() {
           background-size: 28px 28px;
         }
 
-        /* ── Header ── */
+        /* -- Header -- */
         .sj2-header {
           text-align: center;
           margin-bottom: 52px;
@@ -173,16 +171,16 @@ export default function SharkathonJourneyCopy() {
           margin: 14px auto 0;
         }
 
-        /* ── Animation base ── */
+        /* -- Animation base -- */
         .sj2-anim {
           opacity: 0; transform: translateY(16px);
           transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .sj2-anim.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* ══════════════════════════════════
+        /* ----------------------------------
            ROAD SCENE  (desktop)
-        ══════════════════════════════════ */
+        ---------------------------------- */
         .sj2-road-scene {
           position: relative;
           max-width: 1000px;
@@ -204,7 +202,7 @@ export default function SharkathonJourneyCopy() {
           pointer-events: none;
         }
 
-        /* ── Cards layout ── */
+        /* -- Cards layout -- */
         .sj2-cards-row {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
@@ -282,16 +280,16 @@ export default function SharkathonJourneyCopy() {
         }
         .sj2-arrow-below { order: 1; }
 
-        /* ── The road SVG ── */
+        /* -- The road SVG -- */
         .sj2-road-svg {
           width: 100%;
           height: auto;
           display: block;
         }
 
-        /* ══════════════════════════════════
+        /* ----------------------------------
            DESKTOP LAYOUT: top / bottom grid
-        ══════════════════════════════════ */
+        ---------------------------------- */
         .sj2-top-row {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
@@ -310,9 +308,9 @@ export default function SharkathonJourneyCopy() {
         /* col 1 top, col 2 bottom, col 3 bottom */
         .sj2-col-spacer { visibility: hidden; pointer-events: none; }
 
-        /* ══════════════════════════════════
+        /* ----------------------------------
            MOBILE
-        ══════════════════════════════════ */
+        ---------------------------------- */
         .sj2-mobile-stack {
           display: none;
           flex-direction: column;
@@ -374,7 +372,7 @@ export default function SharkathonJourneyCopy() {
 
       <section className="sj2-section" ref={sectionRef}>
 
-        {/* ── Header ── */}
+        {/* -- Header -- */}
         <div className="sj2-header sj2-anim" data-delay="0">
           <p className="sj2-eyebrow">
             <span style={{ display: "inline-block", width: 24, height: 2, background: "#011638", opacity: 0.30 }} />
@@ -387,14 +385,14 @@ export default function SharkathonJourneyCopy() {
           <div className="sj2-h-rule" />
         </div>
 
-        {/* ════════════════════════════════
+        {/* --------------------------------
             DESKTOP: Road Scene
-        ════════════════════════════════ */}
+        -------------------------------- */}
         <div className="sj2-road-scene">
 
-          {/* Top row — only col 1 has content (Learning) */}
+          {/* Top row � only col 1 has content (Learning) */}
           <div className="sj2-top-row">
-            {/* Col 1 – Learning (top) */}
+            {/* Col 1 � Learning (top) */}
             <div className="sj2-anim" data-delay="100">
               <div className="sj2-card sj2-card-top">
                 <div className="sj2-card-inner">
@@ -415,13 +413,13 @@ export default function SharkathonJourneyCopy() {
                 </div>
               </div>
             </div>
-            {/* Col 2 – empty */}
+            {/* Col 2 � empty */}
             <div className="sj2-col-spacer" />
-            {/* Col 3 – empty */}
+            {/* Col 3 � empty */}
             <div className="sj2-col-spacer" />
           </div>
 
-          {/* ── ROAD SVG ── */}
+          {/* -- ROAD SVG -- */}
           <div className="sj2-anim" data-delay="50" style={{ position: "relative", zIndex: 1 }}>
             <svg
               className="sj2-road-svg"
@@ -455,23 +453,23 @@ export default function SharkathonJourneyCopy() {
                 strokeLinecap="butt"
               />
               {/* Stop dots at each phase */}
-              {/* Dot 1 – far left on road (Learning) */}
+              {/* Dot 1 � far left on road (Learning) */}
               <circle cx="60" cy="110" r="14" fill="#f5c842" stroke="#011638" strokeWidth="3" />
               <text x="60" y="115" textAnchor="middle" fontSize="12" fontWeight="700" fill="#011638" fontFamily="DM Sans, sans-serif">1</text>
-              {/* Dot 2 – middle dip (Application) */}
+              {/* Dot 2 � middle dip (Application) */}
               <circle cx="500" cy="53" r="14" fill="#f5c842" stroke="#011638" strokeWidth="3" />
               <text x="500" y="58" textAnchor="middle" fontSize="12" fontWeight="700" fill="#011638" fontFamily="DM Sans, sans-serif">2</text>
-              {/* Dot 3 – far right (Accomplishment) */}
+              {/* Dot 3 � far right (Accomplishment) */}
               <circle cx="940" cy="62" r="14" fill="#f5c842" stroke="#011638" strokeWidth="3" />
               <text x="940" y="67" textAnchor="middle" fontSize="12" fontWeight="700" fill="#011638" fontFamily="DM Sans, sans-serif">3</text>
             </svg>
           </div>
 
-          {/* Bottom row — cols 2 & 3 have content */}
+          {/* Bottom row � cols 2 & 3 have content */}
           <div className="sj2-bottom-row">
-            {/* Col 1 – empty */}
+            {/* Col 1 � empty */}
             <div className="sj2-col-spacer" />
-            {/* Col 2 – Application */}
+            {/* Col 2 � Application */}
             <div className="sj2-anim" data-delay="200">
               <div className="sj2-card sj2-card-bottom">
                 <div className="sj2-arrow-wrap">
@@ -479,7 +477,7 @@ export default function SharkathonJourneyCopy() {
                 </div>
                 <div className="sj2-card-inner">
                   <h3 className="sj2-card-title">
-                    <span className="sj2-card-num">2.</span> Learning –{" "}
+                    <span className="sj2-card-num">2.</span> Learning �{" "}
                     <span className="sj2-card-sublabel">through curated content</span>
                   </h3>
                   <ul className="sj2-card-list">
@@ -488,7 +486,7 @@ export default function SharkathonJourneyCopy() {
                 </div>
               </div>
             </div>
-            {/* Col 3 – Accomplishment */}
+            {/* Col 3 � Accomplishment */}
             <div className="sj2-anim" data-delay="300">
               <div className="sj2-card sj2-card-bottom">
                 <div className="sj2-arrow-wrap">
@@ -496,7 +494,7 @@ export default function SharkathonJourneyCopy() {
                 </div>
                 <div className="sj2-card-inner">
                   <h3 className="sj2-card-title">
-                    <span className="sj2-card-num">3.</span> Accomplishment –{" "}
+                    <span className="sj2-card-num">3.</span> Accomplishment �{" "}
                     <span className="sj2-card-sublabel">continuous and long-term</span>
                   </h3>
                   <ul className="sj2-card-list">
@@ -510,9 +508,9 @@ export default function SharkathonJourneyCopy() {
           </div>
         </div>
 
-        {/* ════════════════════════════════
+        {/* --------------------------------
             MOBILE: Stacked cards
-        ════════════════════════════════ */}
+        -------------------------------- */}
         <div className="sj2-mobile-stack">
           {PHASES.map((phase, i) => (
             <div key={phase.id}>
@@ -520,7 +518,7 @@ export default function SharkathonJourneyCopy() {
                 <div className="sj2-mobile-card-head">
                   <span className="sj2-mobile-phase-num">{phase.num}</span>
                   <h3 className="sj2-card-title" style={{ marginBottom: 0 }}>
-                    {phase.label} –{" "}
+                    {phase.label} �{" "}
                     <span className="sj2-card-sublabel">{phase.sublabel}</span>
                   </h3>
                 </div>

@@ -13,6 +13,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!razorpay) {
+      return NextResponse.json(
+        { error: "Payment service is not configured" },
+        { status: 503 }
+      );
+    }
+
     const order = await razorpay.orders.create({
       amount: Math.round(amount * 100), // Razorpay expects paise
       currency,

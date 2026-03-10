@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { submitSharkathonEnquiry } from "@/app/actions/registration";
+import Image from "next/image";
 
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -306,7 +307,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
 function Avatar({ src, name }: { src?: string; name: string }) {
   const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   if (src) {
-    return <img src={src} alt={name} className="tm-avatar-img" />;
+    return <Image src={src} alt={name} className="tm-avatar-img" width={400} height={400} loading="lazy" />;
   }
   return (
     <div className="tm-avatar-placeholder">
@@ -356,7 +357,7 @@ function TestimonialCard({
             {/* School logo */}
             {item.logoSrc && (
               <div className="tm-logo-wrap">
-                <img src={item.logoSrc} alt={item.logoAlt} className="tm-logo" />
+                <Image src={item.logoSrc} alt={item.logoAlt ?? ""} className="tm-logo" width={120} height={60} loading="lazy" style={{ objectFit: "contain" }} />
               </div>
             )}
             {!item.logoSrc && item.school && (
@@ -451,9 +452,7 @@ export default function SharkathonTestimonials({
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ════════ SECTION ════════ */
+/* ════════ SECTION ════════ */
         .tm-section {
           background: #eef0f2;
           padding: 80px clamp(16px, 8vw, 120px) 96px;
@@ -907,7 +906,7 @@ export default function SharkathonTestimonials({
                   </div>
                   {item.logoSrc ? (
                     <div className="tm-logo-wrap">
-                      <img src={item.logoSrc} alt={item.logoAlt} className="tm-logo" />
+                      <Image src={item.logoSrc} alt={item.logoAlt ?? ""} className="tm-logo" width={120} height={60} loading="lazy" style={{ objectFit: "contain" }} />
                     </div>
                   ) : item.school ? (
                     <div className="tm-logo-placeholder">

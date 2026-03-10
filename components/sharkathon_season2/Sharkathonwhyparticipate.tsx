@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { submitSharkathonEnquiry } from "@/app/actions/registration";
+import Image from "next/image";
 
 function ArrowIcon() {
   return (
@@ -182,9 +183,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ── Section ── */
+/* ── Section ── */
         .wyp-section {
           background: #011638;
           padding: 88px clamp(20px, 7vw, 100px) 96px;
@@ -494,7 +493,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
             <div className="wyp-image-outer">
               <div className="wyp-image-wrap">
                 {imageSrc ? (
-                    <img src={imageSrc} alt="Students participating in Sharkathon" />
+                    <Image src={imageSrc} alt="Students participating in Sharkathon" fill style={{ objectFit: "cover" }} loading="lazy" sizes="(max-width: 860px) 100vw, 45vw" />
                 ) : (
                     <div className="wyp-img-placeholder">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(245,200,66,0.25)" strokeWidth="1.2" strokeLinecap="round">

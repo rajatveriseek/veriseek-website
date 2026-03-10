@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef } from "react";
 
-// ─── Data ──────────────────────────────────────────────────────────────────────
+// --- Data ----------------------------------------------------------------------
 
 const JOURNEY = [
   {
@@ -114,7 +114,7 @@ function CalendarIcon() {
   );
 }
 
-// ─── Card content — shared between both layouts ────────────────────────────────
+// --- Card content - shared between both layouts --------------------------------
 
 function CardContent({ item }: { item: typeof JOURNEY[number] }) {
   const isRound = item.type === "round";
@@ -133,7 +133,7 @@ function CardContent({ item }: { item: typeof JOURNEY[number] }) {
   );
 }
 
-// ─── Phase pill ────────────────────────────────────────────────────────────────
+// --- Phase pill ----------------------------------------------------------------
 
 function PhasePill({ label, isRound = false }: { label: string; isRound?: boolean }) {
   return (
@@ -143,7 +143,7 @@ function PhasePill({ label, isRound = false }: { label: string; isRound?: boolea
   );
 }
 
-// ─── Main component ────────────────────────────────────────────────────────────
+// --- Main component ------------------------------------------------------------
 
 export default function SharkathonJourney() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -182,11 +182,9 @@ export default function SharkathonJourney() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ═══════════════════════════════════════
+/* ---------------------------------------
            SECTION
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-section {
           background: #011638;
           padding: 80px clamp(16px, 7vw, 100px) 100px;
@@ -202,9 +200,9 @@ export default function SharkathonJourney() {
             radial-gradient(ellipse 50% 40% at 10% 80%, rgba(30,90,200,0.12) 0%, transparent 60%);
         }
 
-        /* ═══════════════════════════════════════
+        /* ---------------------------------------
            HEADER
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-header {
           text-align: center; margin-bottom: 64px;
           position: relative; z-index: 1;
@@ -234,18 +232,18 @@ export default function SharkathonJourney() {
           color: rgba(255,255,255,0.40); font-family: 'DM Sans', sans-serif;
         }
 
-        /* ═══════════════════════════════════════
+        /* ---------------------------------------
            ANIMATION BASE
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-anim-item {
           opacity: 0; transform: translateY(18px);
           transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .sj-anim-item.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* ═══════════════════════════════════════
+        /* ---------------------------------------
            PHASE PILL
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-phase-pill {
           display: inline-flex; align-items: center;
           padding: 6px 18px;
@@ -267,9 +265,9 @@ export default function SharkathonJourney() {
           position: relative;
         }
 
-        /* ═══════════════════════════════════════
+        /* ---------------------------------------
            CARD BOX
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-card-box {
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.08);
@@ -313,9 +311,9 @@ export default function SharkathonJourney() {
           font-weight: 400; margin: 0;
         }
 
-        /* ═══════════════════════════════════════
+        /* ---------------------------------------
            DOT STYLES
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-dot {
           width: 40px; height: 40px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
@@ -333,9 +331,9 @@ export default function SharkathonJourney() {
           box-shadow: 0 0 0 5px rgba(245,200,66,0.12), 0 4px 16px rgba(245,200,66,0.28);
         }
 
-        /* ═══════════════════════════════════════
+        /* ---------------------------------------
            VERTICAL CONNECTOR SEGMENT
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-connector {
           display: flex; justify-content: center;
         }
@@ -348,10 +346,10 @@ export default function SharkathonJourney() {
           background: rgba(245,200,66,0.45);
         }
 
-        /* ═══════════════════════════════════════
-           ████  DESKTOP  ████
-           Zigzag: left–centre–right grid
-        ═══════════════════════════════════════ */
+        /* ---------------------------------------
+           ....  DESKTOP  ....
+           Zigzag: left-centre-right grid
+        --------------------------------------- */
         .sj-river-desktop {
           display: block;
           position: relative;
@@ -360,7 +358,7 @@ export default function SharkathonJourney() {
           z-index: 1;
         }
 
-        /* Continuous background line — desktop only */
+        /* Continuous background line - desktop only */
         // .sj-river-bg-line {
         //   position: absolute;
         //   left: 50%; top: 0; bottom: 0;
@@ -474,10 +472,10 @@ export default function SharkathonJourney() {
           box-shadow: 0 0 0 5px rgba(245,200,66,0.15), 0 0 20px rgba(245,200,66,0.30);
         }
 
-        /* ═══════════════════════════════════════
-           ████  MOBILE  ████
+        /* ---------------------------------------
+           ....  MOBILE  ....
            Single left-aligned column
-        ═══════════════════════════════════════ */
+        --------------------------------------- */
         .sj-river-mobile {
           display: none;
           position: relative;
@@ -554,7 +552,7 @@ export default function SharkathonJourney() {
           box-shadow: 0 0 0 4px rgba(245,200,66,0.15), 0 0 16px rgba(245,200,66,0.28);
         }
 
-        /* ─── BREAKPOINTS ─── */
+        /* --- BREAKPOINTS --- */
         @media (max-width: 640px) {
           .sj-river-desktop { display: none !important; }
           .sj-river-mobile  { display: block !important; }
@@ -577,7 +575,7 @@ export default function SharkathonJourney() {
 
       <section className="sj-section" ref={sectionRef}>
 
-        {/* ── Header ── */}
+        {/* -- Header -- */}
         <div className="sj-header">
           <div className="sj-eyebrow">
             <span style={{ display:"inline-block", width:24, height:2, background:"#f5c842", flexShrink:0 }} />
@@ -591,17 +589,17 @@ export default function SharkathonJourney() {
             </em>
           </h2>
           <div className="sj-rule" />
-          <p className="sj-subtitle">From first principles to your final pitch — every step mapped out.</p>
+          <p className="sj-subtitle">From first principles to your final pitch - every step mapped out.</p>
         </div>
 
-        {/* ════════════════════════════════
+        {/* --------------------------------
             DESKTOP ZIGZAG RIVER
-        ════════════════════════════════ */}
+        -------------------------------- */}
         <div className="sj-river-desktop">
           <div className="sj-learning-wrapper">
             <div className="sj-river-bg-line learning-only" />
 
-            {/* ── Learning phase pill ── */}
+            {/* -- Learning phase pill -- */}
             <div className="sj-row sj-anim-item" style={{ marginBottom: 12 }}>
               <div className="sj-row-empty" />
               <div className="sj-row-centre">
@@ -610,7 +608,7 @@ export default function SharkathonJourney() {
               <div className="sj-row-empty" />
             </div>
 
-            {/* ── Learning nodes ── */}
+            {/* -- Learning nodes -- */}
             {learningItems.map((item, i) => {
               const isLeft = i % 2 === 0;
               return (
@@ -640,7 +638,7 @@ export default function SharkathonJourney() {
             })}
           </div>
 
-          {/* ── Connector before rounds phase pill ── */}
+          {/* -- Connector before rounds phase pill -- */}
           {/* <div className="sj-conn-row">
             <div />
             <div className="sj-conn-row-centre">
@@ -649,7 +647,7 @@ export default function SharkathonJourney() {
             <div />
           </div> */}
 
-          {/* ── Competition rounds phase pill ── */}
+          {/* -- Competition rounds phase pill -- */}
           <div className="sj-phase-row sj-anim-item"  style={{ margin: "20px 0px" }}>
             <div />
             <div style={{ display:"flex", justifyContent:"center" }}>
@@ -661,7 +659,7 @@ export default function SharkathonJourney() {
           <div className="sj-learning-wrapper"></div>
             <div className="sj-river-bg-line rounds-only" />
 
-            {/* ── Round nodes ── */}
+            {/* -- Round nodes -- */}
             {roundItems.map((item, i) => {
               const isLeft = i % 2 === 0;
               return (
@@ -689,7 +687,7 @@ export default function SharkathonJourney() {
             })}
           </div>
 
-          {/* ── Terminal dot ── */}
+          {/* -- Terminal dot -- */}
           <div className="sj-conn-row">
             <div />
             <div className="sj-conn-row-centre">
@@ -701,17 +699,17 @@ export default function SharkathonJourney() {
             <div className="sj-terminal-dot" />
           </div>
 
-        {/* ════════════════════════════════
+        {/* --------------------------------
             MOBILE SINGLE-COLUMN RIVER
-        ════════════════════════════════ */}
+        -------------------------------- */}
         <div className="sj-river-mobile">
 
-          {/* ── Learning phase pill ── */}
+          {/* -- Learning phase pill -- */}
           <div className="sj-m-phase sj-anim-item" style={{ marginBottom: 20 }}>
             <PhasePill label="Learning Phase" />
           </div>
 
-          {/* ── Learning nodes ── */}
+          {/* -- Learning nodes -- */}
           {learningItems.map((item, i) => (
             <div key={item.title}>
               <div className="sj-m-node sj-anim-item">
@@ -726,13 +724,13 @@ export default function SharkathonJourney() {
             </div>
           ))}
 
-          {/* ── Rounds phase pill ── */}
+          {/* -- Rounds phase pill -- */}
           <div className="sj-m-spacer" style={{ height: 32 }} />
           <div className="sj-m-phase sj-anim-item" style={{ marginBottom: 20 }}>
             <PhasePill label="Competition Rounds" isRound />
           </div>
 
-          {/* ── Round nodes ── */}
+          {/* -- Round nodes -- */}
           {roundItems.map((item, i) => (
             <div key={item.title}>
               <div className="sj-m-node sj-anim-item">

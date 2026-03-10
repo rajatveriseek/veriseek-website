@@ -112,7 +112,7 @@ export default function SharkathonComparison() {
     <div className="w-full py-12 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-center text-primary mb-4">
-          How Does <img src="/logo.png" alt="Sharkathon" className="h-10 inline-block align-text-bottom" /> Compare?
+          How Does <img src="/logo.png" alt="Sharkathon" className="h-10 inline-block align-text-bottom" width="120" height="40" /> Compare?
         </h1>
 
         <p className="text-center text-lg mb-12">

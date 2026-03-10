@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const LazyYouTube = dynamic(() => import("@/components/shared/lazy-youtube"), { ssr: false });
 
 const GLOBAL_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
-  *, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
   @keyframes sh-fadeUp {
     from { opacity: 0; transform: translateY(28px); }
@@ -619,12 +622,17 @@ export default function SharkathonHero({
 
         {/* Hero image — full right side with mask-image fade, same as Deal Room */}
         {imageSrc && (
-          <img
-            src={imageSrc}
-            alt="Sharkathon Season 2"
-            aria-hidden="true"
-            className="sh-hero-img sh-bg-anim"
-          />
+          <div className="sh-hero-img sh-bg-anim" style={{ position: "absolute", right: 0, top: 0, width: "52%", height: "100%" }}>
+            <Image
+              src={imageSrc}
+              alt="Sharkathon Season 2"
+              fill
+              priority
+              sizes="52vw"
+              quality={75}
+              style={{ objectFit: "cover", objectPosition: "center 30%" }}
+            />
+          </div>
         )}
 
         {/* Floating info card — desktop only */}
@@ -655,7 +663,7 @@ export default function SharkathonHero({
             marginTop: 0,
             marginBottom: 0,
           }}>
-            <img src="/images/11.png" alt="" className="sh-hero-logo" />
+            <Image src="/images/11.png" alt="Sharkathon logo" className="sh-hero-logo" width={400} height={100} priority />
             <span style={{ color: "#f5c842" }}>Season 2</span>
           </h1>
 
@@ -700,17 +708,21 @@ export default function SharkathonHero({
                 In Association with
               </span>
               <a href="https://nandancapital.com/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-                <img
+                <Image
                   src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png"
                   alt="Nandan Capital"
-                  style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, cursor: "pointer" }}
+                  width={120}
+                  height={56}
+                  style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, width: "auto", cursor: "pointer" }}
                 />
               </a>
               <a href="https://www.linkedin.com/company/himlandcapitaladvisors" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-                <img
+                <Image
                   src="/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg"
                   alt="Himland Capital"
-                  style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, cursor: "pointer" }}
+                  width={120}
+                  height={56}
+                  style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 56, width: "auto", cursor: "pointer" }}
                 />
               </a>
             </div>
@@ -736,7 +748,7 @@ export default function SharkathonHero({
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {colleges.map((c) => (
                 <span key={c.src} className="sh-college-badge">
-                  <img src={c.src} alt={c.alt} />
+                  <Image src={c.src} alt={c.alt} width={120} height={52} style={{ height: 52, width: "auto", objectFit: "contain" }} />
                 </span>
               ))}
             </div>
@@ -775,9 +787,9 @@ export default function SharkathonHero({
 
           {/* YouTube embed — full width below heading */}
           <div className="sh-yt-container">
-            <div className="sh-yt-accent" aria-hidden="true" />
+            {/* <div className="sh-yt-accent" aria-hidden="true" /> */}
             <div className="sh-yt-wrap">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/lrMrYxct3Tk?si=euP34w3aDIkD48SL" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+              <LazyYouTube videoId="lrMrYxct3Tk" title="What is Sharkathon?" />
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const MENTORS = [
   {
@@ -64,10 +65,12 @@ function LogoBadge({ src, alt, href }: { src: string; alt: string; href?: string
         height: 40,
       }}
     >
-      <img
+      <Image
         src={src}
         alt={alt}
         className="vc-logo-badge-img"
+        width={56}
+        height={30}
         style={{
           height: 30,
           maxWidth: 56,
@@ -117,9 +120,7 @@ export default function VCFellowshipMentors() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        .vc-mentors-section {
+.vc-mentors-section {
           background: #f5c842;
           padding: clamp(28px, 5vw, 48px) clamp(16px, 6vw, 120px) clamp(32px, 5vw, 48px);
           font-family: 'DM Sans', sans-serif;
@@ -394,9 +395,11 @@ export default function VCFellowshipMentors() {
 
               {/* Photo */}
               <div className="vc-mentor-photo-wrap">
-                <img
+                <Image
                   src={mentor.image.trim()}
                   alt={mentor.name}
+                  width={200}
+                  height={260}
                   onError={(e) => {
                     const el = e.currentTarget;
                     el.style.display = "none";

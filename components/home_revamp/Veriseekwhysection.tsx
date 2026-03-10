@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -49,7 +50,7 @@ function LogoBadge({ src, alt, text }: { src?: string; alt: string; text?: strin
   if (src) {
     return (
       <span className="vw-badge">
-        <img src={src} alt={alt} className="vw-badge-img" />
+        <Image src={src} alt={alt} width={120} height={52} className="vw-badge-img" loading="lazy" />
       </span>
     );
   }
@@ -111,8 +112,6 @@ export default function VeriseekWhySection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
         /* ══════════════════════════════════════════
            SECTION — matches .sj-section / .sr-section navy base
         ══════════════════════════════════════════ */
@@ -632,7 +631,7 @@ background: rgba(255,255,255);
               <div className="vw-school-strip-track">
                 {[...PARTNER_SCHOOLS, ...PARTNER_SCHOOLS].map((s, i) => (
                   <span key={`${s.alt}-${i}`} className="vw-school-strip-badge">
-                    <img src={s.src} alt={s.alt} className="vw-school-strip-img" />
+                    <Image src={s.src} alt={s.alt} width={100} height={60} className="vw-school-strip-img" loading="lazy" />
                   </span>
                 ))}
               </div>

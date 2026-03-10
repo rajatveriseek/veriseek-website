@@ -2,13 +2,12 @@
 
 import { Italic } from "lucide-react";
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 // ─── Global CSS (keyframes + hover states + responsive breakpoints) ────────────
 
 const GLOBAL_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
   @keyframes vc-fadeUp {
     from { opacity: 0; transform: translateY(28px); }
@@ -285,21 +284,27 @@ export default function TheDealRoomHero({
 
       {/* Right-side hero image — hidden on tablet/mobile */}
       {heroImageSrc && (
-        <img
-          src={heroImageSrc}
-          alt=""
-          aria-hidden="true"
+        <div
           className="vc-hero-image vc-bg-anim"
           style={{
             position: "absolute", right: 0, top: 0,
             width: "52%", height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 30%",
             opacity: 0.9,
             maskImage: "linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 75%, transparent 92%)",
             WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 75%, transparent 92%)",
           }}
-        />
+          aria-hidden="true"
+        >
+          <Image
+            src={heroImageSrc}
+            alt=""
+            fill
+            priority
+            sizes="52vw"
+            quality={75}
+            style={{ objectFit: "cover", objectPosition: "center 30%" }}
+          />
+        </div>
       )}
 
       {/* ── Content ── */}
@@ -387,12 +392,12 @@ export default function TheDealRoomHero({
               In Association with
             </span>
             <a href="https://nandancapital.com/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <img src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png" alt="Nandan Capital" style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, cursor: "pointer" }} />
+              <Image src="/images/Nandan_Final_Logo_page-0001_12-removebg-preview.png" alt="Nandan Capital" width={120} height={64} style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, width: "auto", cursor: "pointer" }} />
             </a>
             <a href="https://www.linkedin.com/company/himlandcapitaladvisors" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <img src="/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg"    alt="Himland Capital" style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, cursor: "pointer" }} />
+              <Image src="/images/WhatsApp Image 2026-02-22 at 4.01.38 PM.jpeg" alt="Himland Capital" width={120} height={64} style={{ background: "white", borderRadius: 4, padding: "2px 4px", height: 64, width: "auto", cursor: "pointer" }} />
             </a>
-            <img src="/images/IMG_5883.PNG"                                         alt="" style={{ background: "white", borderRadius: 4, padding: "2px 8px", height: 64 }} />
+            <Image src="/images/IMG_5883.PNG" alt="" width={120} height={64} style={{ background: "white", borderRadius: 4, padding: "2px 8px", height: 64, width: "auto" }} />
           </div>
         </div>
 
@@ -424,7 +429,7 @@ export default function TheDealRoomHero({
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             {colleges.map((c) => (
               <span key={c} className="vc-college-badge">
-                <img src={c} alt="" />
+                <Image src={c} alt="" width={120} height={52} style={{ height: 52, width: "auto", objectFit: "contain" }} />
               </span>
             ))}
           </div>

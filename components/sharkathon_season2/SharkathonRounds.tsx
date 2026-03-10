@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 // ─── Round data (3 dark cards) ─────────────────────────────────────────────────
 
@@ -129,7 +130,7 @@ function RoundCard({ number, label, heading, mode, timeline, imageSrc, imageAlt,
       {/* Image */}
       <div className="sr-card-img-wrap">
         {imageSrc ? (
-          <img src={imageSrc} alt={imageAlt} className="sr-card-img" />
+          <Image src={imageSrc} alt={imageAlt} className="sr-card-img" width={400} height={200} loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" />
         ) : (
           <div className="sr-card-img-placeholder">
             <div className="sr-card-img-icon">{icon}</div>
@@ -218,9 +219,7 @@ export default function SharkathonRounds({
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ── Section ── */
+/* ── Section ── */
         .sr-section {
           background: #eef0f2;
           padding: 80px clamp(20px, 8vw, 120px) 100px;

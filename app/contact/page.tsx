@@ -3,9 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
   @keyframes cp-fade-up {
     from { opacity: 0; transform: translateY(24px); }
@@ -573,7 +571,7 @@ export default function ContactPage() {
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.2034142780366!2d77.09073937537779!3d28.4574333975809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18e0fd4bb287%3A0x7edf0a3ab4642c2c!2sGolf%20Course%20Rd%2C%20Sector%2043%2C%20Gurugram%2C%20Haryana%20122002!5e0!3m2!1sen!2sin!4v1709829847945!5m2!1sen!2sin"
               allowFullScreen
-              loading="lazy"
+              loading="eager"
               title="Veriseek Education Office Location"
             />
           </div>

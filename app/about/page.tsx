@@ -7,9 +7,7 @@ import ImageCarousel from "@/components/home/carousel-home";
 import { getImageUrl } from "@/lib/image-utils";
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
   @keyframes ab-fade-up {
     from { opacity: 0; transform: translateY(28px); }
@@ -943,16 +941,19 @@ export default function AboutPage() {
 
       {/* ── RAJAT KUMAR QUOTE ── */}
       <section className="ab-quote-section ab-section">
-        <img src="/images/P1101633.JPG" alt="" className="ab-quote-bg" aria-hidden="true" />
+        <Image src="/images/P1101633.JPG" alt="" className="ab-quote-bg" aria-hidden={true} fill style={{ objectFit: "cover" }} loading="lazy" />
         <div className="ab-quote-blue-overlay" />
         <div className="ab-quote-inner">
 
           {/* Person photo — left */}
           <div className="ab-quote-photo-col ab-anim-left">
-            <img
+            <Image
               src="/images/vem1-removebg-preview.png"
               alt="Mr. Rajat Kumar, Director"
               className="ab-quote-photo"
+              width={300}
+              height={400}
+              loading="lazy"
             />
           </div>
 
@@ -978,7 +979,7 @@ export default function AboutPage() {
 
           {/* —— VISION LAYER (shown first) —— */}
           <div className="ab-vm-layer ab-vm-vision-layer">
-            <img src="/images/students-session.JPG" alt="" className="ab-vm-panel-bg" aria-hidden="true" />
+            <Image src="/images/students-session.JPG" alt="" className="ab-vm-panel-bg" aria-hidden={true} fill style={{ objectFit: "cover" }} loading="lazy" />
             <div className="ab-vm-panel-overlay" />
             <div className="ab-vm-content">
               <p className="ab-vm-eyebrow">About Veriseek</p>
@@ -994,7 +995,7 @@ export default function AboutPage() {
 
           {/* —— MISSION LAYER (fades in on scroll) —— */}
           <div className="ab-vm-layer ab-vm-mission-layer">
-            <img src="/images/P1101630.JPG" alt="" className="ab-vm-panel-bg" aria-hidden="true" />
+            <Image src="/images/P1101630.JPG" alt="" className="ab-vm-panel-bg" aria-hidden={true} fill style={{ objectFit: "cover" }} loading="lazy" />
             <div className="ab-vm-panel-overlay" />
             <div className="ab-vm-content">
               <p className="ab-vm-eyebrow">Our Mission</p>
@@ -1080,7 +1081,7 @@ export default function AboutPage() {
               <div className="ab-marquee-set">
                 {MARQUEE_LOGOS.map((logo) => (
                   <span key={`a-${logo.alt}`} className="ab-logo-badge">
-                    <img src={logo.src} alt={logo.alt} loading="lazy" />
+                    <Image src={logo.src} alt={logo.alt} loading="lazy" width={100} height={40} style={{ objectFit: "contain" }} />
                   </span>
                 ))}
               </div>
@@ -1088,7 +1089,7 @@ export default function AboutPage() {
               <div className="ab-marquee-set" aria-hidden="true">
                 {MARQUEE_LOGOS.map((logo) => (
                   <span key={`b-${logo.alt}`} className="ab-logo-badge">
-                    <img src={logo.src} alt={logo.alt} loading="lazy" />
+                    <Image src={logo.src} alt={logo.alt} loading="lazy" width={100} height={40} style={{ objectFit: "contain" }} />
                   </span>
                 ))}
               </div>

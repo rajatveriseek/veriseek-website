@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 interface VCContactProps {
   email?: string;
@@ -47,8 +48,6 @@ export default function Veriseekcontact({
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
         @keyframes vc-contact-slide-left {
           from { opacity: 0; transform: translateX(-32px); }
           to { opacity: 1; transform: translateX(0); }
@@ -350,7 +349,7 @@ export default function Veriseekcontact({
         {/* Right — image */}
         <div className="vc-contact-image">
           {imageSrc ? (
-            <img src={imageSrc} alt="The Deal Room team" />
+            <Image src={imageSrc} alt="The Deal Room team" fill style={{ objectFit: "cover" }} loading="lazy" sizes="(max-width: 700px) 100vw, 40vw" />
           ) : (
             <div className="vc-contact-placeholder">
               <div style={{ width: 48, height: 3, background: "#f5c842", borderRadius: 99, opacity: 0.30 }} />
