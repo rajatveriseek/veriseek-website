@@ -1,16 +1,17 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import VCFellowshipHero2 from "@/components/the_deal_room/VCFellowshipHero2";
-import VCFellowshipFAQ from "@/components/the_deal_room/Vcfellowshipfaq";
-import VCFellowshipPricing from "@/components/the_deal_room/Vcfellowshippricing";
-import VCFellowshipExpect from "@/components/the_deal_room/Vcfellowshipexpect";
-import VCFellowshipContact from "@/components/the_deal_room/Vcfellowshipcontact";
-import VCProgrammeFlow from "@/components/the_deal_room/Vcfellowshipprogrammeflow";
-import VCFellowshipMentors from "@/components/the_deal_room/Vcfellowshipmentors";
-import VCFellowshipSection from "@/components/the_deal_room/Vcfellowshipsection";
 import TheDealRoomHero from "@/components/the_deal_room/VCFellowshipHero3";
+
+const VCFellowshipSection = dynamic(() => import("@/components/the_deal_room/Vcfellowshipsection"));
+const VCProgrammeFlow = dynamic(() => import("@/components/the_deal_room/Vcfellowshipprogrammeflow"));
+const VCFellowshipMentors = dynamic(() => import("@/components/the_deal_room/Vcfellowshipmentors"));
+const VCFellowshipExpect = dynamic(() => import("@/components/the_deal_room/Vcfellowshipexpect"));
+const VCFellowshipPricing = dynamic(() => import("@/components/the_deal_room/Vcfellowshippricing"));
+const VCFellowshipContact = dynamic(() => import("@/components/the_deal_room/Vcfellowshipcontact"));
+const VCFellowshipFAQ = dynamic(() => import("@/components/the_deal_room/Vcfellowshipfaq"));
 
 export default function SharkathonPage() {
   return (

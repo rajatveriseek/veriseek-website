@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const SECTION_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-  @keyframes vcf-slide-in-left {
+@keyframes vcf-slide-in-left {
     from { opacity: 0; transform: translateX(-48px); }
     to { opacity: 1; transform: translateX(0); }
   }
@@ -230,12 +229,10 @@ export default function VCFellowshipSection({
         {/* ── Left: image ── */}
         <div className="vcf-img-wrap">
           {imageSrc ? (
-            <img src={imageSrc} alt="The Deal Room programme" />
+            <Image src={imageSrc} alt="The Deal Room programme" fill style={{ objectFit: "cover" }} loading="lazy" sizes="(max-width: 860px) 100vw, 45vw" />
           ) : (
             <div className="vcf-img-placeholder">
-              {/* <div style={{ width: 48, height: 3, background: "#011638", borderRadius: 99, opacity: 0.25 }} />
-              <span>Add imageSrc prop</span> */}
-                <img src="/images/P1101636.JPG" alt="" />
+              <Image src="/images/P1101636.JPG" alt="" fill style={{ objectFit: "cover" }} loading="lazy" sizes="(max-width: 860px) 100vw, 45vw" />
             </div>
           )}
         </div>

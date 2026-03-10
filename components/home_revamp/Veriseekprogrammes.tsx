@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -69,8 +70,6 @@ export default function VeriseekProgrammes() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
         /* ══════════════════════════════════════
            SECTION
         ══════════════════════════════════════ */
@@ -363,10 +362,14 @@ export default function VeriseekProgrammes() {
 
             <div className="ep-media">
               {/* Replace src with Card 2 image path */}
-              <img
+              <Image
                 src="/images/P1101630.JPG"
                 alt="VC Fellowship"
                 className="ep-media-img"
+                width={620}
+                height={330}
+                loading="lazy"
+                sizes="(max-width: 860px) 100vw, 50vw"
               />
               {/* <div className="ep-play">
                 <div className="ep-play-btn"><PlayIcon /></div>
@@ -435,10 +438,14 @@ export default function VeriseekProgrammes() {
 
             <div className="ep-media">
               {/* Auto-playing muted video — replace src with actual video path */}
-              <img
+              <Image
                 src="/images/P1101636.JPG"
                 alt="VC Fellowship"
                 className="ep-media-img"
+                width={620}
+                height={330}
+                loading="lazy"
+                sizes="(max-width: 860px) 100vw, 50vw"
               />
               {/* <div className="ep-play">
                 <div className="ep-play-btn"><PlayIcon /></div>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const MENTORS = [
   {
@@ -60,7 +61,7 @@ function LinkedInIcon() {
 function LogoBadge({ src, alt, href }: { src: string; alt: string; href?: string }) {
   const inner = (
     <span className="vm-logo-badge">
-      <img src={src} alt={alt} className="vm-logo-img" />
+      <Image src={src} alt={alt} width={100} height={40} className="vm-logo-img" loading="lazy" style={{ objectFit: "contain" }} />
     </span>
   );
   return href ? (
@@ -104,9 +105,7 @@ export default function SharkathonMentors() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ── Section ── */
+/* ── Section ── */
         .vm-section {
           background: #f5c842;
           padding: 80px clamp(20px, 7vw, 100px) 88px;

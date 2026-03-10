@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function SchoolMarquee() {
   const schoolLogos = [
     { src: "/schools/theheritageschool-removebg-preview.png",    alt: "The Heritage School" },
@@ -28,9 +30,7 @@ export default function SchoolMarquee() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=DM+Sans:wght@400;600;700&display=swap');
-
-        .sm-section {
+.sm-section {
           background: #f5c842;
           padding: 56px 0 52px;
           overflow: hidden;
@@ -163,7 +163,7 @@ export default function SchoolMarquee() {
           <div className="sm-track">
             {track.map((school, i) => (
               <div className="sm-logo" key={i}>
-                <img src={school.src} alt={school.alt} title={school.alt} />
+                <Image src={school.src} alt={school.alt} title={school.alt} width={100} height={60} loading="lazy" style={{ objectFit: "contain", width: "auto", height: "100%" }} />
               </div>
             ))}
           </div>

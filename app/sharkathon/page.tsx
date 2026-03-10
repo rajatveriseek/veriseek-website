@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import SharkathonHero from "@/components/sharkathon_season2/Sharkathonhero";
-import SharkathonFAQ from "@/components/sharkathon_season2/Sharkathonfaq";
-import SharkathonPricing from "@/components/sharkathon_season2/Sharkathonpricing";
-import SharkathonRounds from "@/components/sharkathon_season2/SharkathonRounds";
-import SharkathonJourney from "@/components/sharkathon_season2/Sharkathonjourney";
-import Sharkathoncontact from "@/components/sharkathon_season2/Sharkathonconnect";
-import SharkathonTestimonials from "@/components/sharkathon_season2/Sharkathontestimonials";
-import SchoolMarquee from "@/components/sharkathon_season2/Schoolmarquee";
-import SharkathonWhyParticipate from "@/components/sharkathon_season2/Sharkathonwhyparticipate";
-import SharkathonMentors from "@/components/sharkathon_season2/Sharkathonmentors";
-import SharkathonJourneycopy from "@/components/sharkathon_season2/Sharkathonjourney_copy";
+
+const SchoolMarquee = dynamic(() => import("@/components/sharkathon_season2/Schoolmarquee"));
+const SharkathonRounds = dynamic(() => import("@/components/sharkathon_season2/SharkathonRounds"));
+const SharkathonTestimonials = dynamic(() => import("@/components/sharkathon_season2/Sharkathontestimonials"));
+const SharkathonMentors = dynamic(() => import("@/components/sharkathon_season2/Sharkathonmentors"));
+const SharkathonJourney = dynamic(() => import("@/components/sharkathon_season2/Sharkathonjourney"));
+const SharkathonWhyParticipate = dynamic(() => import("@/components/sharkathon_season2/Sharkathonwhyparticipate"));
+const SharkathonPricing = dynamic(() => import("@/components/sharkathon_season2/Sharkathonpricing"));
+const Sharkathoncontact = dynamic(() => import("@/components/sharkathon_season2/Sharkathonconnect"));
+const SharkathonFAQ = dynamic(() => import("@/components/sharkathon_season2/Sharkathonfaq"));
 
 export default function SharkathonPage() {
   return (

@@ -5,9 +5,7 @@ import { useEffect, useRef } from "react";
 // ─── Global CSS ────────────────────────────────────────────────────────────────
 
 const GLOBAL_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   @keyframes vc-fadeUp {
     from { opacity: 0; transform: translateY(24px); }

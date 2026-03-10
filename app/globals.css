@@ -6,6 +6,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Make self-hosted fonts available via their family names for inline styles */
+:root {
+  --font-dm-sans-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  --font-playfair-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+/* Override font-family references in inline styles */
+[style*="DM Sans"] {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

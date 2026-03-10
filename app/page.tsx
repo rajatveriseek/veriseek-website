@@ -1,23 +1,10 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  GraduationCap,
-  Award,
-  Users,
-  TrendingUp,
-  ArrowRight,
-} from "lucide-react";
-import TestimonialCarousel from "@/components/home/testimonial-carousel";
 import React from "react";
+import dynamic from "next/dynamic";
 import VeriseekHero from "@/components/home_revamp/Veriseekhero";
-import VeriseekWhySection from "@/components/home_revamp/Veriseekwhysection";
-import Veriseekcontact from "@/components/home_revamp/Veriseekcontact";
-import VeriseekProgrammes from "@/components/home_revamp/Veriseekprogrammes";
-// Import the image utility
-import { getImageUrl } from "@/lib/image-utils";
-import ImageCarousel from "@/components/home/carousel-home";
+
+const VeriseekWhySection = dynamic(() => import("@/components/home_revamp/Veriseekwhysection"), { ssr: true });
+const VeriseekProgrammes = dynamic(() => import("@/components/home_revamp/Veriseekprogrammes"), { ssr: true });
+const Veriseekcontact = dynamic(() => import("@/components/home_revamp/Veriseekcontact"), { ssr: true });
 
 export default function home_old() {
   return (

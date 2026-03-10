@@ -59,9 +59,7 @@ export default function VCFellowshipFAQ() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        @keyframes fadeInUp {
+@keyframes fadeInUp {
           from {
             opacity: 0;
             transform: translateY(12px);

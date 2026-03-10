@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { submitInstitutionalPartnership } from "@/app/actions/registration";
 
 // ─── Global CSS ────────────────────────────────────────────────────────────────
 
 const GLOBAL_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; }
 
   @keyframes vs-fadeUp {
@@ -409,21 +409,27 @@ export default function VeriseekHero({
 
       {/* ── Right-side hero image — hidden on tablet/mobile ── */}
       {heroImageSrc && (
-        <img
-          src={heroImageSrc}
-          alt=""
-          aria-hidden="true"
+        <div
           className="vs-hero-image vs-bg-anim"
           style={{
             position: "absolute", right: 0, top: 0,
             width: "52%", height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 30%",
             opacity: 0.9,
             maskImage: "linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 75%, transparent 92%)",
             WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 75%, transparent 92%)",
           }}
-        />
+          aria-hidden="true"
+        >
+          <Image
+            src={heroImageSrc}
+            alt=""
+            fill
+            priority
+            sizes="52vw"
+            quality={75}
+            style={{ objectFit: "cover", objectPosition: "center 30%" }}
+          />
+        </div>
       )}
 
       {/* ── Main content ── */}
@@ -499,7 +505,7 @@ export default function VeriseekHero({
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             {colleges.map((c) => (
               <span key={c.src} className="vs-college-badge">
-                <img src={c.src} alt={c.alt} />
+                <Image src={c.src} alt={c.alt} width={120} height={52} style={{ height: 52, width: "auto", objectFit: "contain" }} />
               </span>
             ))}
           </div>

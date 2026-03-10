@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const EXPECTATIONS = [
   {
@@ -94,9 +95,7 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-        /* ── Section ── */
+/* ── Section ── */
         .vcfe-section {
           background: #eef0f2;
           padding: 60px clamp(20px, 8vw, 120px);
@@ -356,7 +355,7 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
           {/* Right: image */}
           <div className="vcfe-img-wrap">
             {imageSrc ? (
-              <img src={imageSrc} alt="The Deal Room participants" />
+              <Image src={imageSrc} alt="The Deal Room participants" fill style={{ objectFit: "cover" }} loading="lazy" sizes="(max-width: 860px) 100vw, 45vw" />
             ) : (
               <div className="vcfe-img-placeholder">
                 <div style={{ width: 48, height: 3, background: "#011638", borderRadius: 99, opacity: 0.15 }} />

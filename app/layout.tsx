@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Script from "next/script";
+import { Inter, DM_Sans, Playfair_Display } from "next/font/google";
 
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import AnalyticsWrapper from "@/components/shared/analytics-wrapper";
 import { cn } from "@/lib/utils";
-import { Analytics } from "@vercel/analytics/next"
-import GoogleAnalytics from "./analytics";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", weight: ["400", "500", "700"], display: "swap" });
+const playfairDisplay = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", weight: ["400", "700"], style: ["normal", "italic"], display: "swap" });
 
-// Replace 'YOUR_GA_ID_HERE' with your actual Google Analytics ID (e.g., 'G-XXXXXXXXXX')
-const GOOGLE_ANALYTICS_ID = ' G-DJ59N085L0';
+const GOOGLE_ANALYTICS_ID = 'G-DJ59N085L0';
 
 export const metadata: Metadata = {
   title: "Veriseek Education | Bridging Academic Learning and Professional Skills",
@@ -20,7 +19,19 @@ export const metadata: Metadata = {
     "Veriseek Education is an innovative platform that bridges the gap between traditional academic learning and real-world professional skills through competitions like Sharkathon.",
   keywords:
     "student competitions, educational workshops, Sharkathon, real-world skills, business skills for students, pitch competition, entrepreneurship education, student entrepreneur program, financial literacy for students",
-  generator: "v0.dev",
+  metadataBase: new URL("https://www.veriseekeducation.com"),
+  openGraph: {
+    title: "Veriseek Education | Bridging Academic Learning and Professional Skills",
+    description: "Veriseek Education bridges the gap between traditional academic learning and real-world professional skills.",
+    url: "https://www.veriseekeducation.com",
+    siteName: "Veriseek Education",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Veriseek Education",
+    description: "Bridging Academic Learning and Professional Skills",
+  },
 };
 
 export default function RootLayout({
@@ -30,11 +41,37 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
-        {GOOGLE_ANALYTICS_ID && (
-            <GoogleAnalytics ga_id={GOOGLE_ANALYTICS_ID} />
-          )}
-        <Analytics/>
+      <head>
+        <link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com" />
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://maps.googleapis.com" />
+        <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              name: "Veriseek Education",
+              url: "https://www.veriseekeducation.com",
+              description: "Veriseek Education bridges the gap between traditional academic learning and real-world professional skills.",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "alt.f MPD Tower, 2nd Floor, Golf Course Road, Sector 43",
+                addressLocality: "Gurugram",
+                addressRegion: "Haryana",
+                postalCode: "122002",
+                addressCountry: "IN",
+              },
+              telephone: "+919953371191",
+              email: "team@veriseekeducation.com",
+            }),
+          }}
+        />
+      </head>
+      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable, dmSans.variable, playfairDisplay.variable)}>
+        <AnalyticsWrapper ga_id={GOOGLE_ANALYTICS_ID} />
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>

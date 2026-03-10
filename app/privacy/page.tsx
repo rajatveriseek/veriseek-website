@@ -74,9 +74,7 @@ const SECTIONS = [
 ];
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
   @keyframes pp-pulse {
     0%, 100% { opacity: 0.10; }

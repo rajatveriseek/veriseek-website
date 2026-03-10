@@ -43,9 +43,7 @@ const DAYS = [
 ];
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-  /* ── Viewport Loading Animations ── */
+/* ── Viewport Loading Animations ── */
   @keyframes fadeInUp {
     from {
       opacity: 0;
