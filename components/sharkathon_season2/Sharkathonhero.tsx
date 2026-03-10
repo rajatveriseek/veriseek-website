@@ -522,7 +522,7 @@ function InfoCardBody() {
     <div className="sh-stat-row">
       <div className="sh-stat-col">
         <p className="sh-stat-label">Eligible</p>
-        <p className="sh-stat-value">Class 9th to 12th students</p>
+        <p className="sh-stat-value">Class 9th to 12th students (and recent graduates)</p>
       </div>
       <div className="sh-stat-divider" />
       <div className="sh-stat-col">

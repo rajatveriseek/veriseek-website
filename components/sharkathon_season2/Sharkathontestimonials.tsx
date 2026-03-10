@@ -60,7 +60,7 @@ const TABS: TabGroup[] = [
         school: "Kunskapskolan, Gurugram",
         logoSrc: "/schools/kunskapsskolan-removebg-preview.png",
         logoAlt: "Kunskapskolan",
-        imageSrc: "",
+        imageSrc: "/images/advik.jpeg",
         quote:
           "Sharkathon was fun, interesting, and full of learning. I blanked out once, but I pushed through by going back to the data, spotting a pattern, and applying that approach in later rounds. Biggest takeaway: don\u2019t just look for patterns, look for what breaks the pattern, because that\u2019s what you need to fix.",
         italic: "The Participants",
@@ -71,7 +71,7 @@ const TABS: TabGroup[] = [
         school: "Greenwood International School, Bengaluru",
         logoSrc: "/schools/greenwoodhigh-removebg-preview.png",
         logoAlt: "Greenwood International",
-        imageSrc: "/Iyengar.jpeg",
+        imageSrc: "/images/rumi.jpeg",
         quote:
           "I flew from Bengaluru because Sharkathon\u2019s format is genuinely unique, you\u2019re not pitching, you\u2019re evaluating. It starts out intimidating, but once you get into the groove, it becomes a really memorable experience. My biggest learning was a new kind of data analysis: not just having data, but knowing what actually matters, and being able to set the right questions.",
         italic: "The Participants",
@@ -84,13 +84,13 @@ const TABS: TabGroup[] = [
         school: "Kunskapskolan, Gurugram",
         logoSrc: "/schools/kunskapsskolan-removebg-preview.png",
         logoAlt: "Kunskapskolan",
-        imageSrc: "",
+        imageSrc: "/images/avik.jpeg",
         quote:
           "Sharkathon gave my son real-world exposure that traditional education rarely offers. I was especially proud to see him confidently wrap up and package his thoughts, something I had not seen before. As a parent, the experience was simply fantastic.",
         italic: "The Parents",
       },
       {
-        name: "Usha Iyengar",
+        name: "Usha Narayan",
         role: "Parent, Sharkathon 2025 Participant",
         school: "Greenwood International School",
         logoSrc: "/schools/greenwoodhigh-removebg-preview.png",
@@ -107,7 +107,7 @@ const TABS: TabGroup[] = [
         school: "Amity International School, Pushp Vihar",
         logoSrc: "/schools/amityinternational-removebg-preview.png",
         logoAlt: "Amity International School",
-        imageSrc: "",
+        imageSrc: "/images/ekta.jpeg",
         quote:
           "Students were genuinely excited to pitch, and you could see future business leaders taking shape. Even middle-school and PCM/Humanities confidently understood business terminology and could easily answer the counter question of judges. The way they handled questioning and decision-making was truly impressive.",
         italic: "The Counsellors",
@@ -118,7 +118,7 @@ const TABS: TabGroup[] = [
         school: "Amity International School, Gurugram",
         logoSrc: "/schools/amityinternational-removebg-preview.png",
         logoAlt: "Amity International School",
-        imageSrc: "",
+        imageSrc: "/images/jagriti.jpeg",
         quote:
           "Before Sharkathon, students were largely limited to bookish learning. Through the programme, they built sharp analytical thinking and real business frameworks. Their confidence in questioning and decision-making was genuinely surprising, an overall, comprehensive exposure.",
         italic: "The Counsellors",
@@ -921,7 +921,6 @@ export default function SharkathonTestimonials({
 
                 {/* Quote */}
                 <div className="tm-quote-wrap">
-                  <div className="tm-quote-icon"><QuoteIcon /></div>
                   <p className="tm-quote">"{item.quote}"</p>
                 </div>
 

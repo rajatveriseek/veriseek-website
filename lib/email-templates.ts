@@ -1,5 +1,7 @@
-// Shared base layout for all Veriseek emails
-function emailLayout(bodyContent: string): string {
+import path from "path";
+
+// Shared email shell — accepts a custom header block
+function emailShell(headerHtml: string, bodyContent: string): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +18,7 @@ function emailLayout(bodyContent: string): string {
           <!-- Header -->
           <tr>
             <td style="background-color:#011C41;padding:32px 40px;text-align:center;">
-              <h1 style="margin:0;font-size:28px;font-weight:700;color:#FAD133;letter-spacing:0.5px;">Veriseek Education</h1>
+              ${headerHtml}
             </td>
           </tr>
 
@@ -59,9 +61,43 @@ function emailLayout(bodyContent: string): string {
 </html>`;
 }
 
+// Default Veriseek header
+function emailLayout(bodyContent: string): string {
+  return emailShell(
+    `<h1 style="margin:0;font-size:28px;font-weight:700;color:#FAD133;letter-spacing:0.5px;">Veriseek Education</h1>`,
+    bodyContent
+  );
+}
+
+// Sharkathon header — logo image instead of text
+function sharkathonEmailLayout(bodyContent: string): string {
+  return emailShell(
+    `<img src="https://www.veriseekeducation.com/images/11.png" alt="Sharkathon" style="max-width:280px;height:auto;" />`,
+    bodyContent
+  );
+}
+
+// Deal Room header — styled like the hero section
+function dealRoomEmailLayout(bodyContent: string): string {
+  return emailShell(
+    `<h1 style="margin:0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:36px;font-weight:700;color:#ffffff;letter-spacing:-1px;line-height:1;">
+      <span>The </span>Deal Room
+    </h1>
+    <p style="margin:8px 0 0;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:16px;color:#f5c842;letter-spacing:0.2px;">Make your First Deal.</p>`,
+    bodyContent
+  );
+}
+
+// ─── Attachment helper ───────────────────────────────────────────────────────
+
+interface EmailAttachment {
+  filename: string;
+  path: string;
+}
+
 // ─── Sharkathon Registration Welcome Email ───────────────────────────────────
 
-export function sharkathonRegistrationEmail(studentName: string): { subject: string; html: string } {
+export function sharkathonRegistrationEmail(studentName: string): { subject: string; html: string; attachments: EmailAttachment[] } {
   const body = `
     <h2 style="margin:0 0 20px;font-size:22px;color:#011C41;">Welcome to Sharkathon!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">Dear ${studentName},</p>
@@ -71,6 +107,21 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
     <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">
       Sharkathon is a learning led competition designed to build practical decision making skills through a structured learning track and three competition rounds. During the programme, you will step into the roles of an entrepreneur, a consultant, and an investor, and work through real world style business scenarios.
     </p>
+
+    <!-- YouTube Video -->
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:24px 0;">
+      <tr>
+        <td align="center">
+          <a href="https://youtu.be/lrMrYxct3Tk" style="display:inline-block;text-decoration:none;">
+            <img src="https://img.youtube.com/vi/lrMrYxct3Tk/hqdefault.jpg" alt="Watch Sharkathon Video" style="width:100%;max-width:520px;border-radius:8px;border:2px solid #e9ecef;" />
+          </a>
+          <p style="margin:8px 0 0;font-size:13px;color:#6c757d;">
+            <a href="https://youtu.be/lrMrYxct3Tk" style="color:#011C41;text-decoration:underline;">Watch the Sharkathon overview video &rarr;</a>
+          </p>
+        </td>
+      </tr>
+    </table>
+
     <p style="margin:0 0 12px;font-size:15px;color:#333;line-height:1.7;">Over the next few days, we will share:</p>
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 8px;">
       <tr>
@@ -100,6 +151,22 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
           <p style="margin:0;font-size:15px;color:#333;line-height:1.7;">
             We would really appreciate it if you could join the <strong>official WhatsApp community</strong>, as this is where we share session links, reminders, resources, and important updates to help you stay on track.
           </p>
+          <p style="margin:12px 0 0;">
+            <a href="https://whatsapp.com/channel/0029Vb5jLpHISTkGKsJUX32e" style="display:inline-block;background-color:#22c55e;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:10px 24px;border-radius:6px;">
+              Join WhatsApp Channel &rarr;
+            </a>
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Attachments Note -->
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:16px 0;">
+      <tr>
+        <td style="background-color:#eff6ff;border-left:4px solid #011C41;border-radius:0 8px 8px 0;padding:16px 20px;">
+          <p style="margin:0;font-size:15px;color:#333;line-height:1.7;">
+            We have attached the <strong>Sharkathon brochure</strong> and <strong>sample questions</strong> to this email for your reference.
+          </p>
         </td>
       </tr>
     </table>
@@ -110,7 +177,11 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
 
   return {
     subject: "Welcome to Sharkathon",
-    html: emailLayout(body),
+    html: sharkathonEmailLayout(body),
+    attachments: [
+      { filename: "Sharkathon Season2.pdf", path: path.join(process.cwd(), "public", "Sharkathon Season2.pdf") },
+      { filename: "Sharkathon-Sample Questions.pdf", path: path.join(process.cwd(), "public", "Sharkathon-Sample Questions_compressed.pdf") },
+    ],
   };
 }
 
@@ -173,7 +244,7 @@ export function sharkathonEnquiryEmail(name: string): { subject: string; html: s
 
   return {
     subject: "Thank you for your interest in Sharkathon",
-    html: emailLayout(body),
+    html: sharkathonEmailLayout(body),
   };
 }
 
@@ -265,6 +336,6 @@ export function dealRoomRegistrationEmail(studentName: string): { subject: strin
 
   return {
     subject: "Welcome to The Deal Room",
-    html: emailLayout(body),
+    html: dealRoomEmailLayout(body),
   };
 }

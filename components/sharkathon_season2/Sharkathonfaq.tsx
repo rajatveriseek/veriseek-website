@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 const FAQS = [
   {
     q: "Who can participate in Sharkathon?",
-    a: "Students from Grades 9 to 12 can participate.",
+    a: "Students from Grades 9 to 12 (and recent graduates) can participate.",
   },
   {
     q: "Is this competition for individuals or teams?",
@@ -17,7 +17,7 @@ const FAQS = [
   },
   {
     q: "Where is Sharkathon conducted?",
-    a: "The first two rounds are conducted online. The third round is can be conducted both online and offline in Delhi NCR.",
+    a: "The first two rounds are conducted online. The third round will be conducted both online and offline in Delhi NCR.",
   },
 ];
 
