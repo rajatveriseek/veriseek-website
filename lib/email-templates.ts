@@ -97,7 +97,7 @@ interface EmailAttachment {
 
 // ─── Sharkathon Registration Welcome Email ───────────────────────────────────
 
-export function sharkathonRegistrationEmail(studentName: string): { subject: string; html: string; attachments: EmailAttachment[] } {
+export function sharkathonRegistrationEmail(studentName: string): { subject: string; html: string } {
   const body = `
     <h2 style="margin:0 0 20px;font-size:22px;color:#011C41;">Welcome to Sharkathon!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">Dear ${studentName},</p>
@@ -107,20 +107,6 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
     <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">
       Sharkathon is a learning led competition designed to build practical decision making skills through a structured learning track and three competition rounds. During the programme, you will step into the roles of an entrepreneur, a consultant, and an investor, and work through real world style business scenarios.
     </p>
-
-    <!-- YouTube Video -->
-    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:24px 0;">
-      <tr>
-        <td align="center">
-          <a href="https://youtu.be/lrMrYxct3Tk" style="display:inline-block;text-decoration:none;">
-            <img src="https://img.youtube.com/vi/lrMrYxct3Tk/hqdefault.jpg" alt="Watch Sharkathon Video" style="width:100%;max-width:520px;border-radius:8px;border:2px solid #e9ecef;" />
-          </a>
-          <p style="margin:8px 0 0;font-size:13px;color:#6c757d;">
-            <a href="https://youtu.be/lrMrYxct3Tk" style="color:#011C41;text-decoration:underline;">Watch the Sharkathon overview video &rarr;</a>
-          </p>
-        </td>
-      </tr>
-    </table>
 
     <p style="margin:0 0 12px;font-size:15px;color:#333;line-height:1.7;">Over the next few days, we will share:</p>
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 8px;">
@@ -160,17 +146,6 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
       </tr>
     </table>
 
-    <!-- Attachments Note -->
-    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:16px 0;">
-      <tr>
-        <td style="background-color:#eff6ff;border-left:4px solid #011C41;border-radius:0 8px 8px 0;padding:16px 20px;">
-          <p style="margin:0;font-size:15px;color:#333;line-height:1.7;">
-            We have attached the <strong>Sharkathon brochure</strong> and <strong>sample questions</strong> to this email for your reference.
-          </p>
-        </td>
-      </tr>
-    </table>
-
     <p style="margin:20px 0 0;font-size:15px;color:#333;line-height:1.7;">
       We are looking forward to meeting you in the first session and having you as part of Sharkathon.
     </p>`;
@@ -178,16 +153,12 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
   return {
     subject: "Welcome to Sharkathon",
     html: sharkathonEmailLayout(body),
-    attachments: [
-      { filename: "Sharkathon Season2.pdf", path: path.join(process.cwd(), "public", "Sharkathon Season2.pdf") },
-      { filename: "Sharkathon-Sample Questions.pdf", path: path.join(process.cwd(), "public", "Sharkathon-Sample Questions_compressed.pdf") },
-    ],
   };
 }
 
 // ─── Sharkathon Enquiry Email ────────────────────────────────────────────────
 
-export function sharkathonEnquiryEmail(name: string): { subject: string; html: string } {
+export function sharkathonEnquiryEmail(name: string): { subject: string; html: string; attachments: EmailAttachment[] } {
   const body = `
     <h2 style="margin:0 0 20px;font-size:22px;color:#011C41;">Thank You for Your Interest!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">Dear ${name},</p>
@@ -197,23 +168,28 @@ export function sharkathonEnquiryEmail(name: string): { subject: string; html: s
     <p style="margin:0 0 12px;font-size:15px;color:#333;line-height:1.7;">
       In the meantime, here are a few resources to help you learn more about the programme:
     </p>
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 8px;">
+
+    <!-- YouTube Video -->
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:24px 0;">
       <tr>
-        <td style="padding:8px 0;font-size:15px;color:#333;vertical-align:top;">
-          <span style="color:#FAD133;font-size:16px;margin-right:10px;">&#9654;</span>
-          A short video explaining the format with highlights and participant testimonials
+        <td align="center">
+          <a href="https://youtu.be/lrMrYxct3Tk" style="display:inline-block;text-decoration:none;">
+            <img src="https://img.youtube.com/vi/lrMrYxct3Tk/hqdefault.jpg" alt="Watch Sharkathon Video" style="width:100%;max-width:520px;border-radius:8px;border:2px solid #e9ecef;" />
+          </a>
+          <p style="margin:8px 0 0;font-size:13px;color:#6c757d;">
+            <a href="https://youtu.be/lrMrYxct3Tk" style="color:#011C41;text-decoration:underline;">Watch the Sharkathon overview video</a>
+          </p>
         </td>
       </tr>
+    </table>
+
+    <!-- Attachments Note -->
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:16px 0;">
       <tr>
-        <td style="padding:8px 0;font-size:15px;color:#333;vertical-align:top;">
-          <span style="color:#FAD133;font-size:16px;margin-right:10px;">&#128218;</span>
-          The Sharkathon brochure with the programme overview and timeline
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:8px 0;font-size:15px;color:#333;vertical-align:top;">
-          <span style="color:#FAD133;font-size:16px;margin-right:10px;">&#128221;</span>
-          Sample questions similar to those in Rounds 1, 2, and 3
+        <td style="background-color:#eff6ff;border-left:4px solid #011C41;border-radius:0 8px 8px 0;padding:16px 20px;">
+          <p style="margin:0;font-size:15px;color:#333;line-height:1.7;">
+            We have attached the <strong>Sharkathon brochure</strong> and <strong>sample questions</strong> to this email for your reference.
+          </p>
         </td>
       </tr>
     </table>
@@ -245,6 +221,10 @@ export function sharkathonEnquiryEmail(name: string): { subject: string; html: s
   return {
     subject: "Thank you for your interest in Sharkathon",
     html: sharkathonEmailLayout(body),
+    attachments: [
+      { filename: "Sharkathon Season2.pdf", path: path.join(process.cwd(), "public", "Sharkathon Season2.pdf") },
+      { filename: "Sharkathon-Sample Questions.pdf", path: path.join(process.cwd(), "public", "Sharkathon-Sample Questions_compressed.pdf") },
+    ],
   };
 }
 
