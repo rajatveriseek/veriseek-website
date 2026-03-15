@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { submitSharkathonEnquiry } from "@/app/actions/registration";
 
 // ─── Round data (3 dark cards) ─────────────────────────────────────────────────
 
@@ -76,6 +77,135 @@ function ArrowIcon() {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
       <path d="M7 17L17 7M17 7H7M17 7v10" />
     </svg>
+  );
+}
+
+// ─── Enquiry + Brochure Modal ─────────────────────────────────────────────────
+function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string; onClose: () => void }) {
+  const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const overlayRef          = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", fn);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", fn); document.body.style.overflow = ""; };
+  }, [onClose]);
+
+  const handleOverlay = (e: React.MouseEvent) => { if (e.target === overlayRef.current) onClose(); };
+  const handleChange  = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      const result = await submitSharkathonEnquiry(form);
+      if (result.success) {
+        setStatus("success");
+        const a = document.createElement("a");
+        a.href = brochureHref; a.download = "Sharkathon Season 2 Brochure";
+        a.target = "_blank"; a.rel = "noopener noreferrer";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { setStatus("error"); }
+    } catch { setStatus("error"); }
+  };
+
+  return (
+    <div ref={overlayRef} onClick={handleOverlay} style={{
+      position: "fixed", inset: 0, zIndex: 10000,
+      background: "rgba(1,22,56,0.72)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "20px", backdropFilter: "blur(6px)",
+    }}>
+      <div role="dialog" aria-modal="true" style={{
+        background: "#011638",
+        border: "1.5px solid rgba(245,200,66,0.30)",
+        borderRadius: 20, padding: "36px 32px",
+        width: "100%", maxWidth: 420,
+        position: "relative",
+        fontFamily: "'DM Sans', sans-serif",
+      }}>
+        <button onClick={onClose} style={{
+          position: "absolute", top: 14, right: 14,
+          background: "none", border: "none", cursor: "pointer",
+          color: "rgba(255,255,255,0.55)", padding: 6,
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "16px 0" }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f5c842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: "0 auto 16px" }}>
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <p style={{ color: "#ffffff", fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Brochure is downloading!</p>
+            <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 14, marginBottom: 24 }}>Our team will also reach out to you shortly.</p>
+            <button onClick={onClose} style={{
+              background: "#f5c842", color: "#011638",
+              border: "none", borderRadius: 100, padding: "12px 32px",
+              fontWeight: 700, fontSize: 14, cursor: "pointer",
+            }}>Done</button>
+          </div>
+        ) : (
+          <>
+            <h2 style={{ color: "#f5c842", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Enquire Now / Download Brochure</h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14, marginBottom: 24 }}>Fill in your details and we&apos;ll get back to you.</p>
+            <form onSubmit={handleSubmit} noValidate>
+              {[
+                { id: "name",   label: "Full Name",  type: "text",  placeholder: "e.g. Arjun Sharma" },
+                { id: "phone",  label: "Phone No.",  type: "tel",   placeholder: "e.g. +91 98765 43210" },
+                { id: "school", label: "School",     type: "text",  placeholder: "e.g. DPS RK Puram" },
+                { id: "email",  label: "Email",      type: "email", placeholder: "e.g. arjun@email.com" },
+              ].map(({ id, label, type, placeholder }) => (
+                <div key={id} style={{ marginBottom: 16 }}>
+                  <label htmlFor={`rnd-${id}`} style={{
+                    display: "block", color: "rgba(255,255,255,0.70)",
+                    fontSize: 12, fontWeight: 600, marginBottom: 6,
+                    letterSpacing: "0.8px", textTransform: "uppercase",
+                  }}>{label}</label>
+                  <input
+                    id={`rnd-${id}`} name={id} type={type}
+                    placeholder={placeholder}
+                    value={(form as any)[id]} onChange={handleChange} required
+                    style={{
+                      width: "100%", background: "rgba(255,255,255,0.07)",
+                      border: "1.5px solid rgba(255,255,255,0.15)",
+                      borderRadius: 10, padding: "11px 14px",
+                      color: "#ffffff", fontSize: 14,
+                      outline: "none", fontFamily: "'DM Sans', sans-serif",
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
+              ))}
+              <button type="submit" disabled={status === "submitting"} style={{
+                width: "100%", background: "#f5c842", color: "#011638",
+                border: "none", borderRadius: 100, padding: "14px",
+                fontWeight: 700, fontSize: 14, cursor: status === "submitting" ? "not-allowed" : "pointer",
+                opacity: status === "submitting" ? 0.7 : 1,
+                marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              }}>
+                {status === "submitting" ? "Sending\u2026" : (
+                  <><span>Download Brochure</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </>
+                )}
+              </button>
+              {status === "error" && <p style={{ color: "#f87171", fontSize: 13, marginTop: 10, textAlign: "center" }}>Something went wrong. Please try again.</p>}
+            </form>
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -182,6 +312,7 @@ export default function SharkathonRounds({
   brochureHref = "/Sharkathon Season2.pdf",
 }: SharkathonRoundsProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -191,29 +322,37 @@ export default function SharkathonRounds({
     const cards   = Array.from(section.querySelectorAll<HTMLElement>(".sr-card"));
     const banner  = section.querySelector<HTMLElement>(".sr-judging-banner");
     const footer  = section.querySelector<HTMLElement>(".sr-footer");
+    const timeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-
-          if (el === header) {
-            el.classList.add("is-visible");
-          } else if (el === banner || el === footer) {
-            setTimeout(() => el.classList.add("is-visible"), 120);
+          if (entry.isIntersecting) {
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            if (el === header) {
+              el.classList.add("is-visible");
+            } else if (el === banner || el === footer) {
+              const t = setTimeout(() => el.classList.add("is-visible"), 120);
+              timeouts.set(el, t);
+            } else {
+              const idx = cards.indexOf(el);
+              const t = setTimeout(() => el.classList.add("is-visible"), 80 + idx * 110);
+              timeouts.set(el, t);
+            }
           } else {
-            const idx = cards.indexOf(el);
-            setTimeout(() => el.classList.add("is-visible"), 80 + idx * 110);
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            el.classList.remove("is-visible");
           }
-          io.unobserve(el);
         });
       },
       { threshold: 0.08 }
     );
 
     [header, ...cards, banner, footer].forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+    return () => { io.disconnect(); timeouts.forEach(clearTimeout); };
   }, []);
 
   return (
@@ -491,8 +630,16 @@ export default function SharkathonRounds({
           font-size: 13px; font-weight: 700; letter-spacing: 0.6px;
           text-transform: uppercase; font-family: 'DM Sans', sans-serif;
           text-decoration: none; cursor: pointer;
-          transition: all 0.22s ease; white-space: nowrap;
+          transition: all 0.22s ease;
           border: 2px solid #011638;
+          text-align: center;
+        }
+        .sr-btn-label {
+          display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        .sr-btn-sub {
+          font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+          text-transform: none; opacity: 0.75; line-height: 1;
         }
         .sr-btn-primary {
           background: #011638; color: #f5c842;
@@ -592,12 +739,17 @@ export default function SharkathonRounds({
             <a href={applyHref} className="sr-btn sr-btn-primary">
               Register Now <ArrowIcon />
             </a>
-            <a href={brochureHref} download target="_blank" rel="noopener noreferrer" className="sr-btn sr-btn-secondary">
-              Download Brochure <DownloadIcon />
-            </a>
+            <button onClick={() => setShowModal(true)} className="sr-btn sr-btn-secondary" type="button">
+              <span className="sr-btn-label">
+                <span>Enquire Now</span>
+                <span className="sr-btn-sub">(Download Brochure)</span>
+              </span>
+              <ArrowIcon />
+            </button>
           </div>
         </div>
       </section>
+      {showModal && <EnquiryBrochureModal brochureHref={brochureHref} onClose={() => setShowModal(false)} />}
     </>
   );
 }

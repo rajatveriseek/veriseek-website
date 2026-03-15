@@ -5,6 +5,8 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import AnalyticsWrapper from "@/components/shared/analytics-wrapper";
+import GlobalWhatsAppButton from "@/components/shared/global-whatsapp-button";
+import GlobalScrollReveal from "@/components/shared/scroll-reveal";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -72,11 +74,13 @@ export default function RootLayout({
       </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable, dmSans.variable, playfairDisplay.variable)}>
         <AnalyticsWrapper ga_id={GOOGLE_ANALYTICS_ID} />
+        <GlobalScrollReveal />
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        <GlobalWhatsAppButton />
       </body>
     </html>
   );

@@ -201,12 +201,14 @@ export default function VCFellowshipSection({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const imgWrap = entry.target.querySelector('.vcf-img-wrap');
+          const card = entry.target.querySelector('.vcf-card');
           if (entry.isIntersecting) {
-            const imgWrap = entry.target.querySelector('.vcf-img-wrap');
-            const card = entry.target.querySelector('.vcf-card');
-            if (imgWrap) imgWrap.classList.add('vcf-animate');
-            if (card) card.classList.add('vcf-animate');
-            observer.unobserve(entry.target);
+            if (imgWrap) { void (imgWrap as HTMLElement).offsetWidth; imgWrap.classList.add('vcf-animate'); }
+            if (card) { void (card as HTMLElement).offsetWidth; card.classList.add('vcf-animate'); }
+          } else {
+            if (imgWrap) imgWrap.classList.remove('vcf-animate');
+            if (card) card.classList.remove('vcf-animate');
           }
         });
       },

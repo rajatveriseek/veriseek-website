@@ -418,10 +418,12 @@ export default function ContactPage() {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-          el.classList.add("is-visible");
-          io.unobserve(el);
+          if (entry.isIntersecting) {
+            el.classList.add("is-visible");
+          } else {
+            el.classList.remove("is-visible");
+          }
         });
       },
       { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }

@@ -551,6 +551,12 @@ const CSS = `
     background: #ffffff;
     border: 1.5px solid rgba(1,22,56,0.12);
     box-shadow: 0 2px 8px rgba(1,22,56,0.10);
+    height: 72px;
+    padding: 8px 22px;
+  }
+  .ab-mentors-box .ab-logo-badge img {
+    height: 40px;
+    max-width: 140px;
   }
   .ab-mentors-box .ab-logo-badge:hover {
     border-color: rgba(1,22,56,0.35);

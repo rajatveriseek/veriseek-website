@@ -100,21 +100,28 @@ export default function VCFellowshipMentors() {
     const section = sectionRef.current;
     if (!section) return;
     const cards = Array.from(section.querySelectorAll<HTMLElement>(".vc-mentor-card"));
+    const timeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const card = entry.target as HTMLElement;
           if (entry.isIntersecting) {
-            const card = entry.target as HTMLElement;
+            const existing = timeouts.get(card);
+            if (existing) clearTimeout(existing);
             const idx = cards.indexOf(card);
-            setTimeout(() => card.classList.add("is-visible"), idx * 130);
-            io.unobserve(card);
+            const t = setTimeout(() => card.classList.add("is-visible"), idx * 130);
+            timeouts.set(card, t);
+          } else {
+            const existing = timeouts.get(card);
+            if (existing) clearTimeout(existing);
+            card.classList.remove("is-visible");
           }
         });
       },
       { threshold: 0.12 }
     );
     cards.forEach((c) => io.observe(c));
-    return () => io.disconnect();
+    return () => { io.disconnect(); timeouts.forEach(clearTimeout); };
   }, []);
 
   return (

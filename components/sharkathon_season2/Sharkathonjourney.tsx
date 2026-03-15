@@ -153,19 +153,27 @@ export default function SharkathonJourney() {
     if (!section) return;
     const header = section.querySelector<HTMLElement>(".sj-header");
     const items  = Array.from(section.querySelectorAll<HTMLElement>(".sj-anim-item"));
+    const timeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-          if (el === header) {
-            el.classList.add("is-visible");
+          if (entry.isIntersecting) {
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            if (el === header) {
+              el.classList.add("is-visible");
+            } else {
+              const idx = items.indexOf(el);
+              const t = setTimeout(() => el.classList.add("is-visible"), idx * 50);
+              timeouts.set(el, t);
+            }
           } else {
-            const idx = items.indexOf(el);
-            setTimeout(() => el.classList.add("is-visible"), idx * 100);
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            el.classList.remove("is-visible");
           }
-          io.unobserve(el);
         });
       },
       { threshold: 0.05 }
@@ -173,7 +181,7 @@ export default function SharkathonJourney() {
 
     if (header) io.observe(header);
     items.forEach((n) => io.observe(n));
-    return () => io.disconnect();
+    return () => { io.disconnect(); timeouts.forEach(clearTimeout); };
   }, []);
 
   const learningItems = JOURNEY.filter((j) => j.type === "learning");
@@ -237,7 +245,7 @@ export default function SharkathonJourney() {
         --------------------------------------- */
         .sj-anim-item {
           opacity: 0; transform: translateY(18px);
-          transition: opacity 0.5s ease, transform 0.5s ease;
+          transition: opacity 0.4s ease, transform 0.4s ease;
         }
         .sj-anim-item.is-visible { opacity: 1; transform: translateY(0); }
 

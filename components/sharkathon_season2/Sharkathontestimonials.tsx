@@ -254,7 +254,13 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
     setStatus("submitting");
     try {
       const result = await submitSharkathonEnquiry(form);
-      setStatus(result.success ? "success" : "error");
+      if (result.success) {
+        setStatus("success");
+        const a = document.createElement("a");
+        a.href = "/Sharkathon Season2.pdf"; a.download = "Sharkathon Season 2 Brochure";
+        a.target = "_blank"; a.rel = "noopener noreferrer";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { setStatus("error"); }
     } catch { setStatus("error"); }
   };
 
@@ -307,7 +313,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
 function Avatar({ src, name }: { src?: string; name: string }) {
   const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   if (src) {
-    return <Image src={src} alt={name} className="tm-avatar-img" width={400} height={400} loading="lazy" />;
+    return <Image src={src} alt={name} className="tm-avatar-img" width={400} height={400} />;
   }
   return (
     <div className="tm-avatar-placeholder">
@@ -438,7 +444,8 @@ export default function SharkathonTestimonials({
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
-          io.unobserve(entry.target);
+        } else {
+          entry.target.classList.remove("is-visible");
         }
       });
     }, { threshold: 0.08 });
@@ -701,8 +708,16 @@ export default function SharkathonTestimonials({
           font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
           text-transform: uppercase; font-family: 'DM Sans', sans-serif;
           text-decoration: none; cursor: pointer;
-          transition: all 0.22s ease; white-space: nowrap;
+          transition: all 0.22s ease;
           border: 2px solid #011638;
+          text-align: center;
+        }
+        .tm-btn-label {
+          display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        .tm-btn-sub {
+          font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+          text-transform: none; opacity: 0.75; line-height: 1;
         }
         .tm-btn-primary {
           background: #011638; color: #f5c842;
@@ -959,7 +974,11 @@ export default function SharkathonTestimonials({
               onClick={() => setShowModal(true)}
               type="button"
             >
-              Enquire More <ArrowIcon />
+              <span className="tm-btn-label">
+                <span>Enquire Now</span>
+                <span className="tm-btn-sub">(Download Brochure)</span>
+              </span>
+              <ArrowIcon />
             </button>
           </div>
 

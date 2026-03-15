@@ -53,16 +53,17 @@ export default function VCFellowshipPricing({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const header = entry.target.querySelector('.vcp-header');
+          const left = entry.target.querySelector('.vcp-left');
+          const right = entry.target.querySelector('.vcp-right');
           if (entry.isIntersecting) {
-            const header = entry.target.querySelector('.vcp-header');
-            const left = entry.target.querySelector('.vcp-left');
-            const right = entry.target.querySelector('.vcp-right');
-            
-            if (header) header.classList.add('vcp-animate');
-            if (left) left.classList.add('vcp-animate');
-            if (right) right.classList.add('vcp-animate');
-            
-            observer.unobserve(entry.target);
+            if (header) { void (header as HTMLElement).offsetWidth; header.classList.add('vcp-animate'); }
+            if (left) { void (left as HTMLElement).offsetWidth; left.classList.add('vcp-animate'); }
+            if (right) { void (right as HTMLElement).offsetWidth; right.classList.add('vcp-animate'); }
+          } else {
+            if (header) header.classList.remove('vcp-animate');
+            if (left) left.classList.remove('vcp-animate');
+            if (right) right.classList.remove('vcp-animate');
           }
         });
       },

@@ -3,8 +3,145 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { submitSharkathonEnquiry } from "@/app/actions/registration";
 
 const LazyYouTube = dynamic(() => import("@/components/shared/lazy-youtube"), { ssr: false });
+
+// ─── Enquiry + Brochure Modal ─────────────────────────────────────────────────
+function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string; onClose: () => void }) {
+  const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const overlayRef          = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", fn);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", fn); document.body.style.overflow = ""; };
+  }, [onClose]);
+
+  const handleOverlay = (e: React.MouseEvent) => { if (e.target === overlayRef.current) onClose(); };
+  const handleChange  = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      const result = await submitSharkathonEnquiry(form);
+      if (result.success) {
+        setStatus("success");
+        // Trigger brochure download
+        const a = document.createElement("a");
+        a.href = brochureHref;
+        a.download = "Sharkathon Season 2 Brochure";
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        setStatus("error");
+      }
+    } catch { setStatus("error"); }
+  };
+
+  return (
+    <div ref={overlayRef} onClick={handleOverlay} style={{
+      position: "fixed", inset: 0, zIndex: 10000,
+      background: "rgba(1,22,56,0.72)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "20px", backdropFilter: "blur(6px)",
+    }}>
+      <div role="dialog" aria-modal="true" style={{
+        background: "#011638",
+        border: "1.5px solid rgba(245,200,66,0.30)",
+        borderRadius: 20, padding: "36px 32px",
+        width: "100%", maxWidth: 420,
+        position: "relative",
+        fontFamily: "'DM Sans', sans-serif",
+      }}>
+        <button onClick={onClose} style={{
+          position: "absolute", top: 14, right: 14,
+          background: "none", border: "none", cursor: "pointer",
+          color: "rgba(255,255,255,0.55)", padding: 6,
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "16px 0" }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f5c842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: "0 auto 16px" }}>
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <p style={{ color: "#ffffff", fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Brochure is downloading!</p>
+            <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 14, marginBottom: 24 }}>Our team will also reach out to you shortly.</p>
+            <button onClick={onClose} style={{
+              background: "#f5c842", color: "#011638",
+              border: "none", borderRadius: 100, padding: "12px 32px",
+              fontWeight: 700, fontSize: 14, cursor: "pointer",
+            }}>Done</button>
+          </div>
+        ) : (
+          <>
+            <h2 style={{ color: "#f5c842", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Enquire More / Download Brochure</h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14, marginBottom: 24 }}>Fill in your details and we&apos;ll get back to you.</p>
+            <form onSubmit={handleSubmit} noValidate>
+              {[
+                { id: "name",   label: "Full Name",  type: "text",  placeholder: "e.g. Arjun Sharma" },
+                { id: "phone",  label: "Phone No.",  type: "tel",   placeholder: "e.g. +91 98765 43210" },
+                { id: "school", label: "School",     type: "text",  placeholder: "e.g. DPS RK Puram" },
+                { id: "email",  label: "Email",      type: "email", placeholder: "e.g. arjun@email.com" },
+              ].map(({ id, label, type, placeholder }) => (
+                <div key={id} style={{ marginBottom: 16 }}>
+                  <label htmlFor={`brq-${id}`} style={{
+                    display: "block", color: "rgba(255,255,255,0.70)",
+                    fontSize: 12, fontWeight: 600, marginBottom: 6,
+                    letterSpacing: "0.8px", textTransform: "uppercase",
+                  }}>{label}</label>
+                  <input
+                    id={`brq-${id}`} name={id} type={type}
+                    placeholder={placeholder}
+                    value={(form as any)[id]} onChange={handleChange} required
+                    style={{
+                      width: "100%", background: "rgba(255,255,255,0.07)",
+                      border: "1.5px solid rgba(255,255,255,0.15)",
+                      borderRadius: 10, padding: "11px 14px",
+                      color: "#ffffff", fontSize: 14,
+                      outline: "none", fontFamily: "'DM Sans', sans-serif",
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
+              ))}
+              <button type="submit" disabled={status === "submitting"} style={{
+                width: "100%", background: "#f5c842", color: "#011638",
+                border: "none", borderRadius: 100, padding: "14px",
+                fontWeight: 700, fontSize: 14, cursor: status === "submitting" ? "not-allowed" : "pointer",
+                opacity: status === "submitting" ? 0.7 : 1,
+                marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              }}>
+                {status === "submitting" ? "Sending\u2026" : (
+                  <><span>Download Brochure</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </>
+                )}
+              </button>
+              {status === "error" && <p style={{ color: "#f87171", fontSize: 13, marginTop: 10, textAlign: "center" }}>Something went wrong. Please try again.</p>}
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 const GLOBAL_CSS = `
 *, *::before, *::after { box-sizing: border-box; }
@@ -85,6 +222,13 @@ const GLOBAL_CSS = `
     background: transparent; color: #f5c842; border: 2px solid #f5c842;
     font-family: 'DM Sans', sans-serif;
     text-transform: uppercase; text-align: center;
+  }
+  .sh-btn-label {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .sh-btn-sub {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+    text-transform: none; opacity: 0.80; line-height: 1;
   }
   .sh-btn-secondary:hover {
     background: rgba(245,200,66,0.12) !important;
@@ -213,9 +357,9 @@ const GLOBAL_CSS = `
   .sh-info-card-desktop {
     position: absolute;
     bottom: clamp(136px, 4.5vh, 144px);
-    right: clamp(20px, 6vw, 80px);
+    right: clamp(60px, 6vw, 120px);
     z-index: 20;
-    width: clamp(480px, 46vw, 680px);
+    width: clamp(380px, 46vw, 480px);
     box-shadow: 0 24px 64px rgba(1,22,56,0.45), 0 4px 16px rgba(1,22,56,0.22);
     animation: sh-card-in 0.7s 0.95s ease both;
   }
@@ -225,7 +369,7 @@ const GLOBAL_CSS = `
     display: flex; align-items: stretch;
   }
   .sh-stat-col {
-    flex: 1; padding: 4px 20px; text-align: center;
+    flex: 1; padding: 4px 10px; text-align: center;
   }
   .sh-stat-col:first-child { padding-left: 4px; text-align: left; }
   .sh-stat-col:last-child  { padding-right: 4px; text-align: right; }
@@ -238,7 +382,7 @@ const GLOBAL_CSS = `
     font-family: 'DM Sans', sans-serif; margin: 0 0 5px;
   }
   .sh-stat-value {
-    font-size: 12.5px; font-weight: 700; color: #011638;
+    font-size: 10.5px; font-weight: 700; color: #011638;
     font-family: 'DM Sans', sans-serif; margin: 0;
     line-height: 1.3;
   }
@@ -490,6 +634,26 @@ const GLOBAL_CSS = `
       letter-spacing: -0.5px;
     }
   }
+
+  /* ── What-section reveal animations ── */
+  .sh-what-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .sh-what-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .sh-yt-container {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease 0.12s, transform 0.7s ease 0.12s;
+  }
+  .sh-yt-container.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
 function ArrowIcon() {
@@ -564,6 +728,8 @@ export default function SharkathonHero({
   ],
 }: SharkathonHeroProps) {
   const injected = useRef(false);
+  const whatRef  = useRef<HTMLElement>(null);
+  const [showBrochureModal, setShowBrochureModal] = useState(false);
 
   useEffect(() => {
     if (injected.current) return;
@@ -572,6 +738,29 @@ export default function SharkathonHero({
     tag.setAttribute("data-sh-hero", "1");
     tag.textContent = GLOBAL_CSS;
     document.head.appendChild(tag);
+  }, []);
+
+  useEffect(() => {
+    const section = whatRef.current;
+    if (!section) return;
+    const text = section.querySelector<HTMLElement>(".sh-what-text");
+    const video = section.querySelector<HTMLElement>(".sh-yt-container");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (text)  text.classList.add("is-visible");
+            if (video) video.classList.add("is-visible");
+          } else {
+            if (text)  text.classList.remove("is-visible");
+            if (video) video.classList.remove("is-visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(section);
+    return () => io.disconnect();
   }, []);
 
   return (
@@ -732,10 +921,21 @@ export default function SharkathonHero({
             <a href={applyHref} onClick={onApply} className="sh-btn-primary">
               Register Now <ArrowIcon />
             </a>
-            <a href={brochureHref} download target="_blank" rel="noopener noreferrer" onClick={onBrochure} className="sh-btn-secondary">
-              Download Brochure <DownloadIcon />
-            </a>
+            <button type="button" onClick={() => setShowBrochureModal(true)} className="sh-btn-secondary">
+              <span className="sh-btn-label">
+                <span>Enquire Now</span>
+                <span className="sh-btn-sub">(Download Brochure)</span>
+              </span>
+              <DownloadIcon />
+            </button>
           </div>
+
+          {showBrochureModal && (
+            <EnquiryBrochureModal
+              brochureHref={brochureHref}
+              onClose={() => setShowBrochureModal(false)}
+            />
+          )}
 
           <div className="sh-anim-6">
             <p style={{
@@ -773,14 +973,21 @@ export default function SharkathonHero({
       {/* ══════════════════════════════════════
           WHAT IS SHARKATHON SECTION
       ══════════════════════════════════════ */}
-      <section className="sh-what-section">
+      <section className="sh-what-section" ref={whatRef}>
         <div className="sh-what-inner">
 
           {/* Heading — centred above video */}
           <div className="sh-what-text">
             <p className="sh-what-label">About the Programme</p>
-            <h2 className="sh-what-heading">
-              What is <em>Sharkathon?</em>
+            <h2 className="sh-what-heading" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.18em", flexWrap: "wrap" }}>
+              What is{" "}
+              <Image
+                src="/images/11.png"
+                alt="Sharkathon"
+                width={300}
+                height={80}
+                style={{ height: "0.88em", width: "auto", objectFit: "contain", display: "inline-block", verticalAlign: "middle" }}
+              /><em style={{ color: "#f5c842", fontStyle: "italic" }}>?</em>
             </h2>
             <div className="sh-what-rule" />
           </div>

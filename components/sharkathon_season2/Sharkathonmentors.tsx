@@ -79,19 +79,27 @@ export default function SharkathonMentors() {
     if (!section) return;
     const header = section.querySelector<HTMLElement>(".vm-header");
     const cards  = Array.from(section.querySelectorAll<HTMLElement>(".vm-card"));
+    const timeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-          if (el === header) {
-            el.classList.add("is-visible");
+          if (entry.isIntersecting) {
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            if (el === header) {
+              el.classList.add("is-visible");
+            } else {
+              const idx = cards.indexOf(el);
+              const t = setTimeout(() => el.classList.add("is-visible"), 80 + idx * 130);
+              timeouts.set(el, t);
+            }
           } else {
-            const idx = cards.indexOf(el);
-            setTimeout(() => el.classList.add("is-visible"), 80 + idx * 130);
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            el.classList.remove("is-visible");
           }
-          io.unobserve(el);
         });
       },
       { threshold: 0.10 }
@@ -99,7 +107,7 @@ export default function SharkathonMentors() {
 
     if (header) io.observe(header);
     cards.forEach((c) => io.observe(c));
-    return () => io.disconnect();
+    return () => { io.disconnect(); timeouts.forEach(clearTimeout); };
   }, []);
 
   return (

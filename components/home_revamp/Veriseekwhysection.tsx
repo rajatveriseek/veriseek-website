@@ -407,14 +407,14 @@ export default function VeriseekWhySection() {
         .vw-marquee-track:hover { animation-play-state: paused; }
         /* Equal-size company logo badges in marquee */
         .vw-marquee-track .vw-badge {
-          width: 110px; height: 42px;
-          flex-shrink: 0; padding: 6px 10px;
+          width: 140px; height: 54px;
+          flex-shrink: 0; padding: 6px 12px;
         }
         .vw-marquee-track .vw-badge-img {
           width: 100%; height: 100%;
           object-fit: contain; max-width: none;
         }
-        .vw-marquee-track .vw-badge-label { font-size: 11px; }
+        .vw-marquee-track .vw-badge-label { font-size: 12px; }
 
         /* ── School strip ── */
         @keyframes vw-school-scroll {
