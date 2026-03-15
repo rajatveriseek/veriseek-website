@@ -86,7 +86,17 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
     setStatus("submitting");
     try {
       const result = await submitSharkathonEnquiry(form);
-      setStatus(result.success ? "success" : "error");
+      if (result.success) {
+        setStatus("success");
+        const dl = (href: string, name: string) => {
+          const a = document.createElement("a");
+          a.href = href; a.download = name;
+          a.target = "_blank"; a.rel = "noopener noreferrer";
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        };
+        dl("/Sharkathon Season2.pdf", "Sharkathon Season 2 Brochure");
+        dl("/Sharkathon-Sample Questions.pdf", "Sharkathon Sample Questions");
+      } else { setStatus("error"); }
     } catch { setStatus("error"); }
   };
 
@@ -166,13 +176,15 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
 
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
         const el = entry.target as HTMLElement;
-        if (el === header) el.classList.add("is-visible");
-        else if (el === cta) setTimeout(() => el.classList.add("is-visible"), 200);
-        else if (el === imgWrap) setTimeout(() => el.classList.add("is-visible"), 80);
-        else { const idx = cards.indexOf(el); setTimeout(() => el.classList.add("is-visible"), 80 + idx * 110); }
-        io.unobserve(el);
+        if (entry.isIntersecting) {
+          if (el === header) el.classList.add("is-visible");
+          else if (el === cta) setTimeout(() => el.classList.add("is-visible"), 200);
+          else if (el === imgWrap) setTimeout(() => el.classList.add("is-visible"), 80);
+          else { const idx = cards.indexOf(el); setTimeout(() => el.classList.add("is-visible"), 80 + idx * 110); }
+        } else {
+          el.classList.remove("is-visible");
+        }
       });
     }, { threshold: 0.08 });
 
@@ -289,8 +301,16 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
           font-size: 13px; font-weight: 700; letter-spacing: 1px;
           text-transform: uppercase; font-family: 'DM Sans', sans-serif;
           text-decoration: none; cursor: pointer;
-          transition: all 0.25s ease; white-space: nowrap;
+          transition: all 0.25s ease;
           border: 2px solid #f5c842;
+          text-align: center;
+        }
+        .wyp-btn-label {
+          display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        .wyp-btn-sub {
+          font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+          text-transform: none; opacity: 0.80; line-height: 1;
         }
         .wyp-btn-primary {
           background: #f5c842; color: #011638;
@@ -483,7 +503,11 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
             <div className="wyp-cta">
               <a href={applyHref} className="wyp-btn wyp-btn-primary">Register Now <ArrowIcon /></a>
               <button className="wyp-btn wyp-btn-outline" onClick={() => setShowModal(true)} type="button">
-                Enquire Now <ArrowIcon />
+                <span className="wyp-btn-label">
+                  <span>Enquire Now</span>
+                  <span className="wyp-btn-sub">(Download Brochure / Sample Questions)</span>
+                </span>
+                <ArrowIcon />
               </button>
             </div>
           </div>

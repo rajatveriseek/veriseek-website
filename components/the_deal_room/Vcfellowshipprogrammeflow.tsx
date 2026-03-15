@@ -363,26 +363,35 @@ export default function VCProgrammeFlow() {
     if (!section) return;
 
     const blocks = Array.from(section.querySelectorAll<HTMLElement>(".vcf-day-block"));
+    const timeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
     const blockIO = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const block = entry.target as HTMLElement;
-          const bIdx = blocks.indexOf(block);
-          setTimeout(() => {
-            block.classList.add("is-visible");
-            const sessions = Array.from(block.querySelectorAll<HTMLElement>(".vcf-session"));
-            sessions.forEach((s, si) =>
-              setTimeout(() => s.classList.add("is-visible"), 120 + si * 80)
-            );
-          }, bIdx * 180);
-          blockIO.unobserve(block);
+          if (entry.isIntersecting) {
+            const existing = timeouts.get(block);
+            if (existing) clearTimeout(existing);
+            const bIdx = blocks.indexOf(block);
+            const t = setTimeout(() => {
+              block.classList.add("is-visible");
+              const sessions = Array.from(block.querySelectorAll<HTMLElement>(".vcf-session"));
+              sessions.forEach((s, si) =>
+                setTimeout(() => s.classList.add("is-visible"), 120 + si * 80)
+              );
+            }, bIdx * 180);
+            timeouts.set(block, t);
+          } else {
+            const existing = timeouts.get(block);
+            if (existing) clearTimeout(existing);
+            block.classList.remove("is-visible");
+            block.querySelectorAll<HTMLElement>(".vcf-session").forEach((s) => s.classList.remove("is-visible"));
+          }
         });
       },
       { threshold: 0.1 }
     );
     blocks.forEach((b) => blockIO.observe(b));
-    return () => blockIO.disconnect();
+    return () => { blockIO.disconnect(); timeouts.forEach(clearTimeout); };
   }, []);
 
   return (

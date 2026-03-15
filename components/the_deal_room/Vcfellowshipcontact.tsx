@@ -22,14 +22,14 @@ export default function VCFellowshipContact({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const card = entry.target.querySelector('.vc-contact-card');
+          const image = entry.target.querySelector('.vc-contact-image');
           if (entry.isIntersecting) {
-            const card = entry.target.querySelector('.vc-contact-card');
-            const image = entry.target.querySelector('.vc-contact-image');
-
-            if (card) card.classList.add('vc-animate');
-            if (image) image.classList.add('vc-animate');
-
-            observer.unobserve(entry.target);
+            if (card) { void (card as HTMLElement).offsetWidth; card.classList.add('vc-animate'); }
+            if (image) { void (image as HTMLElement).offsetWidth; image.classList.add('vc-animate'); }
+          } else {
+            if (card) card.classList.remove('vc-animate');
+            if (image) image.classList.remove('vc-animate');
           }
         });
       },

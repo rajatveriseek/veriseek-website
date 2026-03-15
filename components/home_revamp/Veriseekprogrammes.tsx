@@ -493,7 +493,7 @@ export default function VeriseekProgrammes() {
               </div>
 
               <div className="ep-ctas">
-                <a href="/sharkathon_s2" className="ep-btn-primary">
+                <a href="/sharkathon" className="ep-btn-primary">
                   Explore Programme <ArrowIcon />
                 </a>
                 <button

@@ -125,3 +125,22 @@ html {
   @apply absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary z-20;
 }
 
+/* ── Global Scroll Reveal ─────────────────────────────────────────────────── */
+/* Add data-reveal (or data-reveal="left" / "right") to any element           */
+/* A global IntersectionObserver togles the .revealed class bidirectionally   */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+[data-reveal="left"] {
+  transform: translateX(-22px);
+}
+[data-reveal="right"] {
+  transform: translateX(22px);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+

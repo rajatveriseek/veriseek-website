@@ -22,14 +22,15 @@ export default function Sharkathoncontact({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const card = entry.target.querySelector('.vc-contact-card');
-            const image = entry.target.querySelector('.vc-contact-image');
+          const card = entry.target.querySelector('.vc-contact-card');
+          const image = entry.target.querySelector('.vc-contact-image');
 
+          if (entry.isIntersecting) {
             if (card) card.classList.add('vc-animate');
             if (image) image.classList.add('vc-animate');
-
-            observer.unobserve(entry.target);
+          } else {
+            if (card) card.classList.remove('vc-animate');
+            if (image) image.classList.remove('vc-animate');
           }
         });
       },

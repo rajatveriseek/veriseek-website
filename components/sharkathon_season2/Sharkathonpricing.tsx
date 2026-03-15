@@ -65,7 +65,13 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
     setStatus("submitting");
     try {
       const result = await submitSharkathonEnquiry(form);
-      setStatus(result.success ? "success" : "error");
+      if (result.success) {
+        setStatus("success");
+        const a = document.createElement("a");
+        a.href = "/Sharkathon Season2.pdf"; a.download = "Sharkathon Season 2 Brochure";
+        a.target = "_blank"; a.rel = "noopener noreferrer";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { setStatus("error"); }
     } catch {
       setStatus("error");
     }
@@ -305,7 +311,10 @@ export default function SharkathonPricing({
             entry.target.querySelector(".vcp-header")?.classList.add("vcp-animate");
             entry.target.querySelector(".vcp-left")?.classList.add("vcp-animate");
             entry.target.querySelector(".vcp-right")?.classList.add("vcp-animate");
-            observer.unobserve(entry.target);
+          } else {
+            entry.target.querySelector(".vcp-header")?.classList.remove("vcp-animate");
+            entry.target.querySelector(".vcp-left")?.classList.remove("vcp-animate");
+            entry.target.querySelector(".vcp-right")?.classList.remove("vcp-animate");
           }
         });
       },
@@ -514,7 +523,14 @@ export default function SharkathonPricing({
           border: 2px solid #f5c842;
           transition: all 0.25s ease;
           box-shadow: 0 4px 20px rgba(245,200,66,0.20);
-          white-space: nowrap;
+          text-align: center;
+        }
+        .vcp-btn-label {
+          display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        .vcp-btn-sub {
+          font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+          text-transform: none; opacity: 0.80; line-height: 1;
         }
         .vcp-btn:hover {
           background: transparent; color: #f5c842;
@@ -611,7 +627,11 @@ export default function SharkathonPricing({
                 onClick={() => setShowModal(true)}
                 type="button"
               >
-                Enquire More <ArrowIcon />
+                <span className="vcp-btn-label">
+                  <span>Enquire Now</span>
+                  <span className="vcp-btn-sub">(Download Brochure)</span>
+                </span>
+                <ArrowIcon />
               </button>
             </div>
           </div>

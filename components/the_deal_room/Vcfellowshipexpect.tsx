@@ -70,18 +70,26 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
     const header = section.querySelector<HTMLElement>(".vcfe-header");
     const items = Array.from(section.querySelectorAll<HTMLElement>(".vcfe-item"));
 
+    const timeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-          if (el === header) {
-            el.classList.add("is-visible");
+          if (entry.isIntersecting) {
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            if (el === header) {
+              el.classList.add("is-visible");
+            } else {
+              const idx = items.indexOf(el);
+              const t = setTimeout(() => el.classList.add("is-visible"), 80 + idx * 90);
+              timeouts.set(el, t);
+            }
           } else {
-            const idx = items.indexOf(el);
-            setTimeout(() => el.classList.add("is-visible"), 80 + idx * 90);
+            const existing = timeouts.get(el);
+            if (existing) clearTimeout(existing);
+            el.classList.remove("is-visible");
           }
-          io.unobserve(el);
         });
       },
       { threshold: 0.1 }
@@ -89,7 +97,7 @@ export default function VCFellowshipExpect({ imageSrc }: { imageSrc?: string }) 
 
     if (header) io.observe(header);
     items.forEach((item) => io.observe(item));
-    return () => io.disconnect();
+    return () => { io.disconnect(); timeouts.forEach(clearTimeout); };
   }, []);
 
   return (

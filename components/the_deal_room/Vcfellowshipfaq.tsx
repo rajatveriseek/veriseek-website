@@ -37,15 +37,22 @@ export default function VCFellowshipFAQ() {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
-          if (el === header) {
-            setHeaderVisible(true);
+          if (entry.isIntersecting) {
+            if (el === header) {
+              setHeaderVisible(true);
+            } else {
+              const idx = items.indexOf(el);
+              setTimeout(() => setVisibleItems((prev) => new Set([...prev, idx])), idx * 100);
+            }
           } else {
-            const idx = items.indexOf(el);
-            setTimeout(() => setVisibleItems((prev) => new Set([...prev, idx])), idx * 100);
+            if (el === header) {
+              setHeaderVisible(false);
+            } else {
+              const idx = items.indexOf(el);
+              setVisibleItems((prev) => { const n = new Set(prev); n.delete(idx); return n; });
+            }
           }
-          io.unobserve(el);
         });
       },
       { threshold: 0.1 }
