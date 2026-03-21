@@ -404,7 +404,7 @@ export default function TheDealRoomHero({
         {/* CTA Buttons */}
         <div className="vc-anim-5 vc-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 28 }}>
           <a href={applyHref} onClick={onApply} className="vc-btn-primary">
-            14th - 15th March | Apply Now <ArrowIcon />
+            14th - 15th April | Apply Now <ArrowIcon />
           </a>
           <a
             href={brochureHref}
