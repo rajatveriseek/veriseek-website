@@ -40,7 +40,7 @@ interface VCPricingProps {
 
 export default function VCFellowshipPricing({
   fee       = "INR 17,700",
-  dates     = "14–15 March 2026",
+  dates     = "14th–15th April 2026",
   venue     = "Shiv Nadar University, Greater Noida",
   applyHref = "https://rzp.io/rzp/IfWaHBUQ",
   onApply   = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
