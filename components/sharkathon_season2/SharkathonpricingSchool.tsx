@@ -32,7 +32,7 @@ function CheckIcon() {
 
 // ─── Enquiry Modal ─────────────────────────────────────────────────────────────
 
-function EnquiryModal({ onClose }: { onClose: () => void }) {
+function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochureHref: string }) {
   const [form, setForm] = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -64,7 +64,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
       if (result.success) {
         setStatus("success");
         const a = document.createElement("a");
-        a.href = "/Sharkathon Season2.pdf"; a.download = "Sharkathon Season 2 Brochure";
+        a.href = brochureHref; a.download = "Sharkathon Season 2 Brochure";
         a.target = "_blank"; a.rel = "noopener noreferrer";
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
       } else { setStatus("error"); }
@@ -228,11 +228,13 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
 
 interface SharkathonPricingSchoolProps {
   applyHref?: string;
+  brochureHref?: string;
   onApply?: () => void;
 }
 
 export default function SharkathonPricingSchool({
   applyHref = "https://pages.razorpay.com/pl_ST7On7CPa30M7c/view",
+  brochureHref = "/Sharkathon Season2.pdf",
   onApply,
 }: SharkathonPricingSchoolProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -497,7 +499,7 @@ export default function SharkathonPricingSchool({
         }
       `}</style>
 
-      {showModal && <EnquiryModal onClose={() => setShowModal(false)} />}
+      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} />}
 
       <section className="vcp-section" ref={sectionRef}>
         <div className="vcp-header">

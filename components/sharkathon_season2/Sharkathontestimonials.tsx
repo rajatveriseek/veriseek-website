@@ -233,7 +233,7 @@ function QuoteIcon() {
 
 // ─── Enquiry Modal ─────────────────────────────────────────────────────────────
 
-function EnquiryModal({ onClose }: { onClose: () => void }) {
+function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochureHref: string }) {
   const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef          = useRef<HTMLDivElement>(null);
@@ -257,7 +257,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
       if (result.success) {
         setStatus("success");
         const a = document.createElement("a");
-        a.href = "/Sharkathon Season2.pdf"; a.download = "Sharkathon Season 2 Brochure";
+        a.href = brochureHref; a.download = "Sharkathon Season 2 Brochure";
         a.target = "_blank"; a.rel = "noopener noreferrer";
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
       } else { setStatus("error"); }
@@ -404,6 +404,7 @@ interface SharkathonTestimonialsProps {
 export default function SharkathonTestimonials({
   tabs         = TABS,
   applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
+  brochureHref = "/Sharkathon Season2.pdf",
 }: SharkathonTestimonialsProps) {
   const [activeTab, setActiveTab]   = useState(0);
   const [activeIdx, setActiveIdx]   = useState(0);
@@ -853,7 +854,7 @@ export default function SharkathonTestimonials({
         }
       `}</style>
 
-      {showModal && <EnquiryModal onClose={() => setShowModal(false)} />}
+      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} />}
 
       <section className="tm-section" ref={sectionRef}>
 
