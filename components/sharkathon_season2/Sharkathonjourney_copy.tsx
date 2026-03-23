@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 
@@ -30,9 +30,9 @@ const PHASES = [
     num: "03",
     heading: "Competition Phase — Rounds",
     items: [
-      "The CEO Round (21st July 2026)",
-      "The Consultant Round (28th July 2026)",
-      "The Investor Round (5th August 2026)",
+      "The CEO Round (19th July 2026)",
+      "The Consultant Round (26th July 2026)",
+      "The Investor Round (2nd August 2026)",
     ],
   },
 ];
@@ -366,9 +366,9 @@ export default function SharkathonJourneyCopy() {
                 <span className="sj2-card-num">03</span>
                 <h3 className="sj2-card-heading">Competition Phase — Rounds</h3>
                 <ul className="sj2-card-list">
-                  <li>The CEO Round (21st July 2026)</li>
-                  <li>The Consultant Round (28th July 2026)</li>
-                  <li>The Investor Round (5th August 2026)</li>
+                  <li>The CEO Round (19th July 2026)</li>
+                  <li>The Consultant Round (26th July 2026)</li>
+                  <li>The Investor Round (2nd August 2026)</li>
                 </ul>
               </div>
               <div className="sj2-connector"><div className="sj2-connector-dot" /></div>

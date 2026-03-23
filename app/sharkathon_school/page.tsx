@@ -11,7 +11,7 @@ const SharkathonTestimonials = dynamic(() => import("@/components/sharkathon_sea
 const SharkathonMentors = dynamic(() => import("@/components/sharkathon_season2/Sharkathonmentors"));
 const SharkathonJourney = dynamic(() => import("@/components/sharkathon_season2/Sharkathonjourney"));
 const SharkathonWhyParticipate = dynamic(() => import("@/components/sharkathon_season2/Sharkathonwhyparticipate"));
-const SharkathonPricing = dynamic(() => import("@/components/sharkathon_season2/Sharkathonpricing"));
+const SharkathonPricingSchool = dynamic(() => import("@/components/sharkathon_season2/SharkathonpricingSchool"));
 const Sharkathoncontact = dynamic(() => import("@/components/sharkathon_season2/Sharkathonconnect"));
 const SharkathonFAQ = dynamic(() => import("@/components/sharkathon_season2/Sharkathonfaq"));
 const SharkathonJourneyCopy = dynamic(() => import("@/components/sharkathon_season2/Sharkathonjourney_copy"));
@@ -35,7 +35,7 @@ export default function SharkathonPage() {
       
       
       <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"/>
-      <SharkathonPricing fee="INR 3500" applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" />
+      <SharkathonPricingSchool applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" />
       <Sharkathoncontact imageSrc="/images/P1101587.JPG" />
       <SharkathonFAQ />
 
