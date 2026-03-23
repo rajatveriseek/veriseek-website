@@ -22,20 +22,20 @@ export default function SharkathonPage() {
     // doesn't create a horizontal scrollbar on the page
     <div style={{ overflowX: "hidden" }}>
       <SharkathonHero
-        brochureHref="/Sharkathon Season2.pdf"
+        brochureHref="/Sharkathon Season__2.pdf"
         imageSrc="/images/P1101636.JPG"
         applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"
       />
       <SchoolMarquee />
-      <SharkathonRounds applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"/>
-      <SharkathonTestimonials applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"/>
+      <SharkathonRounds applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf"/>
+      <SharkathonTestimonials applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf"/>
       <SharkathonMentors />
       {/* <SharkathonJourney/> */}
       <SharkathonJourneyCopy/>
       
       
-      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"/>
-      <SharkathonPricingSchool applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" />
+      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf"/>
+      <SharkathonPricingSchool applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf"/>
       <Sharkathoncontact imageSrc="/images/P1101587.JPG" />
       <SharkathonFAQ />
 

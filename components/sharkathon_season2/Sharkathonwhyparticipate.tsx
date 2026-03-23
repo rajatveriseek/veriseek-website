@@ -60,7 +60,7 @@ const BENEFITS = [
   },
 ];
 
-function EnquiryModal({ onClose }: { onClose: () => void }) {
+function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochureHref: string }) {
   const [form, setForm] = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -94,7 +94,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
           a.target = "_blank"; a.rel = "noopener noreferrer";
           document.body.appendChild(a); a.click(); document.body.removeChild(a);
         };
-        dl("/Sharkathon Season2.pdf", "Sharkathon Season 2 Brochure");
+        dl(brochureHref, "Sharkathon Season 2 Brochure");
         dl("/Sharkathon-Sample Questions.pdf", "Sharkathon Sample Questions");
       } else { setStatus("error"); }
     } catch { setStatus("error"); }
@@ -159,10 +159,11 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
 
 interface SharkathonWhyProps {
   applyHref?: string;
+  brochureHref?: string;
   imageSrc?: string;
 }
 
-export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", imageSrc }: SharkathonWhyProps) {
+export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", brochureHref="/Sharkathon Season2.pdf", imageSrc }: SharkathonWhyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -466,7 +467,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
         }
       `}</style>
 
-      {showModal && <EnquiryModal onClose={() => setShowModal(false)} />}
+      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} />}
 
       <section className="wyp-section" ref={sectionRef}>
         <div className="wyp-inner">
