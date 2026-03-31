@@ -88,14 +88,6 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
       const result = await submitSharkathonEnquiry(form);
       if (result.success) {
         setStatus("success");
-        const dl = (href: string, name: string) => {
-          const a = document.createElement("a");
-          a.href = href; a.download = name;
-          a.target = "_blank"; a.rel = "noopener noreferrer";
-          document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        };
-        dl(brochureHref, "Sharkathon Season 2 Brochure");
-        dl("/Sharkathon-Sample Questions.pdf", "Sharkathon Sample Questions");
       } else { setStatus("error"); }
     } catch { setStatus("error"); }
   };
@@ -131,8 +123,8 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
           {status === "success" ? (
             <div className="enq-success">
               <CheckIcon />
-              <p className="enq-success-title">We've received your enquiry!</p>
-              <p className="enq-success-body">Our team will reach out shortly.</p>
+              <p className="enq-success-title">Query submitted successfully!</p>
+              <p className="enq-success-body">Our team will reach out to you shortly. The brochure for Sharkathon will be sent to your email inbox — please check there.</p>
               <button className="enq-submit" style={{ marginTop:20, maxWidth:200 }} onClick={onClose}>Done</button>
             </div>
           ) : (
@@ -145,7 +137,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
                 <div className="enq-field"><label className="enq-label" htmlFor="eq-school">School</label><input id="eq-school" name="school" type="text" className="enq-input" placeholder="e.g. DPS RK Puram" value={form.school} onChange={handleChange} required /></div>
                 <div className="enq-field"><label className="enq-label" htmlFor="eq-email">Email</label><input id="eq-email" name="email" type="email" className="enq-input" placeholder="e.g. arjun@email.com" value={form.email} onChange={handleChange} required /></div>
                 <button className="enq-submit" type="submit" disabled={status === "submitting"}>
-                  {status === "submitting" ? "Sending…" : <>Submit Enquiry <ArrowIcon /></>}
+                  {status === "submitting" ? "Sending…" : <>Submit Query <ArrowIcon /></>}
                 </button>
                 {status === "error" && <p className="enq-error">Something went wrong. Please try again.</p>}
               </form>
@@ -504,11 +496,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
             <div className="wyp-cta">
               <a href={applyHref} className="wyp-btn wyp-btn-primary">Register Now <ArrowIcon /></a>
               <button className="wyp-btn wyp-btn-outline" onClick={() => setShowModal(true)} type="button">
-                <span className="wyp-btn-label">
-                  <span>Enquire Now</span>
-                  <span className="wyp-btn-sub">(Download Brochure / Sample Questions)</span>
-                </span>
-                <ArrowIcon />
+                Enquire Now <ArrowIcon />
               </button>
             </div>
           </div>

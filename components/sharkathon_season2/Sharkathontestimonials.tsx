@@ -256,10 +256,6 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
       const result = await submitSharkathonEnquiry(form);
       if (result.success) {
         setStatus("success");
-        const a = document.createElement("a");
-        a.href = brochureHref; a.download = "Sharkathon Season 2 Brochure";
-        a.target = "_blank"; a.rel = "noopener noreferrer";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
       } else { setStatus("error"); }
     } catch { setStatus("error"); }
   };
@@ -272,8 +268,8 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
         {status === "success" ? (
           <div className="enq-success">
             <CheckIcon />
-            <p className="enq-success-title">We've received your enquiry!</p>
-            <p className="enq-success-body">Our team will reach out to you shortly.</p>
+            <p className="enq-success-title">Query submitted successfully!</p>
+            <p className="enq-success-body">Our team will reach out to you shortly. The brochure for Sharkathon will be sent to your email inbox — please check there.</p>
             <button className="enq-submit" style={{ maxWidth: 160, marginTop: 20 }} onClick={onClose}>Done</button>
           </div>
         ) : (
@@ -297,7 +293,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
                 </div>
               ))}
               <button className="enq-submit" type="submit" disabled={status === "submitting"}>
-                {status === "submitting" ? "Sending…" : <><span>Submit Enquiry</span> <ArrowIcon /></>}
+                {status === "submitting" ? "Sending…" : <>Submit Query <ArrowIcon /></>}
               </button>
               {status === "error" && <p className="enq-error">Something went wrong. Please try again.</p>}
             </form>
@@ -975,11 +971,7 @@ export default function SharkathonTestimonials({
               onClick={() => setShowModal(true)}
               type="button"
             >
-              <span className="tm-btn-label">
-                <span>Enquire Now</span>
-                <span className="tm-btn-sub">(Download Brochure)</span>
-              </span>
-              <ArrowIcon />
+              Enquire Now <ArrowIcon />
             </button>
           </div>
 

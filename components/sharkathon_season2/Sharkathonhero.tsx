@@ -31,15 +31,6 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
       const result = await submitSharkathonEnquiry(form);
       if (result.success) {
         setStatus("success");
-        // Trigger brochure download
-        const a = document.createElement("a");
-        a.href = brochureHref;
-        a.download = "Sharkathon Season 2 Brochure";
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
       } else {
         setStatus("error");
       }
@@ -77,8 +68,8 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
-            <p style={{ color: "#ffffff", fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Brochure is downloading!</p>
-            <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 14, marginBottom: 24 }}>Our team will also reach out to you shortly.</p>
+            <p style={{ color: "#ffffff", fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Query submitted successfully!</p>
+            <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 14, marginBottom: 24 }}>Our team will reach out to you shortly. The brochure for Sharkathon will be sent to your email inbox — please check there.</p>
             <button onClick={onClose} style={{
               background: "#f5c842", color: "#011638",
               border: "none", borderRadius: 100, padding: "12px 32px",
@@ -87,7 +78,7 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
           </div>
         ) : (
           <>
-            <h2 style={{ color: "#f5c842", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Enquire More / Download Brochure</h2>
+            <h2 style={{ color: "#f5c842", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Enquire About Sharkathon</h2>
             <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14, marginBottom: 24 }}>Fill in your details and we&apos;ll get back to you.</p>
             <form onSubmit={handleSubmit} noValidate>
               {[
@@ -124,15 +115,7 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
                 opacity: status === "submitting" ? 0.7 : 1,
                 marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}>
-                {status === "submitting" ? "Sending\u2026" : (
-                  <><span>Download Brochure</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                  </>
-                )}
+                {status === "submitting" ? "Sending\u2026" : "Submit Query"}
               </button>
               {status === "error" && <p style={{ color: "#f87171", fontSize: 13, marginTop: 10, textAlign: "center" }}>Something went wrong. Please try again.</p>}
             </form>
@@ -731,6 +714,12 @@ export default function SharkathonHero({
   const whatRef  = useRef<HTMLElement>(null);
   const [showBrochureModal, setShowBrochureModal] = useState(false);
 
+  // Auto-open enquiry modal 1 second after page load
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBrochureModal(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     if (injected.current) return;
     injected.current = true;
@@ -922,11 +911,7 @@ export default function SharkathonHero({
               Register Now <ArrowIcon />
             </a>
             <button type="button" onClick={() => setShowBrochureModal(true)} className="sh-btn-secondary">
-              <span className="sh-btn-label">
-                <span>Enquire Now</span>
-                <span className="sh-btn-sub">(Download Brochure)</span>
-              </span>
-              <DownloadIcon />
+              Enquire Now
             </button>
           </div>
 

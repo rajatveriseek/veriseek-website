@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find D:2026Freelanceveriseek-website/components/sharkathon_season2 -type f \\\\\\(-name *.tsx -o -name *.ts -o -name *.jsx -o -name *.js \\\\\\))",
+      "Bash(wc:*)"
+    ]
+  }
+}
