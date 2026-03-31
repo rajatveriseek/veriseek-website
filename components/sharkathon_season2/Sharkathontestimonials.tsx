@@ -738,7 +738,7 @@ export default function SharkathonTestimonials({
           to   { opacity:1; transform:translateY(0)    scale(1);    }
         }
         .enq-overlay {
-          position: fixed; inset: 0; z-index: 1000;
+          position: fixed; inset: 0; z-index: var(--modal-z, 10000);
           background: rgba(1,22,56,0.72);
           display: flex; align-items: center; justify-content: center;
           padding: 20px;
@@ -836,7 +836,19 @@ export default function SharkathonTestimonials({
           .tm-btn { flex: 1; justify-content: center; }
         }
 
+        @media (max-width: 767px), (max-height: 700px) {
+          .enq-overlay {
+            align-items: flex-start;
+            padding-top: calc(var(--navbar-h, 80px) + 8px);
+            padding-bottom: calc(var(--cta-btn-h, 72px) + 8px);
+            padding-left: 16px;
+            padding-right: 16px;
+            overflow-y: auto;
+          }
+        }
         @media (max-width: 480px) {
+          .enq-card { padding: 24px 18px 20px; }
+          .enq-heading { font-size: 18px; }
           .tm-section { padding: 56px 16px 72px; }
           .tm-tabs { gap: 6px; }
           .tm-tab { padding: 7px 14px; font-size: 12px; }
@@ -845,8 +857,6 @@ export default function SharkathonTestimonials({
           .tm-card-content { padding-top: 14px; }
           .tm-cta-row { flex-direction: column; }
           .tm-btn { width: 100%; }
-          .enq-card { padding: 24px 18px 20px; }
-          .enq-heading { font-size: 18px; }
         }
       `}</style>
 

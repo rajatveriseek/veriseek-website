@@ -81,7 +81,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
           to   { opacity: 1; transform: translateY(0)    scale(1);    }
         }
         .enq-overlay {
-          position: fixed; inset: 0; z-index: 1000;
+          position: fixed; inset: 0; z-index: var(--modal-z, 10000);
           background: rgba(1,22,56,0.70);
           display: flex; align-items: center; justify-content: center;
           padding: 20px;
@@ -163,9 +163,21 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
           margin-top: 8px; font-size: 13px; color: #c0392b;
           font-family: 'DM Sans', sans-serif; text-align: center;
         }
+        @media (max-width: 767px), (max-height: 700px) {
+          .enq-overlay {
+            align-items: flex-start;
+            padding-top: calc(var(--navbar-h, 80px) + 8px);
+            padding-bottom: calc(var(--cta-btn-h, 72px) + 8px);
+            padding-left: 16px;
+            padding-right: 16px;
+            overflow-y: auto;
+          }
+        }
         @media (max-width: 480px) {
           .enq-card { padding: 28px 20px 24px; }
           .enq-heading { font-size: 18px; }
+          .enq-field { margin-bottom: 12px; }
+          .enq-sub { margin-bottom: 20px; }
         }
       `}</style>
 
