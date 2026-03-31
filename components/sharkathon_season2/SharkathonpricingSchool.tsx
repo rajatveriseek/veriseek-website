@@ -63,10 +63,6 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
       const result = await submitSharkathonEnquiry(form);
       if (result.success) {
         setStatus("success");
-        const a = document.createElement("a");
-        a.href = brochureHref; a.download = "Sharkathon Season 2 Brochure";
-        a.target = "_blank"; a.rel = "noopener noreferrer";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
       } else { setStatus("error"); }
     } catch {
       setStatus("error");
@@ -179,10 +175,10 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
           {status === "success" ? (
             <div className="enq-success">
               <CheckIcon />
-              <p className="enq-success-title">We&apos;ve received your enquiry!</p>
+              <p className="enq-success-title">Query submitted successfully!</p>
               <p className="enq-success-body">
                 Our team will reach out to you shortly.<br />
-                Keep an eye on your inbox.
+                The brochure for Sharkathon will be sent to your email inbox — please check there.
               </p>
               <button className="enq-submit" style={{ marginTop: 20, maxWidth: 200 }} onClick={onClose}>
                 Done
@@ -210,7 +206,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
                   <input id="enq-email" name="email" type="email" className="enq-input" placeholder="e.g. arjun@email.com" value={form.email} onChange={handleChange} required />
                 </div>
                 <button className="enq-submit" type="submit" disabled={status === "submitting"}>
-                  {status === "submitting" ? "Sending…" : <>Submit Enquiry <ArrowIcon /></>}
+                  {status === "submitting" ? "Sending…" : <>Submit Query <ArrowIcon /></>}
                 </button>
                 {status === "error" && (
                   <p className="enq-error">Something went wrong. Please try again or email us directly.</p>
@@ -588,11 +584,7 @@ export default function SharkathonPricingSchool({
                 onClick={() => setShowModal(true)}
                 type="button"
               >
-                <span className="vcp-btn-label">
-                  <span>Enquire Now</span>
-                  <span className="vcp-btn-sub">(Download Brochure)</span>
-                </span>
-                <ArrowIcon />
+                Enquire Now <ArrowIcon />
               </button>
             </div>
           </div>

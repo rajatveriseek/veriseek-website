@@ -67,10 +67,6 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
       const result = await submitSharkathonEnquiry(form);
       if (result.success) {
         setStatus("success");
-        const a = document.createElement("a");
-        a.href = "/Sharkathon Season2.pdf"; a.download = "Sharkathon Season 2 Brochure";
-        a.target = "_blank"; a.rel = "noopener noreferrer";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
       } else { setStatus("error"); }
     } catch {
       setStatus("error");
@@ -213,10 +209,10 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
           {status === "success" ? (
             <div className="enq-success">
               <CheckIcon />
-              <p className="enq-success-title">We've received your enquiry!</p>
+              <p className="enq-success-title">Query submitted successfully!</p>
               <p className="enq-success-body">
                 Our team will reach out to you shortly.<br />
-                Keep an eye on your inbox.
+                The brochure for Sharkathon will be sent to your email inbox — please check there.
               </p>
               <button
                 className="enq-submit"
@@ -270,7 +266,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
                   type="submit"
                   disabled={status === "submitting"}
                 >
-                  {status === "submitting" ? "Sending…" : <>Submit Enquiry <ArrowIcon /></>}
+                  {status === "submitting" ? "Sending…" : <>Submit Query <ArrowIcon /></>}
                 </button>
 
                 {status === "error" && (
@@ -627,11 +623,7 @@ export default function SharkathonPricing({
                 onClick={() => setShowModal(true)}
                 type="button"
               >
-                <span className="vcp-btn-label">
-                  <span>Enquire Now</span>
-                  <span className="vcp-btn-sub">(Download Brochure)</span>
-                </span>
-                <ArrowIcon />
+                Enquire Now <ArrowIcon />
               </button>
             </div>
           </div>
