@@ -38,7 +38,20 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
   };
 
   return (
-    <div ref={overlayRef} onClick={handleOverlay} style={{
+    <>
+    <style>{`
+      @media (max-width: 767px), (max-height: 700px) {
+        .sh-enq-dark-overlay {
+          align-items: flex-start !important;
+          padding-top: calc(var(--navbar-h, 80px) + 8px) !important;
+          padding-bottom: calc(var(--cta-btn-h, 72px) + 8px) !important;
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+          overflow-y: auto !important;
+        }
+      }
+    `}</style>
+    <div ref={overlayRef} onClick={handleOverlay} className="sh-enq-dark-overlay" style={{
       position: "fixed", inset: 0, zIndex: 10000,
       background: "rgba(1,22,56,0.72)",
       display: "flex", alignItems: "center", justifyContent: "center",
@@ -123,6 +136,7 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
         )}
       </div>
     </div>
+    </>
   );
 }
 

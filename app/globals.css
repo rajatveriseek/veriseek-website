@@ -10,6 +10,11 @@ html {
 :root {
   --font-dm-sans-family: var(--font-dm-sans), 'DM Sans', sans-serif;
   --font-playfair-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+
+  /* Layout constants — consumed by modal overlays and scroll targets */
+  --navbar-h: 80px;          /* fixed header: h-12 (48px) + py-4 (2×16px) */
+  --cta-btn-h: 72px;         /* Apply Now: ~48px tall + 24px bottom offset  */
+  --modal-z: 10000;          /* above WhatsApp (9999) and navbar/CTA (z-50)  */
 }
 
 /* Override font-family references in inline styles */

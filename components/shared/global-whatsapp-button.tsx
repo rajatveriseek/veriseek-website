@@ -25,6 +25,7 @@ export default function GlobalWhatsAppButton() {
         position: "fixed",
         bottom: isRaised ? "6rem" : "1.5rem",
         right: "1.5rem",
+        /* stays below modals (--modal-z: 10000) but above page content */
         zIndex: 9999,
         width: 56,
         height: 56,
@@ -34,7 +35,7 @@ export default function GlobalWhatsAppButton() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        transition: "transform 0.2s",
+        transition: "transform 0.2s, bottom 0.3s ease",
       }}
     >
       <svg

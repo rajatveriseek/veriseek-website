@@ -97,7 +97,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
       <style>{`
         @keyframes enq-overlay-in{from{opacity:0}to{opacity:1}}
         @keyframes enq-card-in{from{opacity:0;transform:translateY(24px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .enq-overlay{position:fixed;inset:0;z-index:1000;background:rgba(1,22,56,0.72);display:flex;align-items:center;justify-content:center;padding:20px;animation:enq-overlay-in 0.25s ease both;backdrop-filter:blur(4px);}
+        .enq-overlay{position:fixed;inset:0;z-index:var(--modal-z,10000);background:rgba(1,22,56,0.72);display:flex;align-items:center;justify-content:center;padding:20px;animation:enq-overlay-in 0.25s ease both;backdrop-filter:blur(4px);}
         .enq-card{background:#fff;border-radius:20px;padding:36px 36px 32px;width:100%;max-width:460px;position:relative;box-shadow:0 32px 80px rgba(1,22,56,0.35);animation:enq-card-in 0.35s cubic-bezier(0.34,1.40,0.64,1) both;font-family:'DM Sans',sans-serif;}
         .enq-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:#eef0f2;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#011638;transition:background 0.2s,transform 0.2s;}
         .enq-close:hover{background:#dde0e4;transform:scale(1.08)}
@@ -115,7 +115,22 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
         .enq-success-title{font-size:20px;font-weight:700;color:#011638;}
         .enq-success-body{font-size:14px;color:rgba(1,22,56,0.55);line-height:1.6;}
         .enq-error{margin-top:8px;font-size:13px;color:#c0392b;text-align:center;}
-        @media(max-width:480px){.enq-card{padding:28px 20px 24px}.enq-heading{font-size:18px}}
+        @media (max-width: 767px), (max-height: 700px) {
+          .enq-overlay {
+            align-items: flex-start;
+            padding-top: calc(var(--navbar-h, 80px) + 8px);
+            padding-bottom: calc(var(--cta-btn-h, 72px) + 8px);
+            padding-left: 16px;
+            padding-right: 16px;
+            overflow-y: auto;
+          }
+        }
+        @media (max-width: 480px) {
+          .enq-card { padding: 28px 20px 24px; }
+          .enq-heading { font-size: 18px; }
+          .enq-field { margin-bottom: 12px; }
+          .enq-sub { margin-bottom: 20px; }
+        }
       `}</style>
       <div className="enq-overlay" ref={overlayRef} onClick={handleOverlayClick}>
         <div className="enq-card" role="dialog" aria-modal="true">
