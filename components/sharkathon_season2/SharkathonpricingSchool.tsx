@@ -603,14 +603,14 @@ export default function SharkathonPricingSchool({
           <div className="vcp-right">
             {singlePrice ? (
               <>
-                <p className="vcp-fee-label">Programme Fee</p>
+                <p className="vcp-fee-label" style={{ color: "white" }}>Programme Fee</p>
                 <div className="vcp-fee-row">
                   {originalFee && <span className="vcp-fee-strike">{originalFee}</span>}
                   <span className="vcp-fee-amount">{fee}</span>
                   <span className="vcp-fee-suffix">INCL. GST</span>
                 </div>
                 {originalFee && (
-                  <p className="vcp-save-note">Save INR 1,500 on the standard price</p>
+                  <p className="vcp-save-note">Save 30% on the standard price</p>
                 )}
 
                 <div className="vcp-divider" />
@@ -619,7 +619,6 @@ export default function SharkathonPricingSchool({
                   <span className="vcp-chip">3 Rounds Access</span>
                   <span className="vcp-chip">Learning Resources</span>
                   <span className="vcp-chip">Live Masterclasses</span>
-                  <span className="vcp-chip">Certificate &amp; LOR</span>
                 </div>
 
                 <div className="vcp-divider" />
