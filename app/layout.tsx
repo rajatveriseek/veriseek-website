@@ -50,6 +50,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://maps.googleapis.com" />
         <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        
 
         {/* ✅ Google Tag Manager Script */}
         <Script id="gtm-script" strategy="afterInteractive">
@@ -104,6 +105,7 @@ export default function RootLayout({
           />
         </noscript>
 
+        {/* Meta Pixel Code */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -118,6 +120,15 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=2142418656589626&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
 
         <AnalyticsWrapper ga_id={GOOGLE_ANALYTICS_ID} />
         <GlobalScrollReveal />
