@@ -32,7 +32,7 @@ function CheckIcon() {
 
 // ─── Enquiry Modal ─────────────────────────────────────────────────────────────
 
-function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochureHref: string }) {
+function EnquiryModal({ onClose, brochureHref, submitAction }: { onClose: () => void; brochureHref: string; submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }> }) {
   const [form, setForm] = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -60,7 +60,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
     e.preventDefault();
     setStatus("submitting");
     try {
-      const result = await submitSharkathonEnquiry(form);
+      const result = await (submitAction ?? submitSharkathonEnquiry)(form);
       if (result.success) {
         setStatus("success");
       } else { setStatus("error"); }
@@ -81,7 +81,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
           to   { opacity: 1; transform: translateY(0)    scale(1);    }
         }
         .enq-overlay {
-          position: fixed; inset: 0; z-index: var(--modal-z, 10000);
+          position: fixed; inset: 0; z-index: 99999;
           background: rgba(1,22,56,0.70);
           display: flex; align-items: center; justify-content: center;
           padding: 20px;
@@ -238,12 +238,20 @@ interface SharkathonPricingSchoolProps {
   applyHref?: string;
   brochureHref?: string;
   onApply?: () => void;
+  submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
+  singlePrice?: boolean;
+  fee?: string;
+  originalFee?: string;
 }
 
 export default function SharkathonPricingSchool({
   applyHref = "https://pages.razorpay.com/pl_ST7On7CPa30M7c/view",
   brochureHref = "/Sharkathon Season2.pdf",
   onApply,
+  submitAction,
+  singlePrice = false,
+  fee = "INR 3500",
+  originalFee,
 }: SharkathonPricingSchoolProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
@@ -445,6 +453,44 @@ export default function SharkathonPricingSchool({
           font-style: italic;
         }
 
+        /* ── Inclusion chips ── */
+        .vcp-chips {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          position: relative;
+          z-index: 1;
+          margin: 4px 0;
+        }
+        .vcp-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 5px 12px;
+          border-radius: 100px;
+          border: 1px solid rgba(245,200,66,0.28);
+          background: rgba(245,200,66,0.07);
+          font-size: 11px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.72);
+          letter-spacing: 0.3px;
+        }
+        .vcp-chip::before {
+          content: '✓';
+          color: #f5c842;
+          font-size: 10px;
+          font-weight: 700;
+        }
+        .vcp-save-note {
+          font-size: 12px;
+          color: rgba(245,200,66,0.80);
+          font-weight: 600;
+          letter-spacing: 0.2px;
+          position: relative;
+          z-index: 1;
+          margin-top: 2px;
+        }
+
         /* ── Buttons ── */
         .vcp-btn-row {
           display: flex; gap: 12px; flex-wrap: wrap;
@@ -507,7 +553,7 @@ export default function SharkathonPricingSchool({
         }
       `}</style>
 
-      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} />}
+      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} submitAction={submitAction} />}
 
       <section className="vcp-section" ref={sectionRef}>
         <div className="vcp-header">
@@ -553,52 +599,92 @@ export default function SharkathonPricingSchool({
             </div>
           </div>
 
-          {/* ── BLUE card — on top (two pricing options) ── */}
+          {/* ── BLUE card — on top ── */}
           <div className="vcp-right">
-            {/* Option 1 */}
-            <p className="vcp-option-label">Option 1 &mdash; All Three Rounds</p>
-            <div className="vcp-fee-row">
-              <span className="vcp-fee-strike">INR 5000</span>
-              <span className="vcp-fee-amount">INR 3500</span>
-              <span className="vcp-fee-suffix">INCL. GST</span>
-            </div>
-            <p className="vcp-fee-desc">Full access to all three rounds and all learning materials.</p>
+            {singlePrice ? (
+              <>
+                <p className="vcp-fee-label">Programme Fee</p>
+                <div className="vcp-fee-row">
+                  {originalFee && <span className="vcp-fee-strike">{originalFee}</span>}
+                  <span className="vcp-fee-amount">{fee}</span>
+                  <span className="vcp-fee-suffix">INCL. GST</span>
+                </div>
+                {originalFee && (
+                  <p className="vcp-save-note">Save INR 1,500 on the standard price</p>
+                )}
 
-            <div className="vcp-divider" />
+                <div className="vcp-divider" />
 
-            {/* Option 2 */}
-            <p className="vcp-option-label">Option 2 &mdash; Pay Per Round</p>
-            <div className="vcp-round-row">
-              <span className="vcp-round-name">Round 1</span>
-              <span className="vcp-round-price">INR 1500</span>
-            </div>
-            <div className="vcp-round-row">
-              <span className="vcp-round-name">Rounds 2 &amp; 3 Combined</span>
-              <span className="vcp-round-price">INR 2000</span>
-            </div>
+                <div className="vcp-chips">
+                  <span className="vcp-chip">3 Rounds Access</span>
+                  <span className="vcp-chip">Learning Resources</span>
+                  <span className="vcp-chip">Live Masterclasses</span>
+                  <span className="vcp-chip">Certificate &amp; LOR</span>
+                </div>
 
-            <div className="vcp-total-row">
-              <span className="vcp-total-label">Total</span>
-              <span className="vcp-total-price">INR 3500</span>
-            </div>
+                <div className="vcp-divider" />
 
-            <p className="vcp-note">
-              Access to learning materials unlocks progressively with each payment. Register for Round 1 now, upgrade anytime before the later rounds.
-            </p>
+                <div className="vcp-btn-row">
+                  <a href={applyHref} onClick={onApply} className="vcp-btn">
+                    Register Now <ArrowIcon />
+                  </a>
+                  <button
+                    className="vcp-btn vcp-btn-outline"
+                    onClick={() => setShowModal(true)}
+                    type="button"
+                  >
+                    Enquire Now <ArrowIcon />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Option 1 */}
+                <p className="vcp-option-label">Option 1 &mdash; All Three Rounds</p>
+                <div className="vcp-fee-row">
+                  <span className="vcp-fee-strike">INR 5000</span>
+                  <span className="vcp-fee-amount">INR 3500</span>
+                  <span className="vcp-fee-suffix">INCL. GST</span>
+                </div>
+                <p className="vcp-fee-desc">Full access to all three rounds and all learning materials.</p>
 
-            {/* Buttons */}
-            <div className="vcp-btn-row">
-              <a href={applyHref} onClick={onApply} className="vcp-btn">
-                Register Now <ArrowIcon />
-              </a>
-              <button
-                className="vcp-btn vcp-btn-outline"
-                onClick={() => setShowModal(true)}
-                type="button"
-              >
-                Enquire Now <ArrowIcon />
-              </button>
-            </div>
+                <div className="vcp-divider" />
+
+                {/* Option 2 */}
+                <p className="vcp-option-label">Option 2 &mdash; Pay Per Round</p>
+                <div className="vcp-round-row">
+                  <span className="vcp-round-name">Round 1</span>
+                  <span className="vcp-round-price">INR 1500</span>
+                </div>
+                <div className="vcp-round-row">
+                  <span className="vcp-round-name">Rounds 2 &amp; 3 Combined</span>
+                  <span className="vcp-round-price">INR 2000</span>
+                </div>
+
+                <div className="vcp-total-row">
+                  <span className="vcp-total-label">Total</span>
+                  <span className="vcp-total-price">INR 3500</span>
+                </div>
+
+                <p className="vcp-note">
+                  Access to learning materials unlocks progressively with each payment. Register for Round 1 now, upgrade anytime before the later rounds.
+                </p>
+
+                {/* Buttons */}
+                <div className="vcp-btn-row">
+                  <a href={applyHref} onClick={onApply} className="vcp-btn">
+                    Register Now <ArrowIcon />
+                  </a>
+                  <button
+                    className="vcp-btn vcp-btn-outline"
+                    onClick={() => setShowModal(true)}
+                    type="button"
+                  >
+                    Enquire Now <ArrowIcon />
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
         </div>

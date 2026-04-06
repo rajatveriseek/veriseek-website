@@ -86,7 +86,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
         }
 
         .enq-overlay {
-          position: fixed; inset: 0; z-index: var(--modal-z, 10000);
+          position: fixed; inset: 0; z-index: 99999;
           background: rgba(1,22,56,0.70);
           display: flex; align-items: center; justify-content: center;
           padding: 20px;

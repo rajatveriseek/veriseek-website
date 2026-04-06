@@ -81,7 +81,7 @@ function ArrowIcon() {
 }
 
 // ─── Enquiry + Brochure Modal ─────────────────────────────────────────────────
-function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string; onClose: () => void }) {
+function EnquiryBrochureModal({ brochureHref, onClose, submitAction }: { brochureHref: string; onClose: () => void; submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }> }) {
   const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef          = useRef<HTMLDivElement>(null);
@@ -101,7 +101,7 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
     e.preventDefault();
     setStatus("submitting");
     try {
-      const result = await submitSharkathonEnquiry(form);
+      const result = await (submitAction ?? submitSharkathonEnquiry)(form);
       if (result.success) {
         setStatus("success");
       } else { setStatus("error"); }
@@ -123,7 +123,7 @@ function EnquiryBrochureModal({ brochureHref, onClose }: { brochureHref: string;
       }
     `}</style>
     <div ref={overlayRef} onClick={handleOverlay} className="sh-enq-dark-overlay" style={{
-      position: "fixed", inset: 0, zIndex: 10000,
+      position: "fixed", inset: 0, zIndex: 99999,
       background: "rgba(1,22,56,0.72)",
       display: "flex", alignItems: "center", justifyContent: "center",
       padding: "20px", backdropFilter: "blur(6px)",
@@ -306,12 +306,14 @@ interface SharkathonRoundsProps {
   rounds?: typeof ROUNDS;
   applyHref?: string;
   brochureHref?: string;
+  submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
 }
 
 export default function SharkathonRounds({
   rounds = ROUNDS,
   applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   brochureHref = "/Sharkathon Season2.pdf",
+  submitAction,
 }: SharkathonRoundsProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showModal, setShowModal] = useState(false);
@@ -747,7 +749,7 @@ export default function SharkathonRounds({
           </div>
         </div>
       </section>
-      {showModal && <EnquiryBrochureModal brochureHref={brochureHref} onClose={() => setShowModal(false)} />}
+      {showModal && <EnquiryBrochureModal brochureHref={brochureHref} onClose={() => setShowModal(false)} submitAction={submitAction} />}
     </>
   );
 }

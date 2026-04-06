@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { submitSharkathonSchoolEnquiry } from "@/app/actions/registration";
+import { submitSharkathonPartnershipEnquiry } from "@/app/actions/registration";
 
 import SharkathonHero from "@/components/sharkathon_season2/Sharkathonhero";
 
@@ -23,27 +23,27 @@ export default function SharkathonPage() {
     // doesn't create a horizontal scrollbar on the page
     <div style={{ overflowX: "hidden" }}>
       <SharkathonHero
-        brochureHref="/Sharkathon Season__2.pdf"
+        brochureHref="/sharkathon_partnership.pdf"
         imageSrc="/images/P1101636.JPG"
-        applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"
-        submitAction={submitSharkathonSchoolEnquiry}
+        applyHref="https://rzp.io/rzp/X24xgKtl"
+        submitAction={submitSharkathonPartnershipEnquiry}
       />
       <SchoolMarquee />
-      <SharkathonRounds applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
-      <SharkathonTestimonials applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonRounds applyHref="https://rzp.io/rzp/X24xgKtl" brochureHref="/sharkathon_partnership.pdf" submitAction={submitSharkathonPartnershipEnquiry}/>
+      <SharkathonTestimonials applyHref="https://rzp.io/rzp/X24xgKtl" brochureHref="/sharkathon_partnership.pdf" submitAction={submitSharkathonPartnershipEnquiry}/>
       <SharkathonMentors />
       {/* <SharkathonJourney/> */}
       <SharkathonJourneyCopy/>
       
       
-      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
-      <SharkathonPricingSchool applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" applyHref="https://rzp.io/rzp/X24xgKtl" brochureHref="/sharkathon_partnership.pdf" submitAction={submitSharkathonPartnershipEnquiry}/>
+      <SharkathonPricingSchool applyHref="https://rzp.io/rzp/X24xgKtl" brochureHref="/sharkathon_partnership.pdf" submitAction={submitSharkathonPartnershipEnquiry} singlePrice fee="INR 3500" originalFee="INR 5,000"/>
       <Sharkathoncontact imageSrc="/images/P1101587.JPG" />
       <SharkathonFAQ />
 
       {/* Floating Apply Now Button (WhatsApp is global in layout) */}
       <Link
-        href="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"
+        href="https://rzp.io/rzp/X24xgKtl"
         className="fixed z-50 flex items-center gap-2 rounded-full bg-yellow-500 px-6 py-3 font-semibold text-black shadow-lg transition hover:scale-105 hover:bg-yellow-400"
           style={{ bottom: "1.5rem", right: "1.5rem" }}
       >

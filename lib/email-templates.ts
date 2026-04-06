@@ -158,7 +158,7 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
 
 // ─── Sharkathon Enquiry Email ────────────────────────────────────────────────
 
-export function sharkathonEnquiryEmail(name: string): { subject: string; html: string; attachments: EmailAttachment[] } {
+export function sharkathonEnquiryEmail(name: string, variant: 'sharkathon' | 'school' | 'partnerships' = 'sharkathon'): { subject: string; html: string; attachments: EmailAttachment[] } {
   const body = `
     <h2 style="margin:0 0 20px;font-size:22px;color:#011C41;">Thank You for Your Interest!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#333;line-height:1.7;">Dear ${name},</p>
@@ -221,10 +221,19 @@ export function sharkathonEnquiryEmail(name: string): { subject: string; html: s
   return {
     subject: "Thank you for your interest in Sharkathon",
     html: sharkathonEmailLayout(body),
-    attachments: [
-      { filename: "Sharkathon Season2.pdf", path: path.join(process.cwd(), "public", "Sharkathon Season2.pdf") },
-      { filename: "Sharkathon-Sample Questions.pdf", path: path.join(process.cwd(), "public", "Sharkathon-Sample Questions_compressed.pdf") },
-    ],
+    attachments: variant === 'partnerships'
+      ? [
+          { filename: "sharkathon_partnership.pdf", path: path.join(process.cwd(), "public", "sharkathon_partnership.pdf") },
+        ]
+      : variant === 'school'
+      ? [
+          { filename: "Sharkathon Season__2.pdf", path: path.join(process.cwd(), "public", "Sharkathon Season__2.pdf") },
+          { filename: "Sharkathon-Sample Questions.pdf", path: path.join(process.cwd(), "public", "Sharkathon-Sample Questions_compressed.pdf") },
+        ]
+      : [
+          { filename: "Sharkathon Season2.pdf", path: path.join(process.cwd(), "public", "Sharkathon Season2.pdf") },
+          { filename: "Sharkathon-Sample Questions.pdf", path: path.join(process.cwd(), "public", "Sharkathon-Sample Questions_compressed.pdf") },
+        ],
   };
 }
 
