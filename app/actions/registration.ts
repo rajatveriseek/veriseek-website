@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { supabase } from "@/lib/supabase"
 import { sendEmail } from "@/lib/email"
 import {
   sharkathonEnquiryEmail,
@@ -29,18 +28,20 @@ export async function submitRegistration(formData: FormData) {
       status: "pending",
     }
 
-    // Insert into Supabase
-    const { error } = await supabase
-      .from('registrations')
-      .insert([registrationData])
-
-    if (error) {
-      console.error("Supabase error:", error)
-      return { success: false, message: "Failed to save registration. Please try again." }
+    // Post to Google Sheets
+    const sheetUrl = process.env.SHARKATHON_ENQUIRY_SHEET_URL;
+    if (sheetUrl && sheetUrl !== "YOUR_DEPLOYMENT_URL_HERE") {
+      try {
+        await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...registrationData, timestamp: new Date().toISOString(), source: "sharkathon_registration" }),
+        });
+        console.log("Registration saved to Google Sheets");
+      } catch (sheetError) {
+        console.error("Failed to save to Google Sheets:", sheetError);
+      }
     }
-
-    // Log success
-    console.log("Registration saved to Supabase:", registrationData)
 
     // Send enquiry confirmation email (non-blocking)
     if (registrationData.email) {
@@ -137,7 +138,7 @@ export async function submitSharkathonEnquiry(data: {
     // 2. Send enquiry confirmation email
     if (data.email) {
       try {
-        const emailData = sharkathonEnquiryEmail(data.name || "Student");
+        const emailData = sharkathonEnquiryEmail(data.name || "Student", "sharkathon");
         await sendEmail({
           to: data.email,
           subject: emailData.subject,
@@ -153,6 +154,106 @@ export async function submitSharkathonEnquiry(data: {
     return { success: true, message: "Enquiry submitted successfully!" };
   } catch (error) {
     console.error("Sharkathon enquiry error:", error);
+    return { success: false, message: "Failed to submit enquiry. Please try again." };
+  }
+}
+
+// Submit Sharkathon School enquiry (from modal forms on sharkathon_school page)
+export async function submitSharkathonSchoolEnquiry(data: {
+  name: string;
+  phone: string;
+  school: string;
+  email: string;
+}) {
+  try {
+    // 1. Post to Google Sheets (reuse sharkathon enquiry sheet)
+    const sheetUrl = process.env.SHARKATHON_ENQUIRY_SHEET_URL;
+    if (sheetUrl && sheetUrl !== "YOUR_DEPLOYMENT_URL_HERE") {
+      try {
+        await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, timestamp: new Date().toISOString(), source: "sharkathon_school" }),
+        });
+        console.log("Sharkathon school enquiry saved to Google Sheets");
+      } catch (sheetError) {
+        console.error("Failed to save to Google Sheets:", sheetError);
+      }
+    }
+
+    // 2. Send enquiry confirmation email with school brochure attached
+    if (data.email) {
+      try {
+        const emailData = sharkathonEnquiryEmail(data.name || "Student", "school");
+        await sendEmail({
+          to: data.email,
+          subject: emailData.subject,
+          html: emailData.html,
+          attachments: emailData.attachments,
+        });
+        console.log("Sharkathon school enquiry email sent to:", data.email);
+      } catch (emailError) {
+        console.error("Failed to send school enquiry email:", emailError);
+      }
+    }
+
+    return { success: true, message: "Enquiry submitted successfully!" };
+  } catch (error) {
+    console.error("Sharkathon school enquiry error:", error);
+    return { success: false, message: "Failed to submit enquiry. Please try again." };
+  }
+}
+
+// Submit Sharkathon Partnerships enquiry (from modal forms on sharkathon_partnerships page)
+export async function submitSharkathonPartnershipEnquiry(data: {
+  name: string;
+  phone: string;
+  school: string;
+  email: string;
+}) {
+  try {
+    // 1. Post to Google Sheets (reuse institutional-partnership sheet)
+    const sheetUrl = process.env.INSTITUTIONAL_PARTNERSHIP_SHEET_URL;
+    if (sheetUrl && sheetUrl !== "YOUR_DEPLOYMENT_URL_HERE") {
+      try {
+        await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: data.name,
+            institution: data.school,
+            email: data.email,
+            phone: data.phone,
+            designation: "",
+            timestamp: new Date().toISOString(),
+            source: "sharkathon_partnerships",
+          }),
+        });
+        console.log("Sharkathon partnerships enquiry saved to Google Sheets");
+      } catch (sheetError) {
+        console.error("Failed to save to Google Sheets:", sheetError);
+      }
+    }
+
+    // 2. Send enquiry confirmation email with partnership brochure attached
+    if (data.email) {
+      try {
+        const emailData = sharkathonEnquiryEmail(data.name || "Student", "partnerships");
+        await sendEmail({
+          to: data.email,
+          subject: emailData.subject,
+          html: emailData.html,
+          attachments: emailData.attachments,
+        });
+        console.log("Sharkathon partnerships enquiry email sent to:", data.email);
+      } catch (emailError) {
+        console.error("Failed to send partnerships enquiry email:", emailError);
+      }
+    }
+
+    return { success: true, message: "Enquiry submitted successfully!" };
+  } catch (error) {
+    console.error("Sharkathon partnerships enquiry error:", error);
     return { success: false, message: "Failed to submit enquiry. Please try again." };
   }
 }

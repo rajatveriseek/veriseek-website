@@ -41,9 +41,17 @@ export type NewsletterSubscription = {
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _supabase: any = null
+try {
+  if (supabaseUrl && supabaseAnonKey) {
+    _supabase = createClient(supabaseUrl, supabaseAnonKey)
+  } else {
+    console.warn('Missing Supabase environment variables. Supabase features will be disabled.')
+  }
+} catch {
+  console.warn('Failed to initialise Supabase client (invalid credentials). Supabase features will be disabled.')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-export const supabaseClient = supabase
+export const supabase = _supabase
+export const supabaseClient = _supabase

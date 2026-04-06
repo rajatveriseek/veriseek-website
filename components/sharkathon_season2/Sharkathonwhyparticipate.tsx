@@ -60,7 +60,7 @@ const BENEFITS = [
   },
 ];
 
-function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochureHref: string }) {
+function EnquiryModal({ onClose, brochureHref, submitAction }: { onClose: () => void; brochureHref: string; submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }> }) {
   const [form, setForm] = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -85,7 +85,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
     e.preventDefault();
     setStatus("submitting");
     try {
-      const result = await submitSharkathonEnquiry(form);
+      const result = await (submitAction ?? submitSharkathonEnquiry)(form);
       if (result.success) {
         setStatus("success");
       } else { setStatus("error"); }
@@ -97,7 +97,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
       <style>{`
         @keyframes enq-overlay-in{from{opacity:0}to{opacity:1}}
         @keyframes enq-card-in{from{opacity:0;transform:translateY(24px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .enq-overlay{position:fixed;inset:0;z-index:var(--modal-z,10000);background:rgba(1,22,56,0.72);display:flex;align-items:center;justify-content:center;padding:20px;animation:enq-overlay-in 0.25s ease both;backdrop-filter:blur(4px);}
+        .enq-overlay{position:fixed;inset:0;z-index:99999;background:rgba(1,22,56,0.72);display:flex;align-items:center;justify-content:center;padding:20px;animation:enq-overlay-in 0.25s ease both;backdrop-filter:blur(4px);}
         .enq-card{background:#fff;border-radius:20px;padding:36px 36px 32px;width:100%;max-width:460px;position:relative;box-shadow:0 32px 80px rgba(1,22,56,0.35);animation:enq-card-in 0.35s cubic-bezier(0.34,1.40,0.64,1) both;font-family:'DM Sans',sans-serif;}
         .enq-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:#eef0f2;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#011638;transition:background 0.2s,transform 0.2s;}
         .enq-close:hover{background:#dde0e4;transform:scale(1.08)}
@@ -168,9 +168,10 @@ interface SharkathonWhyProps {
   applyHref?: string;
   brochureHref?: string;
   imageSrc?: string;
+  submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
 }
 
-export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", brochureHref="/Sharkathon Season2.pdf", imageSrc }: SharkathonWhyProps) {
+export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", brochureHref="/Sharkathon Season2.pdf", imageSrc, submitAction }: SharkathonWhyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -474,7 +475,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
         }
       `}</style>
 
-      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} />}
+      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} submitAction={submitAction} />}
 
       <section className="wyp-section" ref={sectionRef}>
         <div className="wyp-inner">

@@ -233,7 +233,7 @@ function QuoteIcon() {
 
 // ─── Enquiry Modal ─────────────────────────────────────────────────────────────
 
-function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochureHref: string }) {
+function EnquiryModal({ onClose, brochureHref, submitAction }: { onClose: () => void; brochureHref: string; submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }> }) {
   const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const overlayRef          = useRef<HTMLDivElement>(null);
@@ -253,7 +253,7 @@ function EnquiryModal({ onClose, brochureHref }: { onClose: () => void; brochure
     e.preventDefault();
     setStatus("submitting");
     try {
-      const result = await submitSharkathonEnquiry(form);
+      const result = await (submitAction ?? submitSharkathonEnquiry)(form);
       if (result.success) {
         setStatus("success");
       } else { setStatus("error"); }
@@ -395,12 +395,14 @@ interface SharkathonTestimonialsProps {
   tabs?: TabGroup[];
   applyHref?: string;
   brochureHref?: string;
+  submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
 }
 
 export default function SharkathonTestimonials({
   tabs         = TABS,
   applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   brochureHref = "/Sharkathon Season2.pdf",
+  submitAction,
 }: SharkathonTestimonialsProps) {
   const [activeTab, setActiveTab]   = useState(0);
   const [activeIdx, setActiveIdx]   = useState(0);
@@ -738,7 +740,7 @@ export default function SharkathonTestimonials({
           to   { opacity:1; transform:translateY(0)    scale(1);    }
         }
         .enq-overlay {
-          position: fixed; inset: 0; z-index: var(--modal-z, 10000);
+          position: fixed; inset: 0; z-index: 99999;
           background: rgba(1,22,56,0.72);
           display: flex; align-items: center; justify-content: center;
           padding: 20px;
@@ -860,7 +862,7 @@ export default function SharkathonTestimonials({
         }
       `}</style>
 
-      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} />}
+      {showModal && <EnquiryModal onClose={() => setShowModal(false)} brochureHref={brochureHref} submitAction={submitAction} />}
 
       <section className="tm-section" ref={sectionRef}>
 
