@@ -168,10 +168,11 @@ interface SharkathonWhyProps {
   applyHref?: string;
   brochureHref?: string;
   imageSrc?: string;
+  onApply?: () => void;
   submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
 }
 
-export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", brochureHref="/Sharkathon Season2.pdf", imageSrc, submitAction }: SharkathonWhyProps) {
+export default function SharkathonWhyParticipate({ applyHref = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view", brochureHref="/Sharkathon Season2.pdf", imageSrc, onApply, submitAction }: SharkathonWhyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -510,7 +511,7 @@ export default function SharkathonWhyParticipate({ applyHref = "https://pages.ra
             </div>
 
             <div className="wyp-cta">
-              <a href={applyHref} className="wyp-btn wyp-btn-primary">Register Now <ArrowIcon /></a>
+              <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="wyp-btn wyp-btn-primary">Register Now <ArrowIcon /></button>
               <button className="wyp-btn wyp-btn-outline" onClick={() => setShowModal(true)} type="button">
                 Enquire Now <ArrowIcon />
               </button>

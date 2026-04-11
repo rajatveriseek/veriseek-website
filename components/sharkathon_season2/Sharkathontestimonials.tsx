@@ -395,6 +395,7 @@ interface SharkathonTestimonialsProps {
   tabs?: TabGroup[];
   applyHref?: string;
   brochureHref?: string;
+  onApply?: () => void;
   submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
 }
 
@@ -402,6 +403,7 @@ export default function SharkathonTestimonials({
   tabs         = TABS,
   applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   brochureHref = "/Sharkathon Season2.pdf",
+  onApply,
   submitAction,
 }: SharkathonTestimonialsProps) {
   const [activeTab, setActiveTab]   = useState(0);
@@ -975,9 +977,9 @@ export default function SharkathonTestimonials({
 
           {/* ── CTAs ── */}
           <div className="tm-cta-row">
-            <a href={applyHref} className="tm-btn tm-btn-primary">
+            <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="tm-btn tm-btn-primary">
               Register Now <ArrowIcon />
-            </a>
+            </button>
             <button
               className="tm-btn tm-btn-outline"
               onClick={() => setShowModal(true)}

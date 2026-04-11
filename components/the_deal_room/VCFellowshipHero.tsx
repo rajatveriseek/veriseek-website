@@ -323,9 +323,9 @@ export default function VCFellowshipHero({
           className="vc-anim-5 vc-hero-buttons"
           style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 48 }}
         >
-          <a href={applyHref} onClick={onApply} className="vc-btn-primary">
+          <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vc-btn-primary">
             Apply Now <ArrowIcon />
-          </a>
+          </button>
           <a href={brochureHref} onClick={onBrochure} className="vc-btn-secondary">
             Download Brochure <DownloadIcon />
           </a>

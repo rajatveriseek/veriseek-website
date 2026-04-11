@@ -627,9 +627,9 @@ export default function SharkathonPricing({
 
             <div className="vcp-btn-row">
               {/* Register Now — primary filled */}
-              <a href={applyHref} onClick={onApply} className="vcp-btn">
+              <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcp-btn">
                 Register Now <ArrowIcon />
-              </a>
+              </button>
               {/* Enquire More — outline, opens modal */}
               <button
                 className="vcp-btn vcp-btn-outline"
