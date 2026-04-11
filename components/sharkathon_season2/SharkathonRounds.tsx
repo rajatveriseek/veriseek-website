@@ -306,6 +306,7 @@ interface SharkathonRoundsProps {
   rounds?: typeof ROUNDS;
   applyHref?: string;
   brochureHref?: string;
+  onApply?: () => void;
   submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
 }
 
@@ -313,6 +314,7 @@ export default function SharkathonRounds({
   rounds = ROUNDS,
   applyHref    = "https://pages.razorpay.com/pl_SLYleXmwGJkGqi/view",
   brochureHref = "/Sharkathon Season2.pdf",
+  onApply,
   submitAction,
 }: SharkathonRoundsProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -740,9 +742,9 @@ export default function SharkathonRounds({
             Sharkathon Season 2. Seats are limited — secure yours now.
           </p>
           <div className="sr-footer-btns">
-            <a href={applyHref} className="sr-btn sr-btn-primary">
+            <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="sr-btn sr-btn-primary">
               Register Now <ArrowIcon />
-            </a>
+            </button>
             <button onClick={() => setShowModal(true)} className="sr-btn sr-btn-secondary" type="button">
               Enquire Now <ArrowIcon />
             </button>

@@ -42,8 +42,8 @@ export default function VCFellowshipPricing({
   fee       = "INR 17,700",
   dates     = "14th–15th April 2026",
   venue     = "Shiv Nadar University, Greater Noida",
-  applyHref = "https://rzp.io/rzp/IfWaHBUQ",
-  onApply   = () => { window.location.href = "https://rzp.io/rzp/IfWaHBUQ"; },
+  applyHref = "https://rzp.io/rzp/thedealroomtesting",
+  onApply   = () => { window.location.href = "https://rzp.io/rzp/thedealroomtesting"; },
 }: VCPricingProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -388,9 +388,9 @@ export default function VCFellowshipPricing({
                 {venue}
               </div>
             </div>
-            <a href={applyHref} onClick={onApply} className="vcp-btn">
+            <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcp-btn">
               Apply Now <ArrowIcon />
-            </a>
+            </button>
           </div>
 
         </div>

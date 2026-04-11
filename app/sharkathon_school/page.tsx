@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { submitSharkathonSchoolEnquiry } from "@/app/actions/registration";
 
 import SharkathonHero from "@/components/sharkathon_season2/Sharkathonhero";
+import { useRazorpayCheckout } from "@/hooks/useRazorpayCheckout";
 
 const SchoolMarquee = dynamic(() => import("@/components/sharkathon_season2/Schoolmarquee"));
 const SharkathonRounds = dynamic(() => import("@/components/sharkathon_season2/SharkathonRounds"));
@@ -18,6 +18,8 @@ const SharkathonFAQ = dynamic(() => import("@/components/sharkathon_season2/Shar
 const SharkathonJourneyCopy = dynamic(() => import("@/components/sharkathon_season2/Sharkathonjourney_copy"));
 
 export default function SharkathonPage() {
+  const { openCheckout } = useRazorpayCheckout({ amount: 3500, program: "sharkathon" });
+
   return (
     // overflow-x: hidden is required so the full-bleed hero (-50vw margins)
     // doesn't create a horizontal scrollbar on the page
@@ -25,27 +27,28 @@ export default function SharkathonPage() {
       <SharkathonHero
         brochureHref="/Sharkathon Season__2.pdf"
         imageSrc="/images/P1101636.JPG"
-        applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"
+        onApply={openCheckout}
         submitAction={submitSharkathonSchoolEnquiry}
       />
       <SchoolMarquee />
-      <SharkathonRounds applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
-      <SharkathonTestimonials applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonRounds onApply={openCheckout} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonTestimonials onApply={openCheckout} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
       <SharkathonMentors />
       {/* <SharkathonJourney/> */}
       <SharkathonJourneyCopy/>
-      
-      
-      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
-      <SharkathonPricingSchool applyHref="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view" brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+
+
+      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" onApply={openCheckout} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonPricingSchool onApply={openCheckout} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
       <Sharkathoncontact imageSrc="/images/P1101587.JPG" />
       <SharkathonFAQ />
 
       {/* Floating Apply Now Button (WhatsApp is global in layout) */}
-      <Link
-        href="https://pages.razorpay.com/pl_ST7On7CPa30M7c/view"
+      <button
+        type="button"
+        onClick={openCheckout}
         className="fixed z-50 flex items-center gap-2 rounded-full bg-yellow-500 px-6 py-3 font-semibold text-black shadow-lg transition hover:scale-105 hover:bg-yellow-400"
-          style={{ bottom: "1.5rem", right: "1.5rem" }}
+        style={{ bottom: "1.5rem", right: "1.5rem" }}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
@@ -53,7 +56,7 @@ export default function SharkathonPage() {
           <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
         </svg>
         Apply Now
-      </Link>
+      </button>
     </div>
   );
 }

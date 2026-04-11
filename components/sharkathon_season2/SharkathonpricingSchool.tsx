@@ -624,9 +624,9 @@ export default function SharkathonPricingSchool({
                 <div className="vcp-divider" />
 
                 <div className="vcp-btn-row">
-                  <a href={applyHref} onClick={onApply} className="vcp-btn">
+                  <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcp-btn">
                     Register Now <ArrowIcon />
-                  </a>
+                  </button>
                   <button
                     className="vcp-btn vcp-btn-outline"
                     onClick={() => setShowModal(true)}
@@ -671,9 +671,9 @@ export default function SharkathonPricingSchool({
 
                 {/* Buttons */}
                 <div className="vcp-btn-row">
-                  <a href={applyHref} onClick={onApply} className="vcp-btn">
+                  <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcp-btn">
                     Register Now <ArrowIcon />
-                  </a>
+                  </button>
                   <button
                     className="vcp-btn vcp-btn-outline"
                     onClick={() => setShowModal(true)}

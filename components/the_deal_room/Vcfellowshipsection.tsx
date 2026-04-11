@@ -265,9 +265,9 @@ export default function VCFellowshipSection({
             </div>
           </div>
 
-          <a href={applyHref} onClick={onApply} className="vcf-btn">
+          <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcf-btn">
             Apply Now <ArrowIcon />
-          </a>
+          </button>
         </div>
 
       </div>

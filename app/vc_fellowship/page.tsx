@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 
 import VCFellowshipHero2 from "@/components/the_deal_room/VCFellowshipHero2";
+import { useRazorpayCheckout } from "@/hooks/useRazorpayCheckout";
 import VCFellowshipFAQ from "@/components/the_deal_room/Vcfellowshipfaq";
 import VCFellowshipPricing from "@/components/the_deal_room/Vcfellowshippricing";
 import VCFellowshipExpect from "@/components/the_deal_room/Vcfellowshipexpect";
@@ -13,6 +13,8 @@ import VCFellowshipSection from "@/components/the_deal_room/Vcfellowshipsection"
 import TheDealRoomHero from "@/components/the_deal_room/VCFellowshipHero3";
 
 export default function SharkathonPage() {
+  const { openCheckout } = useRazorpayCheckout({ amount: 17700, program: "thedealroom" });
+
   return (
     <>
       {/* Page Content */}
@@ -23,28 +25,31 @@ export default function SharkathonPage() {
       <TheDealRoomHero
         heroImageSrc="/images/P1101556.JPG"
         brochureHref="/images/The_Deal_Room.pdf"
+        onApply={openCheckout}
       />
-      <VCFellowshipSection />
+      <VCFellowshipSection onApply={openCheckout} />
       <VCProgrammeFlow />
       <VCFellowshipMentors />
       <VCFellowshipExpect imageSrc="/images/IMG_8189 (1).jpg" />
-      <VCFellowshipPricing />
+      <VCFellowshipPricing onApply={openCheckout} />
       <VCFellowshipContact imageSrc="/images/it team.jpeg" />
       <VCFellowshipFAQ />
 
       {/* Floating Apply Button */}
-      <Link
-        href="https://rzp.io/rzp/IfWaHBUQ" // or Razorpay link
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 
+      <button
+        type="button"
+        onClick={openCheckout}
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2
                    rounded-full bg-yellow-500 px-6 py-3 font-semibold text-black
                    shadow-lg transition hover:scale-105 hover:bg-yellow-400"
       >
-       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-  </svg>Apply Now
-      </Link>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+          <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+        </svg>
+        Apply Now
+      </button>
     </>
   );
 }

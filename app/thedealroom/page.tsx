@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 
 import TheDealRoomHero from "@/components/the_deal_room/VCFellowshipHero3";
+import { useRazorpayCheckout } from "@/hooks/useRazorpayCheckout";
 
 const VCFellowshipSection = dynamic(() => import("@/components/the_deal_room/Vcfellowshipsection"));
 const VCProgrammeFlow = dynamic(() => import("@/components/the_deal_room/Vcfellowshipprogrammeflow"));
@@ -14,28 +14,27 @@ const VCFellowshipContact = dynamic(() => import("@/components/the_deal_room/Vcf
 const VCFellowshipFAQ = dynamic(() => import("@/components/the_deal_room/Vcfellowshipfaq"));
 
 export default function SharkathonPage() {
+  const { openCheckout } = useRazorpayCheckout({ amount: 17700, program: "thedealroom" });
+
   return (
     <>
-      {/* Page Content */}
-      {/* <VCFellowshipHero2
-        heroImageSrc="/images/P1101556.JPG"
-        brochureHref="/vc-fellowship-brochure.pdf"
-      /> */}
       <TheDealRoomHero
         heroImageSrc="/images/P1101556.JPG"
         brochureHref="/images/The_Deal_Room.pdf"
+        onApply={openCheckout}
       />
-      <VCFellowshipSection />
+      <VCFellowshipSection onApply={openCheckout} />
       <VCProgrammeFlow />
       <VCFellowshipMentors />
       <VCFellowshipExpect imageSrc="/images/WhatsApp Image 2026-02-22 at 4.01.51 PM.jpeg" />
-      <VCFellowshipPricing />
+      <VCFellowshipPricing onApply={openCheckout} />
       <VCFellowshipContact imageSrc="/images/P1101587.JPG" />
       <VCFellowshipFAQ />
 
-      {/* Floating Apply Button (WhatsApp is global in layout) */}
-      <Link
-        href="https://rzp.io/rzp/IfWaHBUQ"
+      {/* Floating Apply Button */}
+      <button
+        type="button"
+        onClick={openCheckout}
         className="fixed z-50 flex items-center gap-2 rounded-full bg-yellow-500 px-6 py-3 font-semibold text-black shadow-lg transition hover:scale-105 hover:bg-yellow-400"
         style={{ bottom: "1.5rem", right: "1.5rem" }}
       >
@@ -45,7 +44,7 @@ export default function SharkathonPage() {
           <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
         </svg>
         Apply Now
-      </Link>
+      </button>
     </>
   );
 }

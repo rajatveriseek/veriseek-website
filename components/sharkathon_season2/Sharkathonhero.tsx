@@ -923,9 +923,9 @@ export default function SharkathonHero({
           </div>
 
           <div className="sh-anim-5 sh-hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 28 }}>
-            <a href={applyHref} onClick={onApply} className="sh-btn-primary">
+            <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="sh-btn-primary">
               Register Now <ArrowIcon />
-            </a>
+            </button>
             <button type="button" onClick={() => setShowBrochureModal(true)} className="sh-btn-secondary">
               Enquire Now
             </button>
