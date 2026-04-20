@@ -21,7 +21,9 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  phone: z.string().optional(),
+  phone: z.string().min(10, {
+    message: "Please enter a valid phone number.",
+  }),
   subject: z.string({
     required_error: "Please select a subject.",
   }),
@@ -55,7 +57,7 @@ export function ContactForm() {
       dataStore.addContactSubmission({
         name: values.name,
         email: values.email,
-        phone: values.phone || null,
+        phone: values.phone,
         subject: values.subject,
         message: values.message,
         status: "new",
@@ -139,7 +141,7 @@ export function ContactForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone (Optional)</FormLabel>
+                    <FormLabel>Phone</FormLabel>
                     <FormControl>
                       <Input placeholder="(123) 456-7890" {...field} />
                     </FormControl>

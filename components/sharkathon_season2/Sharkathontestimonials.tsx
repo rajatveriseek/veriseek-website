@@ -234,9 +234,10 @@ function QuoteIcon() {
 // ─── Enquiry Modal ─────────────────────────────────────────────────────────────
 
 function EnquiryModal({ onClose, brochureHref, submitAction }: { onClose: () => void; brochureHref: string; submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }> }) {
-  const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const overlayRef          = useRef<HTMLDivElement>(null);
+  const [form, setForm]           = useState({ name: "", phone: "", school: "", email: "" });
+  const [status, setStatus]       = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [validationError, setValidationError] = useState("");
+  const overlayRef                = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fn = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -251,6 +252,11 @@ function EnquiryModal({ onClose, brochureHref, submitAction }: { onClose: () => 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim() || !form.school.trim() || !form.email.trim()) {
+      setValidationError("Please fill in all fields before submitting.");
+      return;
+    }
+    setValidationError("");
     setStatus("submitting");
     try {
       const result = await (submitAction ?? submitSharkathonEnquiry)(form);
@@ -295,6 +301,7 @@ function EnquiryModal({ onClose, brochureHref, submitAction }: { onClose: () => 
               <button className="enq-submit" type="submit" disabled={status === "submitting"}>
                 {status === "submitting" ? "Sending…" : <>Submit Query <ArrowIcon /></>}
               </button>
+              {validationError && <p className="enq-error">{validationError}</p>}
               {status === "error" && <p className="enq-error">Something went wrong. Please try again.</p>}
             </form>
           </>

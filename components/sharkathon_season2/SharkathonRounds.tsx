@@ -82,9 +82,10 @@ function ArrowIcon() {
 
 // ─── Enquiry + Brochure Modal ─────────────────────────────────────────────────
 function EnquiryBrochureModal({ brochureHref, onClose, submitAction }: { brochureHref: string; onClose: () => void; submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }> }) {
-  const [form, setForm]     = useState({ name: "", phone: "", school: "", email: "" });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const overlayRef          = useRef<HTMLDivElement>(null);
+  const [form, setForm]           = useState({ name: "", phone: "", school: "", email: "" });
+  const [status, setStatus]       = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [validationError, setValidationError] = useState("");
+  const overlayRef                = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fn = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -99,6 +100,11 @@ function EnquiryBrochureModal({ brochureHref, onClose, submitAction }: { brochur
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim() || !form.school.trim() || !form.email.trim()) {
+      setValidationError("Please fill in all fields before submitting.");
+      return;
+    }
+    setValidationError("");
     setStatus("submitting");
     try {
       const result = await (submitAction ?? submitSharkathonEnquiry)(form);
@@ -201,6 +207,7 @@ function EnquiryBrochureModal({ brochureHref, onClose, submitAction }: { brochur
               }}>
                 {status === "submitting" ? "Sending\u2026" : "Submit Query"}
               </button>
+              {validationError && <p style={{ color: "#f87171", fontSize: 13, marginTop: 10, textAlign: "center" }}>{validationError}</p>}
               {status === "error" && <p style={{ color: "#f87171", fontSize: 13, marginTop: 10, textAlign: "center" }}>Something went wrong. Please try again.</p>}
             </form>
           </>

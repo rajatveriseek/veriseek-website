@@ -315,6 +315,7 @@ export default function VeriseekHero({
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
   const [formData, setFormData] = useState({ name: "", institution: "", email: "", phone: "", designation: "" });
 
   useEffect(() => {
@@ -339,6 +340,11 @@ export default function VeriseekHero({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!formData.name || !formData.institution || !formData.email || !formData.phone || !formData.designation) {
+      setFormError("Please fill in all fields before submitting.");
+      return;
+    }
+    setFormError("");
     setIsSubmitting(true);
     try {
       const result = await submitInstitutionalPartnership(formData);
@@ -578,7 +584,7 @@ export default function VeriseekHero({
                     <div className="vs-form-group">
                       <label className="vs-form-label" htmlFor="vs-phone">Phone No.</label>
                       <input id="vs-phone" name="phone" type="tel" placeholder="+91 XXXXX XXXXX"
-                        className="vs-form-input" value={formData.phone} onChange={handleChange} />
+                        className="vs-form-input" value={formData.phone} onChange={handleChange} required />
                     </div>
                   </div>
 
@@ -586,10 +592,13 @@ export default function VeriseekHero({
                     <div className="vs-form-group">
                       <label className="vs-form-label" htmlFor="vs-designation">Designation</label>
                       <input id="vs-designation" name="designation" type="text" placeholder="e.g. Principal, Head of Academics"
-                        className="vs-form-input" value={formData.designation} onChange={handleChange} />
+                        className="vs-form-input" value={formData.designation} onChange={handleChange} required />
                     </div>
                   </div>
 
+                  {formError && (
+                    <p style={{ color: "#f87171", fontSize: 13, marginBottom: 8, textAlign: "center" }}>{formError}</p>
+                  )}
                   <button type="submit" className="vs-form-submit" disabled={isSubmitting}>
                     {isSubmitting ? "Submitting…" : <>Submit Request <ArrowIcon /></>}
                   </button>

@@ -66,6 +66,7 @@ const RegistrationForm = () => {
 
     if (
       !formData.firstName ||
+      !formData.email ||
       !formData.phone ||
       !formData.school ||
       !formData.agreeTerms
@@ -253,13 +254,14 @@ const RegistrationForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email">Email Address *</Label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
+                    required
                   />
                 </div>
 
