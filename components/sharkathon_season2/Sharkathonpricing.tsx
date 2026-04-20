@@ -36,6 +36,7 @@ function CheckIcon() {
 function EnquiryModal({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ name: "", phone: "", school: "", email: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [validationError, setValidationError] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
 
   // Close on overlay click
@@ -62,6 +63,11 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim() || !form.school.trim() || !form.email.trim()) {
+      setValidationError("Please fill in all fields before submitting.");
+      return;
+    }
+    setValidationError("");
     setStatus("submitting");
     try {
       const result = await submitSharkathonEnquiry(form);
@@ -282,6 +288,7 @@ function EnquiryModal({ onClose }: { onClose: () => void }) {
                   {status === "submitting" ? "Sending…" : <>Submit Query <ArrowIcon /></>}
                 </button>
 
+                {validationError && <p className="enq-error">{validationError}</p>}
                 {status === "error" && (
                   <p className="enq-error">Something went wrong. Please try again or email us directly.</p>
                 )}

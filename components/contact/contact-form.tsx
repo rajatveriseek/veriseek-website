@@ -89,8 +89,8 @@ const ContactForm = () => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="phone">Phone Number</Label>
-        <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} />
+        <Label htmlFor="phone">Phone Number *</Label>
+        <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} required />
       </div>
 
       <div className="space-y-2">
