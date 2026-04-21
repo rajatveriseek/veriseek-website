@@ -252,7 +252,7 @@ interface SharkathonPricingSchoolProps {
 }
 
 export default function SharkathonPricingSchool({
-  applyHref = "https://pages.razorpay.com/pl_ST7On7CPa30M7c/view",
+  applyHref = "https://rzp.io/rzp/q7Drpeq",
   brochureHref = "/Sharkathon Season2.pdf",
   onApply,
   submitAction,
@@ -631,7 +631,7 @@ export default function SharkathonPricingSchool({
                 <div className="vcp-divider" />
 
                 <div className="vcp-btn-row">
-                  <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcp-btn">
+                  <button type="button" onClick={onApply ?? (() => window.open(applyHref, "_blank", "noopener,noreferrer"))} className="vcp-btn">
                     Register Now <ArrowIcon />
                   </button>
                   <button
@@ -678,7 +678,7 @@ export default function SharkathonPricingSchool({
 
                 {/* Buttons */}
                 <div className="vcp-btn-row">
-                  <button type="button" onClick={onApply ?? (() => { window.location.href = applyHref!; })} className="vcp-btn">
+                  <button type="button" onClick={onApply ?? (() => window.open(applyHref, "_blank", "noopener,noreferrer"))} className="vcp-btn">
                     Register Now <ArrowIcon />
                   </button>
                   <button
