@@ -245,6 +245,7 @@ interface SharkathonPricingSchoolProps {
   applyHref?: string;
   brochureHref?: string;
   onApply?: () => void;
+  onApplyRound1?: () => void;
   submitAction?: (data: { name: string; phone: string; school: string; email: string }) => Promise<{ success: boolean; message: string }>;
   singlePrice?: boolean;
   fee?: string;
@@ -255,6 +256,7 @@ export default function SharkathonPricingSchool({
   applyHref = "https://rzp.io/rzp/q7Drpeq",
   brochureHref = "/Sharkathon Season2.pdf",
   onApply,
+  onApplyRound1,
   submitAction,
   singlePrice = false,
   fee = "INR 3500",
@@ -653,7 +655,7 @@ export default function SharkathonPricingSchool({
                   <span className="vcp-fee-suffix">INCL. GST</span>
                 </div>
                 <p className="vcp-fee-desc">Full access to all three rounds and all learning materials.</p>
-
+                
                 <div className="vcp-divider" />
 
                 {/* Option 2 */}
@@ -678,7 +680,7 @@ export default function SharkathonPricingSchool({
 
                 {/* Buttons */}
                 <div className="vcp-btn-row">
-                  <button type="button" onClick={onApply ?? (() => window.open(applyHref, "_blank", "noopener,noreferrer"))} className="vcp-btn">
+                  <button type="button" onClick={onApplyRound1 ?? (() => window.open(applyHref, "_blank", "noopener,noreferrer"))} className="vcp-btn">
                     Register Now <ArrowIcon />
                   </button>
                   <button

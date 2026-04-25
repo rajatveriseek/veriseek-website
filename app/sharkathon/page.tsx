@@ -3,7 +3,6 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import SharkathonHero from "@/components/sharkathon_season2/Sharkathonhero";
-import { useRazorpayCheckout } from "@/hooks/useRazorpayCheckout";
 
 const SchoolMarquee = dynamic(() => import("@/components/sharkathon_season2/Schoolmarquee"));
 const SharkathonRounds = dynamic(() => import("@/components/sharkathon_season2/SharkathonRounds"));
@@ -17,7 +16,7 @@ const SharkathonFAQ = dynamic(() => import("@/components/sharkathon_season2/Shar
 const SharkathonJourneyCopy = dynamic(() => import("@/components/sharkathon_season2/Sharkathonjourney_copy"));
 
 export default function SharkathonPage() {
-  const { openCheckout } = useRazorpayCheckout({ amount: 5000, program: "sharkathon" });
+  const openCheckout = () => window.open("https://rzp.io/rzp/1dRUIAad", "_blank", "noopener,noreferrer");
 
   return (
     // overflow-x: hidden is required so the full-bleed hero (-50vw margins)
