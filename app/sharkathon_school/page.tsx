@@ -2,7 +2,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { submitSharkathonSchoolEnquiry } from "@/app/actions/registration";
-
 import SharkathonHero from "@/components/sharkathon_season2/Sharkathonhero";
 
 const SchoolMarquee = dynamic(() => import("@/components/sharkathon_season2/Schoolmarquee"));
@@ -15,32 +14,37 @@ const Sharkathoncontact = dynamic(() => import("@/components/sharkathon_season2/
 const SharkathonFAQ = dynamic(() => import("@/components/sharkathon_season2/Sharkathonfaq"));
 const SharkathonJourneyCopy = dynamic(() => import("@/components/sharkathon_season2/Sharkathonjourney_copy"));
 
-const PAYMENT_URL = "https://rzp.io/rzp/q7Drpeq";
-const openPayment = () => window.open(PAYMENT_URL, "_blank", "noopener,noreferrer");
-
 export default function SharkathonPage() {
+  const openCheckout3500 = () => window.open("https://rzp.io/rzp/q7Drpeq", "_blank", "noopener,noreferrer");
+  const openCheckout1500 = () => window.open("https://rzp.io/rzp/q7Drpeq", "_blank", "noopener,noreferrer");
+
   return (
     <div style={{ overflowX: "hidden" }}>
       <SharkathonHero
         brochureHref="/Sharkathon Season__2.pdf"
         imageSrc="/images/P1101636.JPG"
-        onApply={openPayment}
+        onApply={openCheckout3500}
         submitAction={submitSharkathonSchoolEnquiry}
       />
       <SchoolMarquee />
-      <SharkathonRounds onApply={openPayment} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
-      <SharkathonTestimonials onApply={openPayment} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonRounds onApply={openCheckout3500} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonTestimonials onApply={openCheckout3500} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
       <SharkathonMentors />
       <SharkathonJourneyCopy/>
-      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" onApply={openPayment} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
-      <SharkathonPricingSchool onApply={openPayment} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonWhyParticipate imageSrc="/images/P1101634.JPG" onApply={openCheckout3500} brochureHref="/Sharkathon Season__2.pdf" submitAction={submitSharkathonSchoolEnquiry}/>
+      <SharkathonPricingSchool
+        onApply={openCheckout3500}
+        onApplyRound1={openCheckout1500}
+        brochureHref="/Sharkathon Season__2.pdf"
+        submitAction={submitSharkathonSchoolEnquiry}
+      />
       <Sharkathoncontact imageSrc="/images/P1101587.JPG" />
       <SharkathonFAQ />
 
       {/* Floating Apply Now Button */}
       <button
         type="button"
-        onClick={openPayment}
+        onClick={openCheckout3500}
         className="fixed z-50 flex items-center gap-2 rounded-full bg-yellow-500 px-6 py-3 font-semibold text-black shadow-lg transition hover:scale-105 hover:bg-yellow-400"
         style={{ bottom: "1.5rem", right: "1.5rem" }}
       >

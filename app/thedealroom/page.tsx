@@ -3,7 +3,6 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import TheDealRoomHero from "@/components/the_deal_room/VCFellowshipHero3";
-import { useRazorpayCheckout } from "@/hooks/useRazorpayCheckout";
 
 const VCFellowshipSection = dynamic(() => import("@/components/the_deal_room/Vcfellowshipsection"));
 const VCProgrammeFlow = dynamic(() => import("@/components/the_deal_room/Vcfellowshipprogrammeflow"));
@@ -14,7 +13,7 @@ const VCFellowshipContact = dynamic(() => import("@/components/the_deal_room/Vcf
 const VCFellowshipFAQ = dynamic(() => import("@/components/the_deal_room/Vcfellowshipfaq"));
 
 export default function SharkathonPage() {
-  const { openCheckout } = useRazorpayCheckout({ amount: 17700, program: "thedealroom" });
+  const openCheckout = () => window.open("https://rzp.io/rzp/IfWaHBUQ", "_blank", "noopener,noreferrer");
 
   return (
     <>

@@ -3,7 +3,10 @@
     "allow": [
       "Bash(find D:2026Freelanceveriseek-website/components/sharkathon_season2 -type f \\\\\\(-name *.tsx -o -name *.ts -o -name *.jsx -o -name *.js \\\\\\))",
       "Bash(wc:*)",
-      "Bash(find D:2026Freelanceveriseek-website -type f \\\\\\(-name *avbar* -o -name *Navbar* \\\\\\))"
+      "Bash(find D:2026Freelanceveriseek-website -type f \\\\\\(-name *avbar* -o -name *Navbar* \\\\\\))",
+      "WebSearch",
+      "WebFetch(domain:razorpay.com)",
+      "WebFetch(domain:next.razorpay.com)"
     ]
   }
 }
