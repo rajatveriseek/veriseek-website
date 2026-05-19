@@ -138,7 +138,7 @@ export function sharkathonRegistrationEmail(studentName: string): { subject: str
             We would really appreciate it if you could join the <strong>official WhatsApp community</strong>, as this is where we share session links, reminders, resources, and important updates to help you stay on track.
           </p>
           <p style="margin:12px 0 0;">
-            <a href="https://whatsapp.com/channel/0029Vb5jLpHISTkGKsJUX32e" style="display:inline-block;background-color:#22c55e;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:10px 24px;border-radius:6px;">
+            <a href="https://chat.whatsapp.com/B5qt8D8zlqE3SW5j2vmQum" style="display:inline-block;background-color:#22c55e;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:10px 24px;border-radius:6px;">
               Join WhatsApp Channel &rarr;
             </a>
           </p>
