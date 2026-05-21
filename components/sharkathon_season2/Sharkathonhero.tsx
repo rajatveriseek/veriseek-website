@@ -738,10 +738,10 @@ export default function SharkathonHero({
   const [showBrochureModal, setShowBrochureModal] = useState(false);
 
   // Auto-open enquiry modal 1 second after page load
-  useEffect(() => {
-    const timer = setTimeout(() => setShowBrochureModal(true), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setShowBrochureModal(true), 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   useEffect(() => {
     if (injected.current) return;
