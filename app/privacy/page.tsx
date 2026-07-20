@@ -28,7 +28,8 @@ const SECTIONS = [
       "To contact participants or their guardians regarding event updates",
       "To verify eligibility and school representation",
       "To share results, certificates, or follow-up materials",
-      "For event promotion (with consent), including use of photos or videos",
+      "For promotion, including use of photos or videos",
+      "To offer parents/guardians products, services, or promotions from our business partners",
     ],
   },
   {
@@ -48,9 +49,9 @@ const SECTIONS = [
     title: "Data Protection and Storage",
     body: null,
     items: [
-      "All personal information is stored securely and is only accessible to authorized event organizers.",
-      "We do not sell your information to third parties for marketing purposes.",
-      "Payment details are handled securely by our payment processor and are never stored on our servers.",
+      "All personal information is stored securely and is accessible only to authorised personnel, including event organisers, and our programme partners and sponsors, solely for the purpose of marketing, executing the competition, programme delivery, and related communications.",
+      "We may share your contact details with our business partners to offer you certain products, services, or promotions, for which they may contact you personally. Our business partners will also abide by this privacy policy.",
+      "Payment details are handled securely by our payment processor.",
     ],
   },
   {
@@ -68,7 +69,7 @@ const SECTIONS = [
     num: "06",
     id: "section-06",
     title: "Updates to This Policy",
-    body: "We may update this Privacy Policy from time to time. Changes will be posted on this page with the updated effective date.",
+    body: "We may update this Privacy Policy from time to time. Changes will be posted on this page.",
     items: [],
   },
 ];
